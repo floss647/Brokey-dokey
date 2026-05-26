@@ -1,5 +1,5 @@
 # BROKEYDOBKEY — BRAND LAUNCH VIDEO
-## "Don't Bin It. Bank It."
+## "Don't bin it. Earn from it."
 ### 60-Second Hero Film
 
 ---
@@ -39,7 +39,7 @@
 | 20 | Cut back — Original guy | He holds his phone. Money's arrived. He looks at the wall. Looks at the phone. |
 | 21 | Close-up — Phone | Balance updated: +£28 |
 | 22 | Final wide | He buys another controller online. Grins. We know what will happen. |
-| 23 | Title card | **BROKEYDOBKEY** — DON'T BIN IT. BANK IT. |
+| 23 | Title card | **BROKEYDOBKEY** — DON'T BIN IT. EARN FROM IT. |
 | 24 | End frame | URL + App store badges |
 
 ---
@@ -119,7 +119,7 @@
 > [VOICEOVER]
 > *"BrokeyDokey connects the people who broke it with the people who fix it. And the people who want to buy it."*
 
-> [ON-SCREEN TEXT — flashing in rhythm] **BROKE IT. FIX IT. BANK IT.**
+> [ON-SCREEN TEXT — flashing in rhythm] **BROKE IT. FIX IT. EARN FROM IT.**
 
 ---
 
@@ -146,7 +146,7 @@
 > [ON-SCREEN TEXT]
 > **DON'T**
 > **BIN IT.**
-> **BANK IT.**
+> **EARN FROM IT.**
 
 > [VISUAL] BrokeyDokey logo appears. Clean. Bold. Yellow on black.
 
@@ -188,6 +188,6 @@
 **Cut-down versions needed:**
 - 30-second cut (cut from 0:10 to 0:25, shorten montage)
 - 15-second cut (reckoning → valuation → sign-off only)
-- 6-second bumper (slo-mo controller throw → "Don't Bin It. Bank It.")
+- 6-second bumper (slo-mo controller throw → "Don't bin it. Earn from it.")
 
 **Aspect ratio exports:** 16:9 (YouTube/TV), 1:1 (Instagram/Facebook), 9:16 (Reels/TikTok/Shorts) — reframe accordingly, montage works best vertically.

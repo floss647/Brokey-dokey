@@ -510,7 +510,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 > [NARRATOR] *"The broken stuff is everywhere. In spare rooms called offices. In drawers of shame. In car boot sales. In charity shop bins. It is worth more than anyone thought. It always was."*
 
-> [ON-SCREEN TEXT] **DON'T BIN IT. BANK IT.**
+> [ON-SCREEN TEXT] **DON'T BIN IT. EARN FROM IT.**
 
 > [NARRATOR] *"BrokeyDokey. Obviously."*
 

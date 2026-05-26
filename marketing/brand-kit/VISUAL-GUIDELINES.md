@@ -11,28 +11,28 @@
 
 | Name | Hex | RGB | Usage |
 |------|-----|-----|-------|
-| **BrokeyYellow** | `#facc15` | 250, 204, 21 | Primary accent, CTA buttons, highlights, borders on dark backgrounds |
-| **Black** | `#000000` | 0, 0, 0 | Primary text, borders, backgrounds, shadows |
-| **White** | `#ffffff` | 255, 255, 255 | Backgrounds, text on dark, breathing room |
+| **BrokeyPink** | `#E8457C` | 232, 69, 124 | PRIMARY brand colour. Hero backgrounds, header blocks, main CTA buttons. This is the brand. |
+| **BrokeyOrange** | `#F5A623` | 245, 166, 35 | Accent colour. Used on key words ("Earn"), highlights, price callouts, hover states. |
+| **DarkPurple** | `#1A0A2E` | 26, 10, 46 | Logo colour, dark backgrounds, LOGIN-style buttons, footer. |
+| **White** | `#ffffff` | 255, 255, 255 | Text on pink/dark, button text, breathing room, card backgrounds. |
 
 ### Secondary Colours (Use sparingly — one per piece of content max)
 
 | Name | Hex | Usage |
 |------|-----|-------|
-| **ScrapPink** | `#ff90e8` | Hero sections, campaign callouts, "Roast My Junk" elements |
+| **MutedPurple** | `#7B4F8E` | Secondary buttons ("Recycle & earn £30" style), tags, pill labels |
+| **LightPink** | `#FDF0F5` | Subtle section backgrounds, card fills, email backgrounds |
 | **CircuitGreen** | `#4ade80` | Success states, environmental stats, verified badges |
-| **WarningRed** | `#ef4444` | Damage tags, condition flags, urgent CTAs |
-| **TechPurple** | `#a855f7` | AI features, tech-forward content, repair guides |
 | **SlateGrey** | `#6b7280` | Subtext, secondary labels, metadata |
-| **WarmCream** | `#fefce8` | Warm backgrounds, card fills behind yellow elements |
 
 ### Colour Rules
 
-1. **Never use gradients.** Brutalist design is flat. If you're tempted to use a gradient, sit with that feeling and then don't.
-2. **BrokeyYellow is not a background colour for text.** It's an accent. Black text on yellow works. Yellow text on yellow does not exist.
-3. **The hero colour for major campaigns is ScrapPink (`#ff90e8`)** — it signals energy without shouting. Use it for launch campaigns and hero banners.
-4. **Use black borders everywhere.** A box without a border is a box that hasn't committed. Minimum 2px, typically 4px for hero elements.
-5. **Shadow = black, always.** The brutalist shadow is `6px 6px 0px 0px #000000`. Not grey. Not soft. Black.
+1. **BrokeyPink is your hero.** It goes on backgrounds, hero sections, headers. Everything else serves it.
+2. **BrokeyOrange is for one word or one number per piece.** It draws the eye. If everything is orange, nothing is.
+3. **White text on pink always.** Never dark text on pink — it muddies the energy.
+4. **DarkPurple for authority.** Logo, nav, login buttons, footers. It grounds the pink.
+5. **Never use gradients.** Flat colour only. If you're tempted to use a gradient, don't.
+6. **The tagline is always:** "Don't bin it. Earn from it." — "Earn" in BrokeyOrange, everything else in white or dark.
 
 ---
 
@@ -51,7 +51,7 @@
 
 ```
 H1 — Space Grotesk, 700-800, UPPERCASE, 48-72px
-     Example: "DON'T BIN IT. BANK IT."
+     Example: "DON'T BIN IT. EARN FROM IT."
 
 H2 — Space Grotesk, 700, UPPERCASE, 32-40px
      Example: "YOUR BROKEN PS4 IS WORTH MORE THAN YOU THINK"
@@ -74,7 +74,7 @@ Tag / Badge — Space Grotesk, 700, UPPERCASE, 11-12px
 
 ### Typography Rules
 
-1. **H1s are always uppercase.** No exceptions. "Don't Bin It. Bank It." in sentence case is NOT BrokeyDokey. "DON'T BIN IT. BANK IT." is BrokeyDokey.
+1. **H1s are always uppercase.** No exceptions. "Don't bin it. Earn from it." in sentence case is NOT BrokeyDokey. "DON'T BIN IT. EARN FROM IT." is BrokeyDokey.
 2. **Prices always use Chakra Petch.** It's the "tech" font that makes numbers look serious.
 3. **Don't mix more than two font families in a single asset.** Space Grotesk + Inter is the default pair. Chakra Petch is a special guest.
 4. **Letter spacing on uppercase labels:** `0.1em` minimum. Cramped caps look amateur.
@@ -142,7 +142,7 @@ Tag / Badge — Space Grotesk, 700, UPPERCASE, 11-12px
 2. **Minimum size:** 120px wide for digital; 30mm for print
 3. **Never:** Stretch, rotate, recolour (logo is black OR white, never coloured), add drop shadows, place on busy photographic backgrounds without a solid backing block
 4. **Always:** Use on solid colour backgrounds (black, white, or BrokeyYellow) or with a backing rectangle
-5. **Tagline pairing:** "DON'T BIN IT. BANK IT." set in Space Grotesk 600 UPPERCASE appears below logo in formal brand usage (hero sections, press materials, merch)
+5. **Tagline pairing:** "DON'T BIN IT. EARN FROM IT." set in Space Grotesk 600 UPPERCASE appears below logo in formal brand usage (hero sections, press materials, merch)
 
 ### The Brutalist Shadow on Logo Elements
 When the logo appears in a bordered box (e.g., header card, social profile image), use the standard brutalist shadow: `6px 6px 0px 0px #000000` on a white or yellow box.
@@ -203,11 +203,11 @@ We sit at about 75% casual. We're not trying to be a Twitter comedian. We're try
 - Brutalist shadow on outer box: 6px 6px 0px 0px black (simulate with offset duplicate)
 
 **Layout B — "Stat/Impact Post":**
-- Background: BrokeyYellow (#facc15)
+- Background: BrokeyYellow (#E8457C)
 - 4px black border
 - Large number: Chakra Petch 800, 120px, black
 - Subtext: Space Grotesk 600, UPPERCASE, 24px, black
-- Bottom: White strip (height 120px) with tagline "DON'T BIN IT. BANK IT."
+- Bottom: White strip (height 120px) with tagline "DON'T BIN IT. EARN FROM IT."
 - BrokeyDokey wordmark in black, bottom-right
 
 **Layout C — "Quote/Copy Post":**
@@ -231,7 +231,7 @@ We sit at about 75% casual. We're not trying to be a Twitter comedian. We're try
 
 - **Background:** Black or BrokeyYellow
 - **Logo:** Centred, white on black OR black on yellow, 200px wide
-- **Tagline strip:** "DON'T BIN IT. BANK IT." in Space Grotesk 600 UPPERCASE, 16px, letter-spacing 0.2em
+- **Tagline strip:** "DON'T BIN IT. EARN FROM IT." in Space Grotesk 600 UPPERCASE, 16px, letter-spacing 0.2em
 - **No photography in email header** — too unreliable across email clients
 - **Export as PNG at 2x (1200x400px)** then constrain width in email HTML
 
@@ -303,7 +303,7 @@ Deadpan British documentary meets product film. Think early Louis Theroux more t
 
 ```
 COLOUR:
-  Primary Yellow:  #facc15
+  Primary Yellow:  #E8457C
   Black:           #000000
   White:           #ffffff
   ScrapPink:       #ff90e8

@@ -1,5 +1,5 @@
 # BROKEYDOMKEY MARKETING STRATEGY
-## DON'T BIN IT. BANK IT.
+## DON'T BIN IT. EARN FROM IT.
 
 **Version:** 1.0 | **Market:** United Kingdom | **Currency:** GBP  
 **Classification:** Internal Strategy Document  
@@ -53,7 +53,7 @@ The planet is in trouble. Our users know this. They don't need another lecture. 
 
 - **The Scrapyard** — the community forum, but also the general vibe of the whole place
 - **Junk / Your Junk** — the broken tech. Always affectionate, never derogatory.
-- **Bank It** — the act of selling. "Ready to bank it?"
+- **Earn from it** — the act of selling. "Ready to bank it?"
 - **Rescue** — what a buyer does when they purchase. They're not buying, they're rescuing.
 - **Landfill Lurker → Repair God** — the arc. Reference the progression constantly.
 - **Weirdos** — our users. This is a compliment. The specific type of person who wants to buy a half-dead GPU "for parts" is a beautiful weirdo and we love them.
@@ -719,7 +719,7 @@ Ad copy approach:
 ```
 Headline 1: Sell Your Broken Tech. 0% Fees.
 Headline 2: Safe Escrow. Fast Payment. No Faff.
-Headline 3: BrokeyDokey — Don't Bin It. Bank It.
+Headline 3: BrokeyDokey — Don't Bin It. Earn from it.
 Description: List your broken phone, laptop or console in 2 minutes. BrokeyGuard™ protects every sale. Real buyers waiting. Free to list.
 ```
 
@@ -1028,7 +1028,7 @@ The machinery is built. Month 4 onwards is optimisation, not construction.
 
 [City], [Date] — BrokeyDokey, the UK marketplace for broken and damaged electronics, today launched the Great British Tech Amnesty — a two-week event encouraging UK consumers to list broken devices for sale rather than sending them to landfill.
 
-The event comes as UK e-waste volumes continue to rise, with Britons disposing of an estimated [X]kg of electrical waste per year, much of which contains recoverable value. BrokeyDokey, which operates on the principle of "Don't Bin It. Bank It.," connects sellers of broken electronics directly with buyers — repair enthusiasts, parts harvesters, and modders — who actively want broken devices.
+The event comes as UK e-waste volumes continue to rise, with Britons disposing of an estimated [X]kg of electrical waste per year, much of which contains recoverable value. BrokeyDokey, which operates on the principle of "Don't Bin It. Earn from it.," connects sellers of broken electronics directly with buyers — repair enthusiasts, parts harvesters, and modders — who actively want broken devices.
 
 During the Tech Amnesty (running [dates]), all items listed on BrokeyDokey earn double Eco-Credits, with a live counter on the platform's homepage tracking total items rescued, e-waste prevented, and cash generated for sellers.
 
@@ -1065,4 +1065,4 @@ BrokeyDokey is the UK's marketplace for broken, damaged, and otherwise absolutel
 
 *Document ends. Get to work. The drawer is judging you.*
 
-**REPAIR • REUSE • RESCUE • DON'T BIN IT • BANK IT • BROKEYDOMKEY • SAVE THE PLANET • EARN CASH**
+**REPAIR • REUSE • RESCUE • DON'T BIN IT • EARN FROM IT • BROKEYDOMKEY • SAVE THE PLANET • EARN CASH**

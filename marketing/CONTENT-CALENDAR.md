@@ -46,7 +46,7 @@
 
 **YOUTUBE VIDEO**
 
-- **Title:** "Don't Bin It. Bank It. — BrokeyDokey Launch Film"
+- **Title:** "Don't bin it. Earn from it. — BrokeyDokey Launch Film"
 - **Script:** `marketing/video-scripts/01-brand-launch-video.md`
 - **Description tags:** broken tech UK, sell broken phone UK, e-waste, broken PS4, BrokeyDokey
 - **Upload notes:** Add end screen to subscribe + list item CTA. Pin comment linking to the listing page.
@@ -73,7 +73,7 @@
   - Keywords: "sell broken phone UK", "sell cracked screen phone", "broken laptop worth money UK"
   - Budget: £15/day (£105 week 1)
   - Ad copy A: "Your Broken Phone = Cash. List Free on BrokeyDokey. No Fees. Instant Valuation."
-  - Ad copy B: "Don't Bin It. Bank It. The UK Marketplace for Broken Tech. Sell in 3 Taps."
+  - Ad copy B: "Don't bin it. Earn from it. The UK Marketplace for Broken Tech. Sell in 3 Taps."
   - Landing page: Homepage with seller CTA above fold
 
 ---

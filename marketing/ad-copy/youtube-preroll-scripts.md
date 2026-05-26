@@ -34,7 +34,7 @@
 
 > [0:04] [VISUAL] BrokeyDokey logo. Yellow on black. Hard cut.
 
-> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. BANK IT.**
+> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. EARN FROM IT.**
 
 > [0:06] [BLACK.]
 
@@ -68,7 +68,7 @@
 
 > [VOICEOVER] "BrokeyDokey. The UK marketplace for broken tech. Three taps. Real money. Suspiciously easy."
 
-> [ON-SCREEN TEXT — final frame] **DON'T BIN IT. BANK IT.**
+> [ON-SCREEN TEXT — final frame] **DON'T BIN IT. EARN FROM IT.**
 
 ---
 
@@ -90,7 +90,7 @@
 
 > [0:04] [VOICEOVER] "BrokeyDokey."
 
-> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. BANK IT.**
+> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. EARN FROM IT.**
 
 > [0:06] [BLACK.]
 
@@ -120,7 +120,7 @@
 
 > [VOICEOVER] "BrokeyDokey. The marketplace for broken tech. Don't bin it."
 
-> [ON-SCREEN TEXT] **BANK IT. BROKEYDOBKEY.CO.UK**
+> [ON-SCREEN TEXT] **EARN FROM IT. BROKEYDOBKEY.CO.UK**
 
 ---
 
@@ -142,7 +142,7 @@
 
 > [0:04] [VOICEOVER] "BrokeyDokey."
 
-> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. BANK IT.**
+> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. EARN FROM IT.**
 
 > [0:06] [BLACK.]
 
@@ -174,7 +174,7 @@
 
 > [VOICEOVER] "Now you know. BrokeyDokey. Instant valuations for broken electronics. List it in three minutes. Get paid."
 
-> [ON-SCREEN TEXT] **BROKEYDOBKEY.CO.UK | DON'T BIN IT. BANK IT.**
+> [ON-SCREEN TEXT] **BROKEYDOBKEY.CO.UK | DON'T BIN IT. EARN FROM IT.**
 
 ---
 
@@ -194,7 +194,7 @@
 
 > [0:04] [VOICEOVER — flat] "BrokeyDokey."
 
-> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. BANK IT.**
+> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. EARN FROM IT.**
 
 > [0:06] [BLACK.]
 
@@ -228,7 +228,7 @@
 
 > [VOICEOVER — same deadpan AI tone] "BrokeyDokey. We'll roast it. We'll value it. We'll sell it. Don't bin it."
 
-> [ON-SCREEN TEXT] **BANK IT. BROKEYDOBKEY.CO.UK**
+> [ON-SCREEN TEXT] **EARN FROM IT. BROKEYDOBKEY.CO.UK**
 
 ---
 
@@ -248,7 +248,7 @@
 
 > [0:04] [VOICEOVER] "I'm fine now."
 
-> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. BANK IT.**
+> [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. EARN FROM IT.**
 
 > [0:06] [BLACK.]
 
@@ -276,7 +276,7 @@
 
 > [VOICEOVER — as the phone, now genuinely relieved] "Thank you. BrokeyDokey. They understood."
 
-> [ON-SCREEN TEXT] **BROKEYDOBKEY.CO.UK | DON'T BIN IT. BANK IT.**
+> [ON-SCREEN TEXT] **BROKEYDOBKEY.CO.UK | DON'T BIN IT. EARN FROM IT.**
 
 > [VOICEOVER — back to normal brand voice, flat deadpan] "BrokeyDokey. The UK marketplace for broken tech."
 

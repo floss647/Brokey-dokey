@@ -43,7 +43,7 @@
 **Match type:** Broad match modified
 
 **Headline 1:** Broken PS5? Sell It Today [25]
-**Headline 2:** BrokeyDokey — Bank It [21]
+**Headline 2:** BrokeyDokey — Earn from it [21]
 **Headline 3:** PS5 Buyers Waiting Now [22]
 
 **Description 1:** Your broken PS5 is worth real money to the right buyer. List in minutes, get paid safely. [88]
@@ -57,7 +57,7 @@
 
 **Headline 1:** Sell Broken PS5 For Cash [24]
 **Headline 2:** Up To £200 For Faulty PS5 [26]
-**Headline 3:** Don't Bin It. Bank It. [21]
+**Headline 3:** Don't bin it. Earn from it. [21]
 
 **Description 1:** BrokeyDokey: the UK marketplace for broken consoles. BrokeyGuard™ keeps your money safe. [88]
 **Description 2:** Hundreds of buyers looking for broken PS5s right now. Instant valuation. No faff. [83]
@@ -122,7 +122,7 @@
 
 **Headline 1:** Better Than Recycling [21]
 **Headline 2:** Sell It. Don't Bin It. [22]
-**Headline 3:** BrokeyDokey — Bank It [21]
+**Headline 3:** BrokeyDokey — Earn from it [21]
 
 **Description 1:** E-waste centres pay nothing. BrokeyDokey pays you. Sell broken tech to people who fix it. [88]
 **Description 2:** The sustainable choice that also makes you money. List broken electronics free today. [86]
@@ -135,7 +135,7 @@
 
 **Headline 1:** Earn More Than Recycling [24]
 **Headline 2:** Broken Tech = Real Money [22]
-**Headline 3:** Don't Bin It. Bank It. [21]
+**Headline 3:** Don't bin it. Earn from it. [21]
 
 **Description 1:** Skip the recycling centre. BrokeyDokey pays cash for broken phones, laptops and consoles. [89]
 **Description 2:** Every item sold earns eco-credits too. Good for your pocket. Good for the planet. [83]
@@ -174,7 +174,7 @@
 
 **Headline 1:** Sell Your Broken Xbox [21]
 **Headline 2:** Up To £150 For Broken Xbox [26]
-**Headline 3:** Don't Bin It. Bank It. [21]
+**Headline 3:** Don't bin it. Earn from it. [21]
 
 **Description 1:** Broken disc drive? HDMI gone? Won't turn on? BrokeyDokey buyers want your Xbox anyway. [87]
 **Description 2:** List your broken Xbox in 3 minutes. Safe escrow. Instant payout when it sells. [78]
