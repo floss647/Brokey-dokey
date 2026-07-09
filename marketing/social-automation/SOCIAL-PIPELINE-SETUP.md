@@ -30,17 +30,36 @@ Automatically posts to Instagram, TikTok, X/Twitter, and Reddit whenever a listi
 - The function posts to r/BrokeyDokey automatically (safe — you own it)
 - For other subreddits (r/gameswap, r/hardwareswap etc.) post manually until you have karma
 
-### 4. Add environment variables in Supabase
+### 4. Set up Placid for branded images
+- Sign up at placid.app (free tier works to start)
+- Create a new template — **square format (1080×1080px)** works across all platforms
+- Design your template with these exact layer names (the code uses these names to fill in values):
+  - `photo` — Picture layer: the product photo. Make it fill most of the canvas.
+  - `title` — Text layer: listing title. Bold, readable font.
+  - `price` — Text layer: e.g. "£49.00". Make it stand out — big, coloured badge works well.
+  - `condition` — Text layer: e.g. "For Parts / Spares". Smaller, secondary text.
+  - `category` — Text layer (optional): e.g. "Consoles". Can be a label/chip.
+- Add the BrokeyDokey logo as a static element (not a layer — it's always there)
+- Save the template, copy the **Template UUID** from the URL or template settings
+- Copy your **API key** from Placid → Settings → API
+
+**Design tips:** Dark background + white text reads well on all platforms. Price badge in a bright accent colour (yellow, green). Keep it clean — the photo is the hero.
+
+### 5. Add environment variables in Supabase
 Go to: Supabase Dashboard → Project Settings → Edge Functions → Secrets
 
 Add these secrets:
 ```
 AYRSHARE_API_KEY=your_ayrshare_api_key_here
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
+PLACID_API_KEY=your_placid_api_key_here
+PLACID_TEMPLATE_UUID=your_template_uuid_here
 SOCIAL_WEBHOOK_SECRET=make_up_a_random_string_eg_bd_wh_secret_2024
 ```
 
-### 5. Deploy the edge function
+Note: If `PLACID_API_KEY` or `PLACID_TEMPLATE_UUID` are missing, the function falls back to posting the raw listing photo. So you can go live without Placid and add it later.
+
+### 6. Deploy the edge function
 In Lovable chat, say:
 > "Please deploy the trigger-social-post edge function from supabase/functions/trigger-social-post/index.ts"
 
@@ -49,7 +68,7 @@ OR deploy via Supabase CLI:
 supabase functions deploy trigger-social-post
 ```
 
-### 6. Create the database webhook
+### 7. Create the database webhook
 Go to: Supabase Dashboard → Database → Webhooks → Create a new webhook
 
 Settings:
@@ -106,7 +125,8 @@ Post these manually or schedule them in Ayrshare's calendar. Aim for 3–4 found
 | Tool | Cost |
 |------|------|
 | Ayrshare Business | ~$149/month |
+| Placid | Free tier (50 images/month) → $19/month after |
 | Anthropic (Claude Haiku) | ~$0.002 per listing post (negligible) |
 | Supabase edge function | Included in existing plan |
 
-At 50 listings/month the total AI cost is about 10p. Ayrshare is the main cost and it's worth it if even one listing/week sells from social traffic.
+At 50 listings/month the total AI cost is about 10p. Placid free tier covers the first 50 posts. Ayrshare is the main cost and it's worth it if even one listing/week sells from social traffic.
