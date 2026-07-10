@@ -86,7 +86,28 @@ Target: 40 repair shops contacted by end of Month 1.
 
 ---
 
-## STRAND 6 — Content Assets (done)
+## STRAND 6 — Currys Partnership
+
+**Goal:** Get Currys to fund the £30 recycling voucher. Their vouchers drive their purchases. We handle logistics.
+
+**File:** `marketing/outreach/currys-partnership.md`
+
+- [ ] Find sustainability contact on LinkedIn (search "Currys sustainability director")
+- [ ] Send Version C (press angle) to press@currys.co.uk — Day 1
+- [ ] Send Version A (ESG angle) to sustainability contact — Day 1
+- [ ] Day 5 follow-up if no response
+- [ ] If no response by Day 10: send Version B to partnerships@currys.co.uk
+- [ ] If Currys doesn't bite: try Argos, John Lewis, EE/O2
+
+**Fallback voucher funders if Currys say no:**
+- Argos trade-in desk
+- CEX (co-marketing angle instead of vouchers)
+- John Lewis sustainability programme
+- Mobile networks (EE, O2, Three)
+
+---
+
+## STRAND 7 — Content Assets (done)
 
 - [x] E-waste fact sheet (artifact — stats for videos)
 - [x] Repair shop outreach master list + email templates (A/B/C/D)
