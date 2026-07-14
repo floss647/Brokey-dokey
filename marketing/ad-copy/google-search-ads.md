@@ -1,4 +1,4 @@
-# BROKEYDOBKEY — GOOGLE SEARCH ADS
+# BROKEYDOBKEY  -  GOOGLE SEARCH ADS
 ## 20 Ad Sets | UK Market
 ### All copy: British English | 30-char headline max | 90-char description max
 
@@ -18,7 +18,7 @@
 
 **Headline 1:** Sell Your Broken Laptop [22]
 **Headline 2:** Get Paid. It's Worth More [25]
-**Headline 3:** BrokeyDokey — Don't Bin It [27]
+**Headline 3:** BrokeyDokey  -  Don't Bin It [27]
 
 **Description 1:** List your broken laptop in 3 taps. Instant valuation, BrokeyGuard™ escrow, real money. [88]
 **Description 2:** Cracked screen? Dead battery? Won't boot? We'll find a buyer who wants it anyway. [83]
@@ -30,7 +30,7 @@
 **Match type:** Exact match (variant)
 
 **Headline 1:** Broken Laptop? List It Now [26]
-**Headline 2:** Instant Valuation — Free [23]
+**Headline 2:** Instant Valuation  -  Free [23]
 **Headline 3:** £50–£200 For Broken Laptops [28]
 
 **Description 1:** Don't skip to the bin. BrokeyDokey finds buyers for broken, cracked & dead laptops. Fast. [89]
@@ -43,7 +43,7 @@
 **Match type:** Broad match modified
 
 **Headline 1:** Broken PS5? Sell It Today [25]
-**Headline 2:** BrokeyDokey — Earn from it [21]
+**Headline 2:** BrokeyDokey  -  Earn from it [21]
 **Headline 3:** PS5 Buyers Waiting Now [22]
 
 **Description 1:** Your broken PS5 is worth real money to the right buyer. List in minutes, get paid safely. [88]
@@ -70,10 +70,10 @@
 
 **Headline 1:** Sell Your Broken Phone [22]
 **Headline 2:** Cracked Screen? Still Pays [25]
-**Headline 3:** BrokeyDokey — 3 Taps Done [26]
+**Headline 3:** BrokeyDokey  -  3 Taps Done [26]
 
 **Description 1:** Broken phones still have value. Get an instant estimate and list yours in under 3 minutes. [89]
-**Description 2:** Cracked screen, dead battery, water damage — BrokeyDokey buyers want it regardless. [85]
+**Description 2:** Cracked screen, dead battery, water damage  -  BrokeyDokey buyers want it regardless. [85]
 
 ---
 
@@ -122,7 +122,7 @@
 
 **Headline 1:** Better Than Recycling [21]
 **Headline 2:** Sell It. Don't Bin It. [22]
-**Headline 3:** BrokeyDokey — Earn from it [21]
+**Headline 3:** BrokeyDokey  -  Earn from it [21]
 
 **Description 1:** E-waste centres pay nothing. BrokeyDokey pays you. Sell broken tech to people who fix it. [88]
 **Description 2:** The sustainable choice that also makes you money. List broken electronics free today. [86]
@@ -148,9 +148,9 @@
 
 **Headline 1:** Sell Broken Console UK [22]
 **Headline 2:** Buyers Waiting Right Now [24]
-**Headline 3:** BrokeyDokey — Fast & Safe [25]
+**Headline 3:** BrokeyDokey  -  Fast & Safe [25]
 
-**Description 1:** Xbox, PlayStation, Nintendo — broken or not, BrokeyDokey finds buyers across the UK. [86]
+**Description 1:** Xbox, PlayStation, Nintendo  -  broken or not, BrokeyDokey finds buyers across the UK. [86]
 **Description 2:** Secure BrokeyGuard™ escrow. Instant valuations. List your broken console in minutes. [86]
 
 ---
@@ -228,7 +228,7 @@
 **Headline 2:** Crashed Drones Still Pay [23]
 **Headline 3:** Parts Worth More Than Skip [26]
 
-**Description 1:** Broken props, smashed camera, dead battery — BrokeyDokey finds buyers for damaged drones. [89]
+**Description 1:** Broken props, smashed camera, dead battery  -  BrokeyDokey finds buyers for damaged drones. [89]
 **Description 2:** Don't let a crashed drone cost you twice. List it, sell it, bank it. Free on BrokeyDokey. [89]
 
 ---
@@ -238,8 +238,8 @@
 **Match type:** Broad match modified
 
 **Headline 1:** Repair Or Sell? We Help [22]
-**Headline 2:** AI Repair Guides — Free [21]
-**Headline 3:** BrokeyDokey — You Choose [23]
+**Headline 2:** AI Repair Guides  -  Free [21]
+**Headline 3:** BrokeyDokey  -  You Choose [23]
 
 **Description 1:** Fix it yourself with our free AI repair guides, or list it and let a repairer buy it. [87]
 **Description 2:** BrokeyDokey works both ways. Repair, sell, or do both. It's your broken stuff. [79]
@@ -265,7 +265,7 @@
 
 **Headline 1:** Find Out What It's Worth [24]
 **Headline 2:** Free Instant Valuation [21]
-**Headline 3:** BrokeyDokey — Don't Guess [25]
+**Headline 3:** BrokeyDokey  -  Don't Guess [25]
 
 **Description 1:** BrokeyDokey's AI gives you an instant estimate for any broken phone, laptop or console. [87]
 **Description 2:** Stop guessing. Get a real number. Then decide: list it, fix it, or keep ignoring it. [87]
@@ -276,7 +276,7 @@
 
 **Bidding strategy:** Target CPA for conversion campaigns; Enhanced CPC for awareness campaigns.
 
-**Ad rotation:** Set to "Optimise" — let Google test headline combinations for 2–4 weeks, then pause underperformers.
+**Ad rotation:** Set to "Optimise"  -  let Google test headline combinations for 2–4 weeks, then pause underperformers.
 
 **Sitelink extensions to add:**
 - "How It Works" → /how-it-works
@@ -292,7 +292,7 @@
 - Instant Valuations
 - Eco-Credits on Every Sale
 
-**Structured snippet — Type (Brands):**
+**Structured snippet  -  Type (Brands):**
 PlayStation, Xbox, Nintendo, Apple, Samsung, DJI, PC Components
 
 **Negative keywords (add to all campaigns):**

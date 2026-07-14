@@ -1,4 +1,4 @@
-# BROKEYDOBKEY — "LANDFILL LURKER TO REPAIR GOD"
+# BROKEYDOBKEY  -  "LANDFILL LURKER TO REPAIR GOD"
 ## 4-Part YouTube Series Bible
 ### Documentary Format | 8–12 Minutes Per Episode | Comedy/Factual
 
@@ -8,13 +8,13 @@
 
 **Format:** BBC Three-style documentary. Deadpan narration. Real people. Real broken stuff. Real money made. Structured like a nature documentary, but the animals are broken Xboxes and the ecosystem is BrokeyDokey.
 
-**Tone:** David Attenborough narrating a car boot sale. Think *Taskmaster* energy meets *The Repair Shop* — if The Repair Shop had less wholesomeness and more financial incentive.
+**Tone:** David Attenborough narrating a car boot sale. Think *Taskmaster* energy meets *The Repair Shop*  -  if The Repair Shop had less wholesomeness and more financial incentive.
 
-**The Arc:** Each episode follows one hero character through the BrokeyDokey journey — from "I have a pile of broken electronics I've been ignoring since 2019" to "I actually made real money this month." They move up one or more gamification ranks per episode.
+**The Arc:** Each episode follows one hero character through the BrokeyDokey journey  -  from "I have a pile of broken electronics I've been ignoring since 2019" to "I actually made real money this month." They move up one or more gamification ranks per episode.
 
 **Series Arc:** Four different heroes. Four different starting points. Same destination: they made money from junk, they helped someone else, and they didn't fill a landfill.
 
-**Filming style:** Handheld, naturalistic. No studio lighting. No autocue. Let people be awkward — that's funnier.
+**Filming style:** Handheld, naturalistic. No studio lighting. No autocue. Let people be awkward  -  that's funnier.
 
 **Narrator:** Dry, RP British accent. Imagine a nature documentary narrator who's been told he must now cover broken electronics. He's coping.
 
@@ -48,7 +48,7 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 ### SCENES
 
-**SCENE 1 — THE REVEAL (0:00 – 1:30)**
+**SCENE 1  -  THE REVEAL (0:00 – 1:30)**
 
 > [VISUAL] Dave opens the door to the spare room. Camera pans slowly. It is worse than anticipated.
 
@@ -62,11 +62,11 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 ---
 
-**SCENE 2 — THE AUDIT (1:30 – 3:00)**
+**SCENE 2  -  THE AUDIT (1:30 – 3:00)**
 
 > [VISUAL] Dave sits on the floor of the room, surrounded by items. He's made tea. This will take a while.
 
-> [VISUAL — INSERT] He opens BrokeyDokey, starts scanning items one by one. The AI valuations appear on screen.
+> [VISUAL  -  INSERT] He opens BrokeyDokey, starts scanning items one by one. The AI valuations appear on screen.
 
 > | Item | Dave's Estimate | BrokeyDokey Valuation |
 > |------|----------------|----------------------|
@@ -84,7 +84,7 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 ---
 
-**SCENE 3 — THE LISTING MONTAGE (3:00 – 5:00)**
+**SCENE 3  -  THE LISTING MONTAGE (3:00 – 5:00)**
 
 > [VISUAL] Dave learns to use BrokeyDokey. It is a journey.
 
@@ -108,15 +108,15 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 ---
 
-**SCENE 4 — THE WAIT (5:00 – 6:30)**
+**SCENE 4  -  THE WAIT (5:00 – 6:30)**
 
 > [VISUAL] Dave is watching TV. His phone buzzes. He ignores it. It buzzes again. He picks it up.
 
-> [VISUAL — PHONE SCREEN] "First offer received: £22 for the PS3."
+> [VISUAL  -  PHONE SCREEN] "First offer received: £22 for the PS3."
 
 > [DAVE] *[to his wife, off-camera]* "Kath! Someone wants to buy the PS3!"
 
-> [VOICE OFF-CAMERA — KATH] "I don't know what that means."
+> [VOICE OFF-CAMERA  -  KATH] "I don't know what that means."
 
 > [DAVE] "It means I'm a businessman."
 
@@ -124,7 +124,7 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 ---
 
-**SCENE 5 — THE FIRST SALE (6:30 – 8:30)**
+**SCENE 5  -  THE FIRST SALE (6:30 – 8:30)**
 
 > [VISUAL] Dave packs the PS3 into a padded envelope. He has used too much bubble wrap. An entire roll of bubble wrap. The parcel is spherical.
 
@@ -132,7 +132,7 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 > [VISUAL] He drops the parcel at the post office. Looks satisfied.
 
-> [VISUAL — 3 days later] Payment confirmation hits his phone. £22. He screenshots it.
+> [VISUAL  -  3 days later] Payment confirmation hits his phone. £22. He screenshots it.
 
 > [DAVE] "That's £22 I didn't have yesterday."
 
@@ -140,7 +140,7 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 ---
 
-**SCENE 6 — THE CLOSE (8:30 – 10:00)**
+**SCENE 6  -  THE CLOSE (8:30 – 10:00)**
 
 > [VISUAL] Dave stands in the spare room. One shelf is now empty. He looks at it.
 
@@ -148,7 +148,7 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 > [NARRATOR] *"Dave will not put a proper desk in there. But he might list three more items this weekend. And that, in its own way, is progress."*
 
-> [ON-SCREEN GRAPHIC — End card]
+> [ON-SCREEN GRAPHIC  -  End card]
 > **DAVE'S MONTH 1 TOTAL: £22**
 > **RANK: SCRAP APPRENTICE**
 > **ITEMS DIVERTED FROM LANDFILL: 1**
@@ -199,13 +199,13 @@ Dave has a spare room he refers to as "the office." It is not an office. It is a
 
 ### EPISODE DESCRIPTION
 
-Priya breaks controllers. Not because she has a temper — or rather, not *only* because she has a temper — but because she plays a lot and buys cheap ones. Her flat has a designated drawer for broken controllers. She calls it "the drawer of shame." BrokeyDokey's AI calls it "a revenue stream."
+Priya breaks controllers. Not because she has a temper  -  or rather, not *only* because she has a temper  -  but because she plays a lot and buys cheap ones. Her flat has a designated drawer for broken controllers. She calls it "the drawer of shame." BrokeyDokey's AI calls it "a revenue stream."
 
 ---
 
 ### SCENES
 
-**SCENE 1 — THE DRAWER OF SHAME (0:00 – 1:30)**
+**SCENE 1  -  THE DRAWER OF SHAME (0:00 – 1:30)**
 
 > [VISUAL] Priya opens a kitchen drawer. It is entirely filled with broken controllers. She opens it with the energy of someone revealing a crime scene they are both guilty of and proud of.
 
@@ -215,7 +215,7 @@ Priya breaks controllers. Not because she has a temper — or rather, not *only*
 
 ---
 
-**SCENE 2 — THE AUDIT & THE ROASTING (1:30 – 3:30)**
+**SCENE 2  -  THE AUDIT & THE ROASTING (1:30 – 3:30)**
 
 > [VISUAL] She uses BrokeyDokey's "Roast My Junk" feature on each controller. She reads the AI roasts aloud.
 
@@ -225,17 +225,17 @@ Priya breaks controllers. Not because she has a temper — or rather, not *only*
 
 ---
 
-**SCENE 3 — THE SIDE HUSTLE PLAN (3:30 – 5:00)**
+**SCENE 3  -  THE SIDE HUSTLE PLAN (3:30 – 5:00)**
 
-> [VISUAL] Priya makes a spreadsheet. She is a designer — it is colour-coded, beautiful, and excessive.
+> [VISUAL] Priya makes a spreadsheet. She is a designer  -  it is colour-coded, beautiful, and excessive.
 
-> [PRIYA] "Right. So if I list all of these, and they all sell, and they all get repaired and resold, I've basically made —" *[taps calculator]* "— nearly two hundred quid."
+> [PRIYA] "Right. So if I list all of these, and they all sell, and they all get repaired and resold, I've basically made  - " *[taps calculator]* " -  nearly two hundred quid."
 
 > [NARRATOR] *"She has. She also buys about two hundred pounds of controllers per year. We will let her enjoy this moment before the maths catches up with her."*
 
 ---
 
-**SCENE 4 — THE RETRO DISCOVERY (5:00 – 7:00)**
+**SCENE 4  -  THE RETRO DISCOVERY (5:00 – 7:00)**
 
 > [VISUAL] Priya finds the SNES while listing. She doesn't remember owning it.
 
@@ -249,7 +249,7 @@ Priya breaks controllers. Not because she has a temper — or rather, not *only*
 
 ---
 
-**SCENE 5 — SALES MONTAGE (7:00 – 9:00)**
+**SCENE 5  -  SALES MONTAGE (7:00 – 9:00)**
 
 > [VISUAL] Fast-cut: listings going up, buyers appearing, BrokeyGuard™ escrow confirming, parcels going out. Priya's BrokeyDokey rank ticks upward. Component Collector.
 
@@ -259,7 +259,7 @@ Priya breaks controllers. Not because she has a temper — or rather, not *only*
 
 ---
 
-**SCENE 6 — THE CLOSE (9:00 – 10:00)**
+**SCENE 6  -  THE CLOSE (9:00 – 10:00)**
 
 > [VISUAL] Priya looks at the empty drawer of shame. It is now just a kitchen drawer.
 
@@ -277,7 +277,7 @@ Priya breaks controllers. Not because she has a temper — or rather, not *only*
 ### B-ROLL LIST
 
 - The drawer of shame (multiple angles)
-- Priya gaming (loses, reacts, controller survives — this time)
+- Priya gaming (loses, reacts, controller survives  -  this time)
 - Spreadsheet building (over-the-shoulder)
 - Retro SNES being discovered
 - BrokeyDokey app: Roast My Junk feature in use
@@ -313,7 +313,7 @@ Marcus doesn't think of himself as someone who fixes things. He thinks of himsel
 
 ### SCENES
 
-**SCENE 1 — THE BOOT SALE DRONE (0:00 – 2:00)**
+**SCENE 1  -  THE BOOT SALE DRONE (0:00 – 2:00)**
 
 > [VISUAL] Marcus at a car boot sale, holding a smashed drone he's just bought for £8 from a man in a hi-vis jacket.
 
@@ -323,11 +323,11 @@ Marcus doesn't think of himself as someone who fixes things. He thinks of himsel
 
 ---
 
-**SCENE 2 — THE VALUATION SHOCK (2:00 – 3:30)**
+**SCENE 2  -  THE VALUATION SHOCK (2:00 – 3:30)**
 
 > [VISUAL] Marcus opens BrokeyDokey on his phone, photographs the drone. The valuation appears.
 
-> [VISUAL — PHONE SCREEN] "Estimated repaired value: £145"
+> [VISUAL  -  PHONE SCREEN] "Estimated repaired value: £145"
 
 > [MARCUS] *[staring]* "From eight quid?"
 
@@ -335,7 +335,7 @@ Marcus doesn't think of himself as someone who fixes things. He thinks of himsel
 
 ---
 
-**SCENE 3 — THE AI REPAIR GUIDE (3:30 – 6:00)**
+**SCENE 3  -  THE AI REPAIR GUIDE (3:30 – 6:00)**
 
 > [VISUAL] Marcus opens the BrokeyDokey AI repair guide for his drone model. It walks him through the fix with animated diagrams, step-by-step instructions, and part sourcing links.
 
@@ -351,7 +351,7 @@ Marcus doesn't think of himself as someone who fixes things. He thinks of himsel
 
 ---
 
-**SCENE 4 — THE TEST FLIGHT (6:00 – 7:00)**
+**SCENE 4  -  THE TEST FLIGHT (6:00 – 7:00)**
 
 > [VISUAL] Marcus takes the drone to a park. He's nervous. He launches it. It flies. A clean, stable hover.
 
@@ -361,9 +361,9 @@ Marcus doesn't think of himself as someone who fixes things. He thinks of himsel
 
 ---
 
-**SCENE 5 — THE LISTING AND THE ECO-CREDITS (7:00 – 9:00)**
+**SCENE 5  -  THE LISTING AND THE ECO-CREDITS (7:00 – 9:00)**
 
-> [VISUAL] Marcus lists the repaired drone at £130. While doing so, he notices BrokeyDokey's eco-credits system — credits earned for each repair, redeemable for discounts.
+> [VISUAL] Marcus lists the repaired drone at £130. While doing so, he notices BrokeyDokey's eco-credits system  -  credits earned for each repair, redeemable for discounts.
 
 > [MARCUS] "So I get money AND points?"
 
@@ -375,7 +375,7 @@ Marcus doesn't think of himself as someone who fixes things. He thinks of himsel
 
 ---
 
-**SCENE 6 — THE CLOSE (9:00 – 11:00)**
+**SCENE 6  -  THE CLOSE (9:00 – 11:00)**
 
 > [VISUAL] Marcus looks at the remaining pile from his mum's house. He picks up a dead laptop. Opens BrokeyDokey. Photographs it. Reads the repair guide. Nods.
 
@@ -430,7 +430,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 ### SCENES
 
-**SCENE 1 — THE OPERATION (0:00 – 2:00)**
+**SCENE 1  -  THE OPERATION (0:00 – 2:00)**
 
 > [VISUAL] Bex's workspace. It is impeccably organised. Every tool has a hook. Every component has a labelled drawer. In the corner: a stack of broken items awaiting processing. She calls the stack "the queue."
 
@@ -438,7 +438,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 ---
 
-**SCENE 2 — THE SOURCING RUN (2:00 – 4:00)**
+**SCENE 2  -  THE SOURCING RUN (2:00 – 4:00)**
 
 > [VISUAL] Bex at a charity shop. She moves through the electronics rack with practiced speed, picking things up, photographing them on BrokeyDokey, reading valuations, making decisions in seconds.
 
@@ -454,13 +454,13 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 ---
 
-**SCENE 3 — THE REPAIR PROCESS (4:00 – 7:00)**
+**SCENE 3  -  THE REPAIR PROCESS (4:00 – 7:00)**
 
 > [VISUAL] Bex repairs three items in time-lapse. It is oddly satisfying to watch. The AI repair guide is visible on a tablet propped beside her workspace.
 
 > [NARRATOR] *"The BrokeyDokey AI repair guide has, in Bex's words, 'saved me about forty hours of Googling.' It knows the components, the fault patterns, the part numbers, and the sourcing links. Bex provides the hands and the relentless focus."*
 
-> [VISUAL] She completes the third repair — a laptop screen replacement — snaps it shut, opens it, grins at the result.
+> [VISUAL] She completes the third repair  -  a laptop screen replacement  -  snaps it shut, opens it, grins at the result.
 
 > [BEX] "Nice."
 
@@ -468,7 +468,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 ---
 
-**SCENE 4 — THE NUMBERS CHECK (7:00 – 8:30)**
+**SCENE 4  -  THE NUMBERS CHECK (7:00 – 8:30)**
 
 > [VISUAL] Bex at her kitchen table with a coffee, reviewing her BrokeyDokey dashboard. Running total for the month: £463.
 
@@ -478,7 +478,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 ---
 
-**SCENE 5 — THE REPAIR GOD UNLOCK (8:30 – 10:00)**
+**SCENE 5  -  THE REPAIR GOD UNLOCK (8:30 – 10:00)**
 
 > [VISUAL] Bex's phone lights up. The BrokeyDokey notification: **"REPAIR GOD UNLOCKED. You've crossed the threshold. The landfill fears you."**
 
@@ -492,7 +492,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 ---
 
-**SCENE 6 — THE REFLECTION (10:00 – 11:00)**
+**SCENE 6  -  THE REFLECTION (10:00 – 11:00)**
 
 > [VISUAL] Bex in her garage, end of day. She looks at the queue. It is smaller than it was this morning.
 
@@ -504,7 +504,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 ---
 
-**SCENE 7 — SERIES CLOSE (11:00 – 12:00)**
+**SCENE 7  -  SERIES CLOSE (11:00 – 12:00)**
 
 > [VISUAL] Quick cuts: Dave's spare room. Priya's empty drawer. Marcus's drone in flight. Bex's workspace at the start of a new morning.
 
@@ -520,7 +520,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 - Charity shop electronics aisle (permission required)
 - Bex's workspace tour (slow pan)
-- Hands repairing — screen replacement, soldering, snap reassembly
+- Hands repairing  -  screen replacement, soldering, snap reassembly
 - BrokeyDokey dashboard (screen capture)
 - The Repair God notification arriving
 - Bex's coffee going cold while she works
@@ -540,7 +540,7 @@ Bex left a retail management job that was, in her words, "soul-leaking." She now
 
 **Episode order:** Drop weekly. January, February, April, June aligns with peak clear-out seasons.
 
-**Narrator casting:** Real casting essential. Tone must be genuinely deadpan — not winking, not trying to be funny. The comedy comes from the contrast between the narrator's gravity and the subject matter.
+**Narrator casting:** Real casting essential. Tone must be genuinely deadpan  -  not winking, not trying to be funny. The comedy comes from the contrast between the narrator's gravity and the subject matter.
 
 **End card consistency:** Every episode ends with the same three stats: money made, rank achieved, items diverted from landfill. This is the emotional payoff and the metric that earns the brand message.
 

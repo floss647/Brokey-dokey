@@ -1,4 +1,4 @@
-# BROKEYDOBKEY — YOUTUBE PRE-ROLL AD SCRIPTS
+# BROKEYDOBKEY  -  YOUTUBE PRE-ROLL AD SCRIPTS
 ## 5 Ads | 6-Second Bumper + 15-Second Skippable Versions
 ### UK Market | Brutalist Visual Style | Deadpan Comedy
 
@@ -8,7 +8,7 @@
 
 **6-second bumper:** Non-skippable. Must land the full joke AND the brand in six seconds. Punchline IS the product.
 
-**15-second skippable:** Skip button appears at 5 seconds. Seconds 1–5 are the hook. The "skip moment" is the beat right at second 5 where we acknowledge the viewer is reaching for the button — then make it too interesting to skip.
+**15-second skippable:** Skip button appears at 5 seconds. Seconds 1–5 are the hook. The "skip moment" is the beat right at second 5 where we acknowledge the viewer is reaching for the button  -  then make it too interesting to skip.
 
 **Visual style across all ads:** Brutalist. High contrast. Yellow-and-black title cards that slam in. Hard cuts only. No fades, no dissolves, no gentle crossfades. These are not gentle ads.
 
@@ -26,7 +26,7 @@
 
 > [0:00] [VISUAL] Extreme close-up of a cracked laptop screen held up to camera in two gloved hands, as if evidence.
 
-> [0:00] [VOICEOVER — solemn, clipped, Morse-esque] "Cause of death: unknown."
+> [0:00] [VOICEOVER  -  solemn, clipped, Morse-esque] "Cause of death: unknown."
 
 > [0:02] [ON-SCREEN TEXT SLAMS IN] **ESTIMATED VALUE: £120**
 
@@ -46,7 +46,7 @@
 
 > [VISUAL] CCTV-style footage aesthetic. Timestamp in corner. Someone enters frame carrying what is clearly a broken laptop in a zip-lock evidence bag.
 
-> [VOICEOVER — flat, serious, police procedural] "The victim: a 2019 MacBook Pro. Cause of death: sat on, apparently, by someone named 'Gav.' Found in a drawer. Forgotten."
+> [VOICEOVER  -  flat, serious, police procedural] "The victim: a 2019 MacBook Pro. Cause of death: sat on, apparently, by someone named 'Gav.' Found in a drawer. Forgotten."
 
 > [ON-SCREEN TEXT] **"FOUND IN A DRAWER. FORGOTTEN."**
 
@@ -56,19 +56,19 @@
 
 > [ON-SCREEN TEXT] **WAIT.**
 
-> [VOICEOVER — same flat tone] "It's worth a hundred and twenty quid."
+> [VOICEOVER  -  same flat tone] "It's worth a hundred and twenty quid."
 
 ---
 
 > [0:06 – 0:15] **THE CLOSE**
 
-> [VISUAL] The "evidence bag" laptop goes through the BrokeyDokey flow — photographed, valued, listed.
+> [VISUAL] The "evidence bag" laptop goes through the BrokeyDokey flow  -  photographed, valued, listed.
 
 > [ON-SCREEN TEXT] **BROKEYDOBKEY.CO.UK**
 
 > [VOICEOVER] "BrokeyDokey. The UK marketplace for broken tech. Three taps. Real money. Suspiciously easy."
 
-> [ON-SCREEN TEXT — final frame] **DON'T BIN IT. EARN FROM IT.**
+> [ON-SCREEN TEXT  -  final frame] **DON'T BIN IT. EARN FROM IT.**
 
 ---
 
@@ -82,7 +82,7 @@
 
 > [0:00] [VISUAL] Slow pan across a living room carpet. A broken PS4 controller lies on its side, one thumbstick missing.
 
-> [0:00] [VOICEOVER — hushed, reverent, full nature doc] "Here it lies. Abandoned."
+> [0:00] [VOICEOVER  -  hushed, reverent, full nature doc] "Here it lies. Abandoned."
 
 > [0:02] [VOICEOVER] "But not worthless."
 
@@ -100,9 +100,9 @@
 
 > [0:00 – 0:05] **THE HOOK**
 
-> [VISUAL] Footage styled like a nature documentary — slightly desaturated, slow zoom onto a broken PS4 controller lying on a carpet between a pizza box and a dog toy.
+> [VISUAL] Footage styled like a nature documentary  -  slightly desaturated, slow zoom onto a broken PS4 controller lying on a carpet between a pizza box and a dog toy.
 
-> [VOICEOVER — hushed, reverent, extraordinary gravitas given the subject matter] "Here, on the savanna of the British living room floor, we observe a specimen rarely studied by science. The broken controller. Discarded. Forgotten. Slowly gathering the dust of ages."
+> [VOICEOVER  -  hushed, reverent, extraordinary gravitas given the subject matter] "Here, on the savanna of the British living room floor, we observe a specimen rarely studied by science. The broken controller. Discarded. Forgotten. Slowly gathering the dust of ages."
 
 > [ON-SCREEN TEXT] **"SLOWLY GATHERING THE DUST OF AGES"**
 
@@ -110,7 +110,7 @@
 
 > [VISUAL] Hard cut. Suddenly full colour. The controller gets photographed on a phone. BrokeyDokey app visible.
 
-> [VOICEOVER — same narrator, same gravity, absolute deadpan] "It's worth sixty-five pounds."
+> [VOICEOVER  -  same narrator, same gravity, absolute deadpan] "It's worth sixty-five pounds."
 
 ---
 
@@ -154,7 +154,7 @@
 
 > [VISUAL] Formal intervention setup. Soft lighting. A man in his 30s sits in the middle of the room. His mum, his mate, and his partner are seated around him. One holds a folded letter.
 
-> [VOICEOVER — gentle, concerned, carefully chosen words] "We've gathered today because we love you. And because you have thrown away, in the past year, approximately three hundred and forty pounds worth of broken electronics."
+> [VOICEOVER  -  gentle, concerned, carefully chosen words] "We've gathered today because we love you. And because you have thrown away, in the past year, approximately three hundred and forty pounds worth of broken electronics."
 
 > [ON-SCREEN TEXT] **"£340 WORTH OF BROKEN ELECTRONICS."**
 
@@ -164,7 +164,7 @@
 
 > [VISUAL] Cut to his face, directly into camera.
 
-> [MAN — genuinely plaintive] "How was I supposed to know the broken PS4 was worth sixty quid?"
+> [MAN  -  genuinely plaintive] "How was I supposed to know the broken PS4 was worth sixty quid?"
 
 ---
 
@@ -188,11 +188,11 @@
 
 > [0:00] [VISUAL] Broken drone sitting on a table. Alone. Two propeller arms snapped off.
 
-> [0:00] [ON-SCREEN TEXT — slamming in, one line] **"YOU FLEW INTO A FENCE. WE KNOW."**
+> [0:00] [ON-SCREEN TEXT  -  slamming in, one line] **"YOU FLEW INTO A FENCE. WE KNOW."**
 
 > [0:02] [ON-SCREEN TEXT] **STILL WORTH £85.**
 
-> [0:04] [VOICEOVER — flat] "BrokeyDokey."
+> [0:04] [VOICEOVER  -  flat] "BrokeyDokey."
 
 > [0:05] [ON-SCREEN TEXT] **DON'T BIN IT. EARN FROM IT.**
 
@@ -206,7 +206,7 @@
 
 > [VISUAL] Smashed Nintendo Switch propped up on a table, facing camera, like a defendant in a trial. Cracked screen. One Joy-Con missing.
 
-> [ON-SCREEN TEXT — lines arriving one at a time, machine-gun pace]
+> [ON-SCREEN TEXT  -  lines arriving one at a time, machine-gun pace]
 
 > **"THE SCREEN LOOKS LIKE A CRIME SCENE DIAGRAM."**
 
@@ -226,7 +226,7 @@
 
 > [VISUAL] The Switch photographed, listed on BrokeyDokey, valuation confirmed.
 
-> [VOICEOVER — same deadpan AI tone] "BrokeyDokey. We'll roast it. We'll value it. We'll sell it. Don't bin it."
+> [VOICEOVER  -  same deadpan AI tone] "BrokeyDokey. We'll roast it. We'll value it. We'll sell it. Don't bin it."
 
 > [ON-SCREEN TEXT] **EARN FROM IT. BROKEYDOBKEY.CO.UK**
 
@@ -242,7 +242,7 @@
 
 > [0:00] [VISUAL] Close-up of a cracked iPhone screen. Slow zoom in.
 
-> [0:00] [VOICEOVER — in character as the phone, resigned British monotone] "I was going in the bin."
+> [0:00] [VOICEOVER  -  in character as the phone, resigned British monotone] "I was going in the bin."
 
 > [0:02] [VOICEOVER] "Someone listed me on BrokeyDokey instead."
 
@@ -258,15 +258,15 @@
 
 > [0:00 – 0:05] **THE HOOK**
 
-> [VISUAL] A cracked phone, sitting in a bin — literally in a kitchen bin, visible above the rubbish. We are looking at it from slightly below. It is indignant.
+> [VISUAL] A cracked phone, sitting in a bin  -  literally in a kitchen bin, visible above the rubbish. We are looking at it from slightly below. It is indignant.
 
-> [VOICEOVER — as the phone, clipped, vaguely insulted British accent] "I appreciate this is my lot. Cracked screen, dead battery, minor water damage from what I can only describe as a catastrophic bathroom incident. I understand. I've made peace with it."
+> [VOICEOVER  -  as the phone, clipped, vaguely insulted British accent] "I appreciate this is my lot. Cracked screen, dead battery, minor water damage from what I can only describe as a catastrophic bathroom incident. I understand. I've made peace with it."
 
 > [VISUAL] A hand reaches toward the bin.
 
 > [0:05] **THE SKIP MOMENT**
 
-> [VOICEOVER — sudden shift, urgent] "But I am worth forty-five pounds repaired. I just want you to know that."
+> [VOICEOVER  -  sudden shift, urgent] "But I am worth forty-five pounds repaired. I just want you to know that."
 
 ---
 
@@ -274,21 +274,21 @@
 
 > [VISUAL] The hand removes the phone from the bin. Opens BrokeyDokey. Photographs it. Lists it.
 
-> [VOICEOVER — as the phone, now genuinely relieved] "Thank you. BrokeyDokey. They understood."
+> [VOICEOVER  -  as the phone, now genuinely relieved] "Thank you. BrokeyDokey. They understood."
 
 > [ON-SCREEN TEXT] **BROKEYDOBKEY.CO.UK | DON'T BIN IT. EARN FROM IT.**
 
-> [VOICEOVER — back to normal brand voice, flat deadpan] "BrokeyDokey. The UK marketplace for broken tech."
+> [VOICEOVER  -  back to normal brand voice, flat deadpan] "BrokeyDokey. The UK marketplace for broken tech."
 
 ---
 
-## PRODUCTION NOTES — ALL ADS
+## PRODUCTION NOTES  -  ALL ADS
 
-**The skip moment is everything.** Every 15-second ad is written so that second 5 is the single most interesting moment — either the punchline setup, the twist reveal, or the key information. Do not give away the money figure before the skip moment.
+**The skip moment is everything.** Every 15-second ad is written so that second 5 is the single most interesting moment  -  either the punchline setup, the twist reveal, or the key information. Do not give away the money figure before the skip moment.
 
 **Subtitles:** Burned into the video itself, not YouTube auto-captions. We control timing, size, and font. BrokeyDokey brutalist style throughout.
 
-**Music:** Ads 1 and 2: no music (silence makes them feel more cinematic). Ads 3 and 5: low ambient tension, release at the skip moment. Ad 4: punchy — a single buzzer for each roast line, cash register ding on reveal.
+**Music:** Ads 1 and 2: no music (silence makes them feel more cinematic). Ads 3 and 5: low ambient tension, release at the skip moment. Ad 4: punchy  -  a single buzzer for each roast line, cash register ding on reveal.
 
 **Targeting notes:**
 - Ads 1 & 2: Broad audience, 25–45, interest in tech/gaming

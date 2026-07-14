@@ -1,4 +1,4 @@
-# Currys Partnership — Recycling Voucher Scheme
+# Currys Partnership  -  Recycling Voucher Scheme
 
 > Status: [ ] Draft · [ ] Reviewed · [ ] Sent · [ ] Response received
 
@@ -6,9 +6,9 @@
 
 ## The Opportunity
 
-Currys already accepts broken devices for recycling under WEEE regulations — but customers get nothing for it. BrokeyDokey can change that: when a customer hands in a broken laptop or phone that has no trade-in value, they get a **£30 Currys voucher** via BrokeyDokey's recycling scheme.
+Currys already accepts broken devices for recycling under WEEE regulations  -  but customers get nothing for it. BrokeyDokey can change that: when a customer hands in a broken laptop or phone that has no trade-in value, they get a **£30 Currys voucher** via BrokeyDokey's recycling scheme.
 
-The voucher is redeemable at Currys. So Currys funds it — but every redemption drives a purchase.
+The voucher is redeemable at Currys. So Currys funds it  -  but every redemption drives a purchase.
 
 ---
 
@@ -17,7 +17,7 @@ The voucher is redeemable at Currys. So Currys funds it — but every redemption
 | What they get | Why it matters |
 |---|---|
 | Customers come in to recycle, leave with a voucher, spend at Currys | Net cost of voucher offset by purchase uplift |
-| ESG / sustainability headline — "We pay you to recycle" | Differentiator vs. Argos, Amazon |
+| ESG / sustainability headline  -  "We pay you to recycle" | Differentiator vs. Argos, Amazon |
 | BrokeyDokey handles logistics, comms, and device routing | Zero operational lift for Currys |
 | Devices that can be repaired go to repair shops, not landfill | Better ESG outcome than landfill/smelter |
 | Co-branded campaign materials (social, in-store, online) | Shared marketing reach |
@@ -48,9 +48,9 @@ Currys handles: voucher redemption backend, in-store QR placement.
 
 ## What We're Asking For
 
-1. **Currys-funded £30 voucher codes** — issued via Currys' existing gift card / voucher infrastructure
+1. **Currys-funded £30 voucher codes**  -  issued via Currys' existing gift card / voucher infrastructure
 2. **QR code placement** at trade-in/recycling desks in a pilot set of stores (suggest: 5–10 stores, 3-month pilot)
-3. **Co-brand rights** — use of Currys logo in BrokeyDokey recycling flow and social posts
+3. **Co-brand rights**  -  use of Currys logo in BrokeyDokey recycling flow and social posts
 4. **Introductions** to Currys' certified WEEE recycling partners for device routing
 
 In return:
@@ -80,30 +80,30 @@ If pilot hits 500 devices: Currys has diverted ~750kg of e-waste and driven ~£1
 | PR / Communications Manager | Co-brand + press angle | Press office: press@currys.co.uk |
 | Head of Customer Experience | In-store QR placement | Via PR contact |
 
-**Best entry point:** Press office or sustainability team. ESG angle is stronger than commercial for first contact — they'll route to partnerships.
+**Best entry point:** Press office or sustainability team. ESG angle is stronger than commercial for first contact  -  they'll route to partnerships.
 
 ---
 
-## Email — Version A (Sustainability Angle)
+## Email  -  Version A (Sustainability Angle)
 
 **To:** [sustainability contact name]@currys.co.uk  
-**Subject:** Paying customers to recycle their broken tech — want to partner?
+**Subject:** Paying customers to recycle their broken tech  -  want to partner?
 
 ---
 
 Hi [Name],
 
-I'm Adrian, founder of BrokeyDokey — a UK marketplace for broken electronics that connects people who have broken tech with the repair shops and hobbyists who can fix it.
+I'm Adrian, founder of BrokeyDokey  -  a UK marketplace for broken electronics that connects people who have broken tech with the repair shops and hobbyists who can fix it.
 
 I've been following Currys' recycling programme and think there's a gap we could fill together.
 
-Right now, when a customer brings in a broken laptop that has no trade-in value, they get nothing — it goes to recycling and they walk away. We think that's a missed opportunity, both for customer loyalty and for the ESG story.
+Right now, when a customer brings in a broken laptop that has no trade-in value, they get nothing  -  it goes to recycling and they walk away. We think that's a missed opportunity, both for customer loyalty and for the ESG story.
 
-**The idea:** When a customer brings you a broken device that can't be traded in, they get a £30 Currys voucher via BrokeyDokey. We handle the intake, device routing (to repair shops or certified WEEE recyclers), and voucher issuance. Currys funds the voucher — but every redemption drives a Currys purchase.
+**The idea:** When a customer brings you a broken device that can't be traded in, they get a £30 Currys voucher via BrokeyDokey. We handle the intake, device routing (to repair shops or certified WEEE recyclers), and voucher issuance. Currys funds the voucher  -  but every redemption drives a Currys purchase.
 
 We're not competing with your trade-in scheme. We're the answer for the devices your scheme has to turn away.
 
-I'd love to propose a small pilot — 5–10 stores, 3 months — and share the data on how it performs. Happy to put a one-pager together for whoever owns partnerships.
+I'd love to propose a small pilot  -  5–10 stores, 3 months  -  and share the data on how it performs. Happy to put a one-pager together for whoever owns partnerships.
 
 Would a 20-minute call next week work?
 
@@ -114,16 +114,16 @@ brokeydokey.com
 
 ---
 
-## Email — Version B (Commercial Angle)
+## Email  -  Version B (Commercial Angle)
 
 **To:** partnerships@currys.co.uk  
-**Subject:** Drive £15k in store purchases from broken device recycling — pilot proposal
+**Subject:** Drive £15k in store purchases from broken device recycling  -  pilot proposal
 
 ---
 
 Hi,
 
-Quick intro: I'm Adrian, founder of BrokeyDokey (brokeydokey.com) — a UK platform for buying and selling broken electronics.
+Quick intro: I'm Adrian, founder of BrokeyDokey (brokeydokey.com)  -  a UK platform for buying and selling broken electronics.
 
 I want to propose a voucher partnership that drives Currys store purchases from customers who currently walk in, recycle a broken device, and walk out with nothing.
 
@@ -131,7 +131,7 @@ I want to propose a voucher partnership that drives Currys store purchases from 
 
 At 500 devices processed in a 3-month pilot, with a 50% redemption rate and £60 average basket, that's ~£15,000 in incremental Currys purchases driven by devices that currently generate zero revenue.
 
-We're looking for a pilot partner for Q3. I've written this up properly if you'd like to see the numbers — happy to share a one-pager.
+We're looking for a pilot partner for Q3. I've written this up properly if you'd like to see the numbers  -  happy to share a one-pager.
 
 Worth a call?
 
@@ -141,7 +141,7 @@ brokeydokey.com
 
 ---
 
-## Email — Version C (Press/PR Entry)
+## Email  -  Version C (Press/PR Entry)
 
 **To:** press@currys.co.uk  
 **Subject:** Story pitch: UK startup paying people £30 to recycle broken tech at Currys
@@ -150,7 +150,7 @@ brokeydokey.com
 
 Hi,
 
-I'm Adrian, founder of BrokeyDokey — and I'd like to pitch a partnership story.
+I'm Adrian, founder of BrokeyDokey  -  and I'd like to pitch a partnership story.
 
 We've built a marketplace for broken electronics: repair shops buy broken phones and laptops instead of them going to landfill. We're now proposing a voucher scheme with Currys where customers who recycle broken devices get a £30 Currys voucher.
 
@@ -158,7 +158,7 @@ The headline writes itself: *"Currys will pay you £30 to recycle your broken te
 
 39 million pieces of tech are sitting unused in UK homes. The UK generates 1.5 million tonnes of e-waste a year. A partnership like this puts Currys at the front of that conversation.
 
-I'd love to put this to your sustainability or partnerships team — could you point me to the right person?
+I'd love to put this to your sustainability or partnerships team  -  could you point me to the right person?
 
 Adrian  
 brokeydokey.com
@@ -177,7 +177,7 @@ brokeydokey.com
 
 **Next retailers if Currys doesn't bite:**
 - Argos / Sainsbury's (Argos has a trade-in desk)
-- CEX (already buys broken devices — different angle: co-marketing)
+- CEX (already buys broken devices  -  different angle: co-marketing)
 - John Lewis (sustainability brand fit)
 - EE / O2 / Three (phone recycling schemes)
 
@@ -185,8 +185,8 @@ brokeydokey.com
 
 ## Notes
 
-- Currys' own recycling is called "Recycle with Currys" — don't say "your trade-in scheme"
+- Currys' own recycling is called "Recycle with Currys"  -  don't say "your trade-in scheme"
 - Their sustainability page: currys.co.uk/working-sustainably
 - Press contact confirmed: press@currys.co.uk (listed on their press page)
-- Don't lead with £30 cost to Currys — lead with purchase uplift and ESG
+- Don't lead with £30 cost to Currys  -  lead with purchase uplift and ESG
 - If they ask about WEEE compliance: BrokeyDokey routes unrepairable devices to certified WEEE recyclers, we don't hold the liability

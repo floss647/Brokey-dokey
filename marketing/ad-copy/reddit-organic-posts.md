@@ -1,4 +1,4 @@
-# BROKEYDOBKEY — REDDIT ORGANIC POSTS
+# BROKEYDOBKEY  -  REDDIT ORGANIC POSTS
 ## 10 Template Posts | Native/Community Voice
 ### UK Market | Platform: Reddit
 
@@ -6,13 +6,13 @@
 
 ## USAGE GUIDELINES
 
-These posts are written to feel native to each subreddit. They should NOT be posted by an account that looks like a brand account. They should be posted by a genuine community member who uses BrokeyDokey — or by a seeded account that has been active in each subreddit for several weeks before posting.
+These posts are written to feel native to each subreddit. They should NOT be posted by an account that looks like a brand account. They should be posted by a genuine community member who uses BrokeyDokey  -  or by a seeded account that has been active in each subreddit for several weeks before posting.
 
 **Golden rules:**
 - Never lead with the brand name. Let it emerge naturally.
 - Match the subreddit's specific tone and conventions exactly.
 - Posts about money should feel like genuine "sharing a win" energy, not an ad.
-- Always reply to comments in the thread — organic posts live or die on engagement.
+- Always reply to comments in the thread  -  organic posts live or die on engagement.
 - One brand mention per post maximum. Let the URL do the work.
 
 ---
@@ -34,7 +34,7 @@ Went to set up a second controller for a mate coming over and ended up opening t
 
 I always think "I'll fix that" and then never do.
 
-Finally listed them this week on a site called BrokeyDokey — it's basically a marketplace specifically for broken tech. Got £22 for the stick drift one within a day, which I was not expecting. Someone's going to repair it and resell it.
+Finally listed them this week on a site called BrokeyDokey  -  it's basically a marketplace specifically for broken tech. Got £22 for the stick drift one within a day, which I was not expecting. Someone's going to repair it and resell it.
 
 Anyone else sitting on a pile of broken controllers? Starting to feel like this is more common than I thought.
 
@@ -42,7 +42,7 @@ Anyone else sitting on a pile of broken controllers? Starting to feel like this 
 
 **Engagement hooks:**
 - "How did you break yours?" opens the thread to stories (people love sharing this)
-- The £22 figure is specific and believable — not aspirational, genuinely surprising
+- The £22 figure is specific and believable  -  not aspirational, genuinely surprising
 - The relatable cupboard-opening discovery is a universal experience
 - Expected: "same!" replies, "what site?" replies, people sharing their own controller disasters
 
@@ -66,14 +66,14 @@ Anyone else sitting on a pile of broken controllers? Starting to feel like this 
 
 **Body:**
 
-Never touched electronics repair in my life. My PS4's disc drive has been making the noise — you know the noise — for about six months. Kept putting it off because I assumed it'd either cost £80 at a repair shop or I'd brick it trying myself.
+Never touched electronics repair in my life. My PS4's disc drive has been making the noise  -  you know the noise  -  for about six months. Kept putting it off because I assumed it'd either cost £80 at a repair shop or I'd brick it trying myself.
 
 Ended up finding a repair guide through BrokeyDokey (I was on there looking at broken PS4s to buy, ironically) and the guide was genuinely step-by-step in a way that made it seem doable. Ordered the replacement drive from their parts recommendations. Took me about an hour, but it works.
 
 I know this isn't exactly pro-level repair content, but I was genuinely surprised how approachable it was. Anyone else gone from "I can't fix electronics" to "actually this is fine"?
 
 **Engagement hooks:**
-- The "noise" line — every PS4 owner knows exactly what noise. Instant connection.
+- The "noise" line  -  every PS4 owner knows exactly what noise. Instant connection.
 - Framing as a beginner is humble and relatable; invites others to share their first repair stories
 - Mentions BrokeyDokey naturally as where the guide was found, not as the main point
 - Opens a genuine conversation about DIY repair confidence
@@ -85,11 +85,11 @@ I know this isn't exactly pro-level repair content, but I was genuinely surprise
 **Subreddit:** r/techsupport
 **Flair:** Fixed! (if available) or Solved
 **Best time to post:** Weekday afternoon, 2–5pm
-**When to post:** Anytime — this is a help subreddit; evergreen content
+**When to post:** Anytime  -  this is a help subreddit; evergreen content
 
 ---
 
-**Title:** [Solved] Dead laptop — couldn't fix it but turned it into £85 instead
+**Title:** [Solved] Dead laptop  -  couldn't fix it but turned it into £85 instead
 
 **Body:**
 
@@ -104,8 +104,8 @@ So it went from "useless" to £55. Thought it was worth sharing here in case any
 Thanks again for all the troubleshooting help.
 
 **Engagement hooks:**
-- The "Fixed!" flair is ironic and attention-grabbing — the fix is financial, not technical
-- References a previous post (even if fictional) — feels like genuine community participation
+- The "Fixed!" flair is ironic and attention-grabbing  -  the fix is financial, not technical
+- References a previous post (even if fictional)  -  feels like genuine community participation
 - The honest correction ("not £85, I'm bad at maths") makes it feel authentic
 - Useful information framed as a tip, not a promotion
 - "Selling for parts" is a legitimate and well-understood solution in this subreddit
@@ -125,7 +125,7 @@ Thanks again for all the troubleshooting help.
 
 **Body:**
 
-Just upgraded my phone (RIP Samsung Galaxy S21, you took a corner at pace and lost). Old one's got a cracked screen and a battery that doesn't hold charge. Tried looking at repair costs — screen replacement alone would be £120 at a proper shop, which doesn't make sense financially.
+Just upgraded my phone (RIP Samsung Galaxy S21, you took a corner at pace and lost). Old one's got a cracked screen and a battery that doesn't hold charge. Tried looking at repair costs  -  screen replacement alone would be £120 at a proper shop, which doesn't make sense financially.
 
 Options I've found:
 1. Bin it (feels wasteful)
@@ -133,14 +133,14 @@ Options I've found:
 3. Give it to someone who doesn't care about the crack (no one wants it)
 4. Sell it broken
 
-Started looking into option 4. Found BrokeyDokey which is specifically for broken tech — listed it last night. Already have two offers for £28-£30. Someone's going to replace the screen and resell it or use it for parts.
+Started looking into option 4. Found BrokeyDokey which is specifically for broken tech  -  listed it last night. Already have two offers for £28-£30. Someone's going to replace the screen and resell it or use it for parts.
 
 Is this common? Feels like everyone I know just keeps their old broken phone in a drawer indefinitely. Curious what the actual solution most people land on is.
 
 **Engagement hooks:**
 - "You took a corner at pace and lost" is funny and immediately relatable
 - Presenting four options frames this as research, not advertising
-- £28-£30 is a believable, unsexy figure — not aspirational, which makes it feel real
+- £28-£30 is a believable, unsexy figure  -  not aspirational, which makes it feel real
 - The "drawer" mention is universally relatable
 - Invites a genuine thread about what people do with broken phones
 
@@ -149,7 +149,7 @@ Is this common? Feels like everyone I know just keeps their old broken phone in 
 ## POST 5
 
 **Subreddit:** r/GamersRiseUp
-**Flair:** (varies — use whatever current meta flair is active on the sub)
+**Flair:** (varies  -  use whatever current meta flair is active on the sub)
 **Best time to post:** Weekend, any time
 **When to post:** After a widely-discussed gaming rage moment; works well near game launch windows
 
@@ -172,9 +172,9 @@ have listed it. will use the proceeds to buy a new controller which i will also 
 **Engagement hooks:**
 - Self-deprecating tone matches the subreddit's ironic/gamer identity perfectly
 - "Peak gamer behaviour" is an in-community phrase
-- The lowercase throughout, the run-on structure — matches the sub's posting style
+- The lowercase throughout, the run-on structure  -  matches the sub's posting style
 - The final "the cycle continues" is darkly funny and invites commiseration
-- BrokeyDokey mentioned in lowercase like any other website someone found — not branded
+- BrokeyDokey mentioned in lowercase like any other website someone found  -  not branded
 
 ---
 
@@ -187,7 +187,7 @@ have listed it. will use the proceeds to buy a new controller which i will also 
 
 ---
 
-**Title:** Sourced all my practice electronics repair projects from broken tech listings — cost me about £30 total
+**Title:** Sourced all my practice electronics repair projects from broken tech listings  -  cost me about £30 total
 
 **Body:**
 
@@ -201,7 +201,7 @@ Results after six months:
 - Tablet: couldn't fix it, stripped for parts, learned a lot.
 - Phone: screen replaced. Sold it for £45. Accidentally made a profit.
 
-The platform also has AI repair guides which I used alongside iFixit. They're decent — component-level rather than just "take it to a shop."
+The platform also has AI repair guides which I used alongside iFixit. They're decent  -  component-level rather than just "take it to a shop."
 
 If anyone's looking for cheap practice hardware this is a decent route. You know exactly what's broken going in.
 
@@ -209,7 +209,7 @@ If anyone's looking for cheap practice hardware this is a decent route. You know
 - Framed entirely as a DIY hack/tip, which is exactly what r/DIY wants
 - Specific prices and outcomes make it credible
 - The accidental profit on the phone is funny and real-feeling
-- Mentions iFixit alongside BrokeyDokey — this adds credibility by showing it's not an exclusive pitch
+- Mentions iFixit alongside BrokeyDokey  -  this adds credibility by showing it's not an exclusive pitch
 - "You know exactly what's broken going in" is genuinely useful insight for DIY learners
 
 ---
@@ -236,7 +236,7 @@ Has anyone done this? Specific questions:
 2. Is there a console that's particularly beginner-friendly to start with?
 3. Where do you source parts? (The site I mentioned seems to have a parts component market too)
 
-Not looking to get rich — just wondering if this is a realistic weekend project.
+Not looking to get rich  -  just wondering if this is a realistic weekend project.
 
 **Engagement hooks:**
 - Genuine question format works perfectly in r/DIY
@@ -256,13 +256,13 @@ Not looking to get rich — just wondering if this is a realistic weekend projec
 
 ---
 
-**Title:** Cleared out broken tech during January and made £340 — not bad for stuff I was going to bin
+**Title:** Cleared out broken tech during January and made £340  -  not bad for stuff I was going to bin
 
 **Body:**
 
 Bit of a boring one but might be useful for people doing the January clear-out.
 
-I had a drawer (and a cupboard, and a shelf, if I'm honest) full of old broken tech I'd been ignoring. Did a proper audit over two weekends. Used BrokeyDokey to get instant valuations on everything — it's a marketplace specifically for broken/damaged electronics, so it knows what broken things are worth rather than just what working things sell for.
+I had a drawer (and a cupboard, and a shelf, if I'm honest) full of old broken tech I'd been ignoring. Did a proper audit over two weekends. Used BrokeyDokey to get instant valuations on everything  -  it's a marketplace specifically for broken/damaged electronics, so it knows what broken things are worth rather than just what working things sell for.
 
 What I had and what I got:
 
@@ -275,14 +275,14 @@ What I had and what I got:
 | Xbox One | No video output | £25 | £22 |
 | Graphics card (GTX 1070) | Fan failure | £55 | £48 |
 
-Total: £340 over about three weeks. Nothing sold instantly — some took a week to ten days — but BrokeyGuard™ escrow on the platform meant I wasn't handing anything over until payment was confirmed.
+Total: £340 over about three weeks. Nothing sold instantly  -  some took a week to ten days  -  but BrokeyGuard™ escrow on the platform meant I wasn't handing anything over until payment was confirmed.
 
 Stuff that didn't sell I've either kept for parts or it's gone on eBay.
 
 Not a get-rich scheme but if you've got broken electronics gathering dust, worth knowing the number before you bin it.
 
 **Engagement hooks:**
-- The table format is r/UKPersonalFinance's native language — they love specific numbers
+- The table format is r/UKPersonalFinance's native language  -  they love specific numbers
 - The totals are realistic, not aspirational
 - "Not a get-rich scheme" is a disarming qualifier that this sub requires
 - BrokeyGuard™ mentioned naturally as a reassurance feature, not a selling point
@@ -304,18 +304,18 @@ Not a get-rich scheme but if you've got broken electronics gathering dust, worth
 
 **Body:**
 
-Been trying to shift some old electronics — mix of broken and just-old stuff. The problem I keep running into is that eBay and CEX are priced for working items, so when something is broken or part-broken it's hard to know if you're pricing it sensibly or leaving money on the table.
+Been trying to shift some old electronics  -  mix of broken and just-old stuff. The problem I keep running into is that eBay and CEX are priced for working items, so when something is broken or part-broken it's hard to know if you're pricing it sensibly or leaving money on the table.
 
 Found a marketplace called BrokeyDokey specifically for broken/damaged tech that gives instant AI valuations for damaged items. It's based on what repairers are actually willing to pay, which is more useful than trying to price off a working item.
 
-Wondering if there are other tools people use? I'm not trying to make a career of this — just trying to not accidentally bin something worth £60 or list something at £10 when I could get £80.
+Wondering if there are other tools people use? I'm not trying to make a career of this  -  just trying to not accidentally bin something worth £60 or list something at £10 when I could get £80.
 
 **Engagement hooks:**
-- Framed as a question, not a recommendation — invites genuine responses
+- Framed as a question, not a recommendation  -  invites genuine responses
 - The CEX comparison is relatable and real (everyone knows CEX)
-- Mentions BrokeyDokey as one discovery among potentially others — not the whole point
+- Mentions BrokeyDokey as one discovery among potentially others  -  not the whole point
 - "Accidentally bin something worth £60" resonates with this subreddit's saving mindset
-- Likely to get replies mentioning Ziffit, Music Magpie, etc. — BrokeyDokey sits well alongside these
+- Likely to get replies mentioning Ziffit, Music Magpie, etc.  -  BrokeyDokey sits well alongside these
 
 ---
 
@@ -328,11 +328,11 @@ Wondering if there are other tools people use? I'm not trying to make a career o
 
 ---
 
-**Title:** Upgraded my GPU and have no idea what to do with my dead old one — anyone sold broken components?
+**Title:** Upgraded my GPU and have no idea what to do with my dead old one  -  anyone sold broken components?
 
 **Body:**
 
-Just upgraded from a GTX 1080 to a 4070 Super (finally, I know). The 1080 died — one fan seized, runs hot, crashes under load. Not worth fixing for my purposes.
+Just upgraded from a GTX 1080 to a 4070 Super (finally, I know). The 1080 died  -  one fan seized, runs hot, crashes under load. Not worth fixing for my purposes.
 
 Options I can see:
 - Strip it for the heatsink (my mate said this is fine, my mate may be lying)
@@ -348,7 +348,7 @@ Has anyone actually done this? Any gotchas I should know about listing component
 - Showing the three options makes it feel like genuine deliberation
 - The price range cited is specific and real
 - The packaging question at the end is a practical hook that invites useful replies
-- This opens a thread about component resale generally — BrokeyDokey is one answer, not the only answer
+- This opens a thread about component resale generally  -  BrokeyDokey is one answer, not the only answer
 
 ---
 

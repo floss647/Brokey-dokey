@@ -1,4 +1,4 @@
-# BROKEYDOBKEY — MARKETING TOOLS STACK
+# BROKEYDOBKEY  -  MARKETING TOOLS STACK
 ## The Set-and-Forget Growth Machine
 
 > **Core Principle:** Every tool in this stack can run while you sleep. No daily scrolling. No manual posting. No grinding. This is the anti-influencer marketing playbook.
@@ -10,7 +10,7 @@
 ### **Ahrefs** (Primary SEO Tool)
 - **What it does:** Keyword research, backlink analysis, site audits, competitor tracking, content gap analysis
 - **Why it fits BrokeyDokey:** The broken tech niche has high-intent, low-competition keywords ("sell broken PS4 UK", "broken MacBook value", "cracked screen trade in"). These searchers have cash intent. Ahrefs finds those gaps before competitors do.
-- **Free tier:** Ahrefs Webmaster Tools (free for verified site owners — site audit + backlink checker)
+- **Free tier:** Ahrefs Webmaster Tools (free for verified site owners  -  site audit + backlink checker)
 - **Cost:** Starter £29/mo | Standard £179/mo (Standard is worth it for content team)
 - **Automation:**
   - Set weekly email digests for rank tracking (zero login required)
@@ -25,7 +25,7 @@
 - **Cost:** £0
 - **Automation:**
   - Connect to Looker Studio (free) for automated weekly report emailed to you
-  - Set up Performance Alerts for drops over 20% — instant email notification
+  - Set up Performance Alerts for drops over 20%  -  instant email notification
 
 ### **Screaming Frog SEO Spider** (Technical SEO)
 - **What it does:** Crawls your site for broken links, missing meta, duplicate content, speed issues
@@ -37,7 +37,7 @@
   - Pair with Google Sheets + Apps Script to auto-flag issues
 
 ### **RankMath** (On-Site SEO for CMS blog)
-- **What it does:** WordPress/CMS SEO plugin — meta optimisation, schema markup, XML sitemap auto-generation
+- **What it does:** WordPress/CMS SEO plugin  -  meta optimisation, schema markup, XML sitemap auto-generation
 - **Why it fits BrokeyDokey:** When you launch the BrokeyDokey blog (week 2 of launch), every post should be pre-optimised without thinking about it
 - **Free tier:** Very generous free tier covers all core needs
 - **Cost:** £0 (free) | Pro £59/year
@@ -54,7 +54,7 @@
 - **What it does:** Behavioural email automation, SMS, segmentation, A/B testing, predictive analytics
 - **Why it fits BrokeyDokey:** Klaviyo is built for marketplaces and e-commerce. It triggers emails based on BEHAVIOUR (item listed, item viewed, no activity). This is the automation engine for the whole user lifecycle.
 - **Free tier:** Up to 250 contacts / 500 emails/month free
-- **Cost:** From £20/mo (500 contacts) — scales with list size
+- **Cost:** From £20/mo (500 contacts)  -  scales with list size
 - **Automation Workflows:**
 
   **Seller Flow:**
@@ -62,10 +62,10 @@
   User registers as seller
   → Day 0: "Welcome to the Scrapyard" email (tone: warm, funny, quick-start tips)
   → Day 1: "Your first listing is waiting" nudge (if no listing created)
-  → Day 3: If listed: "Your item has 12 views — here's how to get offers faster"
+  → Day 3: If listed: "Your item has 12 views  -  here's how to get offers faster"
   → Day 3: If not listed: "Your broken stuff is losing value by the minute" FOMO email
   → Day 7: If no activity: "Your junk called. It wants a new home." re-engagement
-  → Day 14: If still no listing: "Don't be a div — takes 3 minutes to list" final push
+  → Day 14: If still no listing: "Don't be a div  -  takes 3 minutes to list" final push
   → Day 30: If listed & sold: "You beauty! Here's what to sell next" cross-sell
   → Day 30: If listed & unsold: "Not sold yet? Here's a price drop nudge"
   ```
@@ -83,15 +83,15 @@
   No login in 30 days
   → "We miss your broken stuff" re-engagement (BrokeyPoints reminder)
   → 7 days later: "Right. Last chance before we assume you've gone full normie"
-  → 14 days later: Sunset email (we're removing you from list — clean list hygiene)
+  → 14 days later: Sunset email (we're removing you from list  -  clean list hygiene)
   ```
 
   **Post-Purchase:**
   ```
   Purchase confirmed
   → Day 0: BrokeyGuard™ confirmation + tracking
-  → Day 5 (estimated delivery): "Should have arrived — how's the repair going?"
-  → Day 14: Review request ("Roast Your Experience — 2 stars minimum if you're feeling kind")
+  → Day 5 (estimated delivery): "Should have arrived  -  how's the repair going?"
+  → Day 14: Review request ("Roast Your Experience  -  2 stars minimum if you're feeling kind")
   → Day 30: "Ready to flip something else?" back-in-marketplace nudge
   ```
 
@@ -100,7 +100,7 @@
 - **Why it fits BrokeyDokey:** If budget is tight pre-launch, Mailchimp's free tier covers the basics. Migrate to Klaviyo at 1,000+ subscribers.
 - **Free tier:** Up to 500 contacts / 1,000 emails/month
 - **Cost:** £0 (free tier) | £11.35/mo (Essentials)
-- **Automation:** Basic welcome sequence and abandoned cart — functional but less sophisticated than Klaviyo
+- **Automation:** Basic welcome sequence and abandoned cart  -  functional but less sophisticated than Klaviyo
 
 ---
 
@@ -109,14 +109,14 @@
 ### **CapCut** (Short-Form Video Editing)
 - **What it does:** Auto-captions, templates, AI voiceover, trending audio, one-click ratio exports (9:16, 1:1, 16:9)
 - **Why it fits BrokeyDokey:** The "Roast My Junk" UGC content and YouTube Shorts are the highest-ROI content format. CapCut lets non-editors produce shareable videos fast. Template + brand colour = consistent output.
-- **Free tier:** Very generous — all core features free
+- **Free tier:** Very generous  -  all core features free
 - **Cost:** £0 (free) | Pro ~£8/mo (for brand kits and advanced AI tools)
 - **Automation:**
   - CapCut's "Auto Cut" and "AI Script to Video" can convert a blog post into a rough cut with zero timeline editing
   - Batch-render multiple aspect ratios from one project
 
 ### **Descript** (Long-Form Video + Podcast Editing)
-- **What it does:** Edit video like a text document — delete words to cut footage. Auto-transcription, screen recording, AI voice correction.
+- **What it does:** Edit video like a text document  -  delete words to cut footage. Auto-transcription, screen recording, AI voice correction.
 - **Why it fits BrokeyDokey:** For YouTube tutorials ("How to Diagnose PS4 BLOD"), Descript makes editing non-technical. Record, transcribe, delete ums, export. Done.
 - **Free tier:** 1 hour transcription/month free
 - **Cost:** Hobbyist £12/mo | Creator £24/mo
@@ -126,8 +126,8 @@
   - "Studio Sound" AI removes background noise in one click
 
 ### **HeyGen** (AI Presenter Videos)
-- **What it does:** AI avatar lip-sync video — upload a script, get a talking-head video with an AI presenter
-- **Why it fits BrokeyDokey:** For explainer content and ad creatives, HeyGen lets you produce "presenter" style videos without filming. Use sparingly — brand voice needs real humans too.
+- **What it does:** AI avatar lip-sync video  -  upload a script, get a talking-head video with an AI presenter
+- **Why it fits BrokeyDokey:** For explainer content and ad creatives, HeyGen lets you produce "presenter" style videos without filming. Use sparingly  -  brand voice needs real humans too.
 - **Free tier:** 1 free video/month (watermarked)
 - **Cost:** Essential £24/mo
 - **Automation:**
@@ -147,9 +147,9 @@
 ## 4. IMAGE CREATION
 
 ### **Canva** (Primary Design Tool)
-- **What it does:** Drag-and-drop graphic design — social posts, thumbnails, email headers, banners, print ads
+- **What it does:** Drag-and-drop graphic design  -  social posts, thumbnails, email headers, banners, print ads
 - **Why it fits BrokeyDokey:** The brutalist aesthetic is achievable without a designer. Black border + yellow fill + bold uppercase = BrokeyDokey. Set up Brand Kit once, create everything in 5 minutes.
-- **Free tier:** Generous — most features free, Brand Kit requires Pro
+- **Free tier:** Generous  -  most features free, Brand Kit requires Pro
 - **Cost:** £0 (free) | Pro £13/mo per user (worth it for Brand Kit + background removal)
 - **Automation:**
   - Magic Resize: Create one post → resize to all 8 formats in one click
@@ -157,9 +157,9 @@
   - Canva API (paid): Programmatically generate listing images from product data
 
 ### **Adobe Firefly / Midjourney** (AI Image Generation)
-- **What it does:** Generate custom imagery from text prompts — product shots, backgrounds, lifestyle images
+- **What it does:** Generate custom imagery from text prompts  -  product shots, backgrounds, lifestyle images
 - **Why it fits BrokeyDokey:** For ad creatives showing "broken tech in real environments" when you don't have a photographer. Use real photos where possible, AI fill gaps.
-- **Free tier:** Adobe Firefly — 25 credits/month free (in Creative Cloud)
+- **Free tier:** Adobe Firefly  -  25 credits/month free (in Creative Cloud)
 - **Cost:** Adobe Firefly £3/mo | Midjourney £8/mo (Basic)
 - **Automation:**
   - Midjourney → Zapier → auto-save to Google Drive for team access
@@ -167,7 +167,7 @@
 
 ### **Remove.bg** (Background Removal)
 - **What it does:** Instantly removes image backgrounds
-- **Why it fits BrokeyDokey:** For making listing images look clean and professional — sellers upload messy photos, platform can batch-clean them
+- **Why it fits BrokeyDokey:** For making listing images look clean and professional  -  sellers upload messy photos, platform can batch-clean them
 - **Free tier:** 50 free low-res credits/month
 - **Cost:** Pay-per-use: £0.13/image or £6.99/mo subscription
 - **Automation:**
@@ -181,17 +181,17 @@
 ### **Google Ads** (Search + Display)
 - **What it does:** Pay-per-click search ads targeting specific keywords; display ads across Google network
 - **Why it fits BrokeyDokey:** High-intent keywords like "sell broken iPhone UK", "broken laptop worth money", "where to sell damaged tech". These searchers are ready to list. Capture them.
-- **Free tier:** No free tier — pay per click
+- **Free tier:** No free tier  -  pay per click
 - **Cost:** Start with £500/mo test budget. Target CPC: £0.40-£1.20 for broken tech terms
 - **Key Campaigns:**
   - Campaign 1: Seller acquisition ("sell broken [device] UK")
   - Campaign 2: Buyer acquisition ("buy broken tech for parts UK")
   - Campaign 3: Branded (protect your own brand terms)
 - **Automation:**
-  - Smart Bidding: Target CPA or ROAS — Google's AI optimises bids automatically
+  - Smart Bidding: Target CPA or ROAS  -  Google's AI optimises bids automatically
   - Responsive Search Ads: Feed 15 headlines + 4 descriptions → Google tests combinations
   - Performance Max: One campaign type that runs across all Google channels automatically
-  - Set budget alerts (email when spend hits 80% of budget — no overspend surprises)
+  - Set budget alerts (email when spend hits 80% of budget  -  no overspend surprises)
 
 ### **Meta Ads Manager** (Facebook + Instagram)
 - **What it does:** Interest + demographic targeting, retargeting, lookalike audiences, video ads
@@ -202,12 +202,12 @@
   - Advantage+ Shopping Campaigns: Meta's AI picks audiences, placements, bids automatically
   - Dynamic Creative: Upload 5 images + 5 headlines → Meta auto-tests all combinations
   - Retargeting Pixel: Automatically shows ads to site visitors with relevant listings
-  - Lead gen forms: "What's your broken tech worth?" — zero-friction lead capture
+  - Lead gen forms: "What's your broken tech worth?"  -  zero-friction lead capture
 
 ### **Reddit Ads** (Niche Community Targeting)
 - **What it does:** Promoted posts and display ads within specific subreddits
-- **Why it fits BrokeyDokey:** r/GameDeals, r/PCMasterRace, r/techsupport, r/bapcsalesuk — these communities are full of people with broken tech who'd list it if they knew about BrokeyDokey
-- **Free tier:** No free tier — £5 minimum daily spend
+- **Why it fits BrokeyDokey:** r/GameDeals, r/PCMasterRace, r/techsupport, r/bapcsalesuk  -  these communities are full of people with broken tech who'd list it if they knew about BrokeyDokey
+- **Free tier:** No free tier  -  £5 minimum daily spend
 - **Cost:** £3-8 CPM; budget £150/mo for subreddit targeting
 - **Automation:**
   - Schedule ads to run only Thur-Sun (highest engagement days on Reddit gaming/tech subs)
@@ -229,7 +229,7 @@
 
 ### **Hotjar** (Behaviour Analytics)
 - **What it does:** Session recordings, heatmaps, on-site surveys, funnel analysis
-- **Why it fits BrokeyDokey:** See exactly where people drop off in the listing flow. If everyone abandons at step 3 of listing creation — you know where to fix the product.
+- **Why it fits BrokeyDokey:** See exactly where people drop off in the listing flow. If everyone abandons at step 3 of listing creation  -  you know where to fix the product.
 - **Free tier:** 35 sessions/day free (enough for early stage)
 - **Cost:** Plus £32/mo | Business £80/mo
 - **Automation:**
@@ -243,7 +243,7 @@
 - **Cost:** £0
 - **Automation:**
   - Set up scheduled email delivery of dashboard PDF to yourself weekly
-  - Connects directly to all Google products — zero manual data pulls
+  - Connects directly to all Google products  -  zero manual data pulls
 
 ---
 
@@ -267,31 +267,31 @@
 - **Key Zaps to Build:**
 
   ```
-  ZAP 1 — New Blog Post Pipeline:
+  ZAP 1  -  New Blog Post Pipeline:
   WordPress publish → Klaviyo "new blog post" email → Buffer posts social → Ahrefs alert check
 
-  ZAP 2 — New Listing Alert:
+  ZAP 2  -  New Listing Alert:
   BrokeyDokey new listing → Klaviyo trigger "listing live" email → Google Sheets log
 
-  ZAP 3 — New User Registration:
+  ZAP 3  -  New User Registration:
   New user signed up → Klaviyo add to "new sellers" sequence → Slack notify team
 
-  ZAP 4 — Stale Listing Alert:
+  ZAP 4  -  Stale Listing Alert:
   Google Sheets "listing age > 14 days" → Klaviyo trigger nudge email → log in Notion
 
-  ZAP 5 — UGC Capture:
+  ZAP 5  -  UGC Capture:
   Instagram hashtag #brokeydokey → save to Google Drive folder → Slack notify for review
 
-  ZAP 6 — Review Request:
+  ZAP 6  -  Review Request:
   Order status = delivered (in system) → 5-day delay → Klaviyo review email
   ```
 
 ### **Make (formerly Integromat)** (Advanced Automation)
-- **What it does:** More powerful than Zapier — handles complex multi-step workflows, better for data transformation
+- **What it does:** More powerful than Zapier  -  handles complex multi-step workflows, better for data transformation
 - **Why it fits BrokeyDokey:** Use for complex scenarios like: "If new listing is PS4 + price under £50 + no image → trigger improvement email with Canva template link"
 - **Free tier:** 1,000 operations/month free
 - **Cost:** Core £9/mo | Pro £16/mo
-- **Automation:** Build the Remove.bg listing image cleaning pipeline here — handles webhooks and API calls better than Zapier
+- **Automation:** Build the Remove.bg listing image cleaning pipeline here  -  handles webhooks and API calls better than Zapier
 
 ---
 
@@ -299,7 +299,7 @@
 
 ### **Tapfiliate** (Affiliate Programme Management)
 - **What it does:** Manages affiliate tracking, payouts, commission structures, affiliate dashboard
-- **Why it fits BrokeyDokey:** Turn your early users into advocates. Pay them £2 per new seller they refer. iFixit YouTubers, repair Reddit mods, tech bloggers — all potential affiliates who'll promote for cash.
+- **Why it fits BrokeyDokey:** Turn your early users into advocates. Pay them £2 per new seller they refer. iFixit YouTubers, repair Reddit mods, tech bloggers  -  all potential affiliates who'll promote for cash.
 - **Free tier:** 14-day trial
 - **Cost:** Essential £59/mo
 - **Automation:**
@@ -309,19 +309,19 @@
   - Tapfiliate → Zapier → Klaviyo: When affiliate earns first commission → send congratulations email
 
 ### **ReferralHero** (User Referral / Viral Loops)
-- **What it does:** In-product referral programme — "Refer a friend, get £3 BrokeyPoints"
+- **What it does:** In-product referral programme  -  "Refer a friend, get £3 BrokeyPoints"
 - **Why it fits BrokeyDokey:** The BrokeyPoints system is already in the product. Add a referral layer: "Share your link → friend lists an item → you both get 50 points." Viral growth mechanic baked in.
 - **Free tier:** Up to 100 referrals/month free
 - **Cost:** Starter £49/mo
 - **Automation:**
   - Auto-generates referral links on user signup
   - Tracks conversions and credits BrokeyPoints automatically
-  - Sends "Your friend just listed something — you've earned points!" email via Klaviyo integration
+  - Sends "Your friend just listed something  -  you've earned points!" email via Klaviyo integration
 
 ### **PartnerStack** (B2B / Partnership Programme)
 - **What it does:** Manages partnerships with businesses (repair shops, refurb companies, schools)
-- **Why it fits BrokeyDokey:** For the "Corporate Partner" tier — IT departments, councils, schools who donate bulk broken kit. Track their referrals, provide dashboards, automate impact reports.
-- **Free tier:** Demo required — no self-serve free tier
+- **Why it fits BrokeyDokey:** For the "Corporate Partner" tier  -  IT departments, councils, schools who donate bulk broken kit. Track their referrals, provide dashboards, automate impact reports.
+- **Free tier:** Demo required  -  no self-serve free tier
 - **Cost:** From ~£800/mo (enterprise tool, use after Series A)
 - **Automation:** Full partner portal with automated commission tracking, co-marketing assets, and impact reports
 
@@ -340,7 +340,7 @@ USER LISTS FIRST ITEM
 ├─→ Make: Auto-clean listing image via Remove.bg
 └─→ Google Analytics: "first_listing" conversion event
 
-7 DAYS — NO ACTIVITY
+7 DAYS  -  NO ACTIVITY
 └─→ Klaviyo: "Your broken stuff is still broken" nudge email
 
 ITEM SOLD

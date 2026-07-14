@@ -1,4 +1,4 @@
-# BROKEYDOBKEY — "ROAST MY JUNK" SERIES
+# BROKEYDOBKEY  -  "ROAST MY JUNK" SERIES
 ## YouTube Shorts Template + Episode Scripts
 ### Vertical Format | 15–30 Seconds | Recurring Series
 
@@ -6,7 +6,7 @@
 
 ## SERIES CONCEPT
 
-Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brutal on-screen text — deadpan, vicious, oddly compassionate — and roasts the item to within an inch of its life. Then: the twist. It's worth actual money. CTA.
+Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brutal on-screen text  -  deadpan, vicious, oddly compassionate  -  and roasts the item to within an inch of its life. Then: the twist. It's worth actual money. CTA.
 
 **The joke is always the same. It never gets old. That's the point.**
 
@@ -18,13 +18,13 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 [VISUAL] Person holds broken item to camera. Straight face.
           They say nothing. Or they say one line.
 
-[ON-SCREEN TEXT — AI ROAST] 3–4 brutal lines, arriving one at a time.
+[ON-SCREEN TEXT  -  AI ROAST] 3–4 brutal lines, arriving one at a time.
 
 [VISUAL] Their face changes. Slight wince. Or pride.
 
-[PLOT TWIST — ON-SCREEN TEXT] "Actually worth: £XX repaired."
+[PLOT TWIST  -  ON-SCREEN TEXT] "Actually worth: £XX repaired."
 
-[CTA — ON-SCREEN TEXT] "List it. Don't bin it. BrokeyDokey.co.uk"
+[CTA  -  ON-SCREEN TEXT] "List it. Don't bin it. BrokeyDokey.co.uk"
 
 [SOUND DESIGN] Each roast line: a buzzer or game show wrong-answer noise.
                The twist reveal: a cash register ding.
@@ -36,7 +36,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 - No voiceover. The AI text IS the voice.
 - Person on camera never argues back. Deadpan acceptance only.
-- Roasts must be specific to the item's damage — no generic insults.
+- Roasts must be specific to the item's damage  -  no generic insults.
 - Always end on the money twist. The roast earns the punchline.
 - Keep subtitles on at all times. These are watched on mute at 2am.
 - Music: lo-fi background until the cash register ding, then silence.
@@ -60,9 +60,9 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:03 – 0:14] — THE ROAST
+[0:03 – 0:14]  -  THE ROAST
 
-> [ON-SCREEN TEXT — line by line, each one held for 2 seconds]
+> [ON-SCREEN TEXT  -  line by line, each one held for 2 seconds]
 
 > **"THE DISC DRIVE IS HAVING AN OUT-OF-BODY EXPERIENCE."**
 
@@ -74,11 +74,11 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:14 – 0:18] — THE TWIST
+[0:14 – 0:18]  -  THE TWIST
 
 > [VISUAL] Person is nodding slowly. Unsurprised.
 
-> [ON-SCREEN TEXT — cash register ding]
+> [ON-SCREEN TEXT  -  cash register ding]
 
 > **ACTUALLY WORTH: £65 REPAIRED.**
 
@@ -86,7 +86,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:18 – 0:22] — CTA
+[0:18 – 0:22]  -  CTA
 
 > [ON-SCREEN TEXT]
 
@@ -111,7 +111,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:04 – 0:17] — THE ROAST
+[0:04 – 0:17]  -  THE ROAST
 
 > [ON-SCREEN TEXT]
 
@@ -127,9 +127,9 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:17 – 0:22] — THE TWIST
+[0:17 – 0:22]  -  THE TWIST
 
-> [ON-SCREEN TEXT — cash register ding]
+> [ON-SCREEN TEXT  -  cash register ding]
 
 > **ACTUALLY WORTH: £120 REPAIRED.**
 
@@ -137,7 +137,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:22 – 0:28] — CTA
+[0:22 – 0:28]  -  CTA
 
 > [ON-SCREEN TEXT]
 
@@ -164,7 +164,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:04 – 0:16] — THE ROAST
+[0:04 – 0:16]  -  THE ROAST
 
 > [ON-SCREEN TEXT]
 
@@ -178,9 +178,9 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:16 – 0:20] — THE TWIST
+[0:16 – 0:20]  -  THE TWIST
 
-> [ON-SCREEN TEXT — cash register ding]
+> [ON-SCREEN TEXT  -  cash register ding]
 
 > **ACTUALLY WORTH: £80 REPAIRED.**
 
@@ -188,7 +188,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:20 – 0:25] — CTA
+[0:20 – 0:25]  -  CTA
 
 > [ON-SCREEN TEXT]
 
@@ -213,7 +213,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:03 – 0:14] — THE ROAST
+[0:03 – 0:14]  -  THE ROAST
 
 > [ON-SCREEN TEXT]
 
@@ -227,15 +227,15 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:14 – 0:17] — THE TWIST
+[0:14 – 0:17]  -  THE TWIST
 
-> [ON-SCREEN TEXT — cash register ding]
+> [ON-SCREEN TEXT  -  cash register ding]
 
 > **ACTUALLY WORTH: £55 REPAIRED.**
 
 ---
 
-[0:17 – 0:20] — CTA
+[0:17 – 0:20]  -  CTA
 
 > [ON-SCREEN TEXT]
 
@@ -254,13 +254,13 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 [0:00 – 0:05]
 
-> [VISUAL] Person holds a graphics card to camera two-handed like an offering. It is spectacularly, magnificently dusty — a thick grey beard of dust covers every surface. The fan blades are brown. There is something that may be a scorch mark on the PCB. The thermal paste has dried and cracked like old paint.
+> [VISUAL] Person holds a graphics card to camera two-handed like an offering. It is spectacularly, magnificently dusty  -  a thick grey beard of dust covers every surface. The fan blades are brown. There is something that may be a scorch mark on the PCB. The thermal paste has dried and cracked like old paint.
 
 > [CAPTION] "Used it for mining. Once."
 
 ---
 
-[0:05 – 0:20] — THE ROAST
+[0:05 – 0:20]  -  THE ROAST
 
 > [ON-SCREEN TEXT]
 
@@ -268,7 +268,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 > **"THE DUST IS STRUCTURAL NOW. DO NOT REMOVE IT."**
 
-> **"'USED IT FOR MINING. ONCE.' — WE HAVE QUESTIONS."**
+> **"'USED IT FOR MINING. ONCE.'  -  WE HAVE QUESTIONS."**
 
 > **"THE THERMAL PASTE LOOKS LIKE AN ANCIENT MAP."**
 
@@ -278,9 +278,9 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:20 – 0:25] — THE TWIST
+[0:20 – 0:25]  -  THE TWIST
 
-> [ON-SCREEN TEXT — cash register ding, held longer than usual]
+> [ON-SCREEN TEXT  -  cash register ding, held longer than usual]
 
 > **ACTUALLY WORTH: £200 REPAIRED.**
 
@@ -288,7 +288,7 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-[0:25 – 0:30] — CTA
+[0:25 – 0:30]  -  CTA
 
 > [ON-SCREEN TEXT]
 
@@ -297,9 +297,9 @@ Someone holds up their broken tech to camera. The BrokeyDokey AI appears as brut
 
 ---
 
-## PRODUCTION NOTES — ALL EPISODES
+## PRODUCTION NOTES  -  ALL EPISODES
 
-**Camera:** Vertical (9:16). Handheld feel preferred — this is YouTube Shorts, not cinema.
+**Camera:** Vertical (9:16). Handheld feel preferred  -  this is YouTube Shorts, not cinema.
 
 **Lighting:** Harsh overhead or natural window light. We want to see every scratch.
 

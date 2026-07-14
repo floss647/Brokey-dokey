@@ -1,4 +1,4 @@
-# BROKEYDOBKEY — 30-DAY SUPPLY SPRINT
+# BROKEYDOBKEY  -  30-DAY SUPPLY SPRINT
 ## Getting From 50 to 500+ Listings Before Spending a Penny on Ads
 
 > **The only metric that matters this month:** Number of active listings.
@@ -14,8 +14,8 @@ Above 500, there's always something relevant on page 1 of results. That's when p
 ## THE CORE INSIGHT
 
 You have two types of potential users:
-- **Sellers** — people with broken tech sitting in a drawer
-- **Buyers/Repairers** — people who fix things for a living or hobby
+- **Sellers**  -  people with broken tech sitting in a drawer
+- **Buyers/Repairers**  -  people who fix things for a living or hobby
 
 Right now you need **sellers**. Not buyers. Every tactic this month is aimed at getting people to list.
 
@@ -28,24 +28,24 @@ These people don't know BrokeyDokey exists yet. Your job this month is to show u
 
 ---
 
-## WEEK 1 — SEED THE GROUND (Days 1–7)
+## WEEK 1  -  SEED THE GROUND (Days 1–7)
 
 **Goal:** Get your first 100 listings. Start with people you know.
 
-### Day 1 — List Everything You Own (30 mins)
+### Day 1  -  List Everything You Own (30 mins)
 List every broken or underused piece of tech you can find.
 Your old phone. The controller with the drifting stick. The laptop with the dead battery.
 Your friends' and family's broken stuff. Ask them directly.
 
 This does two things:
 1. Gives the marketplace its first real-looking listings
-2. Forces you to experience the listing flow as a user — you'll find friction points immediately
+2. Forces you to experience the listing flow as a user  -  you'll find friction points immediately
 
 **Target:** 20+ listings from your own network by end of day.
 
 ---
 
-### Day 2 — Email 20 Repair Shops (45 mins)
+### Day 2  -  Email 20 Repair Shops (45 mins)
 
 Repair shops are your secret weapon. They receive broken devices every week that aren't worth their time to fix. Instead of binning them, they could list on BrokeyDokey and recoup something.
 
@@ -58,13 +58,13 @@ Google "phone repair shop [your city]" and "laptop repair [your city]". Get 20 e
 >
 > Hi [Name],
 >
-> I'm Adrian, founder of BrokeyDokey — a UK marketplace specifically for broken and damaged tech.
+> I'm Adrian, founder of BrokeyDokey  -  a UK marketplace specifically for broken and damaged tech.
 >
 > Quick question: what do you do with devices customers bring in that aren't worth repairing?
 >
 > If you're binning them or recycling for pennies, BrokeyDokey is a free alternative. List them in a few minutes, get offers from buyers who want them for parts or DIY repair. No seller fees.
 >
-> I'd love to get you set up — happy to do the first few listings with you if that makes it easier.
+> I'd love to get you set up  -  happy to do the first few listings with you if that makes it easier.
 >
 > Worth a quick chat?
 >
@@ -75,7 +75,7 @@ Send 20 emails. If 5 reply and 2 sign up, that's potentially 50+ listings from a
 
 ---
 
-### Day 3 — Post in 3 Facebook Groups (30 mins)
+### Day 3  -  Post in 3 Facebook Groups (30 mins)
 
 Search Facebook for:
 - "Broken electronics UK"
@@ -85,7 +85,7 @@ Search Facebook for:
 
 Join the groups. Wait for approval. Then post this (native, not promotional):
 
-> "Question for the group — what do people here do with broken tech that's not worth getting repaired? I've got a dead MacBook and a broken PS5 controller and I'm not sure if they're worth anything or just landfill."
+> "Question for the group  -  what do people here do with broken tech that's not worth getting repaired? I've got a dead MacBook and a broken PS5 controller and I'm not sure if they're worth anything or just landfill."
 
 Then when people reply with suggestions, mention BrokeyDokey naturally as something you're using. Don't lead with it. Let the conversation happen first.
 
@@ -93,13 +93,13 @@ Then when people reply with suggestions, mention BrokeyDokey naturally as someth
 
 ---
 
-### Day 4 — Post on Reddit (45 mins)
+### Day 4  -  Post on Reddit (45 mins)
 
 Use the pre-written scripts in `marketing/ad-copy/reddit-organic-posts.md`.
 
 Start with:
-- r/techsupport — "My PS4 disc drive died and I've no idea if it's worth selling or just binning"
-- r/gaming — the broken controller post
+- r/techsupport  -  "My PS4 disc drive died and I've no idea if it's worth selling or just binning"
+- r/gaming  -  the broken controller post
 
 These are written as genuine questions, not ads. Read the rules of each subreddit before posting. Don't post the same thing twice in the same day.
 
@@ -107,7 +107,7 @@ These are written as genuine questions, not ads. Read the rules of each subreddi
 
 ---
 
-### Day 5 — Identify 10 UK Repair YouTubers (30 mins)
+### Day 5  -  Identify 10 UK Repair YouTubers (30 mins)
 
 Search YouTube for:
 - "phone repair UK"
@@ -116,23 +116,23 @@ Search YouTube for:
 
 Find 10 channels with 1,000–50,000 subscribers. These are mid-size creators who are reachable and whose audience is exactly who buys broken tech.
 
-Write their channel names and email/contact info into a spreadsheet. You're not reaching out yet — just building the list.
+Write their channel names and email/contact info into a spreadsheet. You're not reaching out yet  -  just building the list.
 
 ---
 
-### Day 6 — Write the Press Pitch (45 mins)
+### Day 6  -  Write the Press Pitch (45 mins)
 
 Tech journalists at The Guardian, Wired UK, TechRadar, and Which? all cover e-waste and circular economy stories. You have a genuinely good angle.
 
 **Your pitch (email this to tech journalists):**
 
-> Subject: UK startup lets people sell broken tech instead of binning it — and pays them real money
+> Subject: UK startup lets people sell broken tech instead of binning it  -  and pays them real money
 >
 > Hi [Name],
 >
-> 62 million tonnes of e-waste are generated globally each year. Most broken consumer tech in the UK ends up in landfill — not because it can't be fixed, but because people don't know anyone who wants to buy it broken.
+> 62 million tonnes of e-waste are generated globally each year. Most broken consumer tech in the UK ends up in landfill  -  not because it can't be fixed, but because people don't know anyone who wants to buy it broken.
 >
-> BrokeyDokey is a UK marketplace specifically for broken, damaged, and faulty electronics. Sellers list their broken PS5, dead laptop, or cracked iPhone. Buyers — mostly independent repairers and parts hunters — pay real money for it.
+> BrokeyDokey is a UK marketplace specifically for broken, damaged, and faulty electronics. Sellers list their broken PS5, dead laptop, or cracked iPhone. Buyers  -  mostly independent repairers and parts hunters  -  pay real money for it.
 >
 > A broken PS4 that someone would bin is worth £40–80 on BrokeyDokey. A dead MacBook that would go to a recycling centre is worth £80–150 for parts.
 >
@@ -146,7 +146,7 @@ Send to 10 journalists today.
 
 ---
 
-### Day 7 — Rest + Review (15 mins)
+### Day 7  -  Rest + Review (15 mins)
 
 Check your listing count. Where are you vs. 100 target?
 Reply to any Reddit comments, Facebook messages, or repair shop emails.
@@ -154,11 +154,11 @@ Note what's working and what isn't.
 
 ---
 
-## WEEK 2 — FIRST CONTENT (Days 8–14)
+## WEEK 2  -  FIRST CONTENT (Days 8–14)
 
 **Goal:** 200 listings. First piece of content that works for you while you sleep.
 
-### Day 8 — Write the First SEO Blog Post (60 mins)
+### Day 8  -  Write the First SEO Blog Post (60 mins)
 
 **Title:** "Your Broken PS4 Is Worth More Than Your Dignity (And Here's How to Sell It)"
 **Target keyword:** "sell broken PS4 UK" (1,900 searches/month)
@@ -177,9 +177,9 @@ This post will take 3–6 months to rank. You're planting a tree today. That's f
 
 ---
 
-### Day 9 — Film Your First YouTube Short (45 mins)
+### Day 9  -  Film Your First YouTube Short (45 mins)
 
-**Format:** "Roast My Junk" — pick one item from your broken tech pile.
+**Format:** "Roast My Junk"  -  pick one item from your broken tech pile.
 **Script:** Use the template in `marketing/video-scripts/02-roast-my-junk-series-template.md`
 
 Equipment needed: your phone. That's it.
@@ -192,24 +192,24 @@ Edit in CapCut (free). Add captions (CapCut does this automatically).
 Upload as a YouTube Short AND a TikTok AND an Instagram Reel.
 
 You don't need followers. Shorts/Reels get shown to people who don't follow you.
-One funny video showing a broken PS4 and "£65 — list it, mate" could reach 50,000 people.
+One funny video showing a broken PS4 and "£65  -  list it, mate" could reach 50,000 people.
 
 **Time investment:** 45 mins to film. 30 mins to edit. Post across 3 platforms.
 **Ongoing:** One of these per week from now on. Pick a different broken item each time.
 
 ---
 
-### Day 10 — Follow Up on Repair Shop Emails (20 mins)
+### Day 10  -  Follow Up on Repair Shop Emails (20 mins)
 
 Reply to anyone who responded. For those who didn't: send a 3-line follow-up.
 
-> "Hi [Name] — following up on my email from [Day 2]. Happy to jump on a 10-min call to show you how BrokeyDokey works if that's easier than email. No obligation."
+> "Hi [Name]  -  following up on my email from [Day 2]. Happy to jump on a 10-min call to show you how BrokeyDokey works if that's easier than email. No obligation."
 
 Repair shops are busy. The follow-up almost always outperforms the first email.
 
 ---
 
-### Day 11 — Post in 3 More Facebook Groups (30 mins)
+### Day 11  -  Post in 3 More Facebook Groups (30 mins)
 
 Same approach as Day 3. New groups, fresh angle.
 This time, try groups for specific devices:
@@ -221,7 +221,7 @@ These are people who already trade second-hand tech. They understand the concept
 
 ---
 
-### Day 12 — Discord Outreach (30 mins)
+### Day 12  -  Discord Outreach (30 mins)
 
 Join 3 Discord servers:
 - r/GamersRiseUp Discord
@@ -235,21 +235,21 @@ When someone mentions a broken device ("my controller is drifting, it's broken")
 
 ---
 
-### Day 13 — Email Your First 10 YouTubers (45 mins)
+### Day 13  -  Email Your First 10 YouTubers (45 mins)
 
 From the list you built on Day 5, pick the 10 most relevant channels.
 
 **The pitch:**
 
-> Subject: Partnership idea — your audience has broken tech, we pay them for it
+> Subject: Partnership idea  -  your audience has broken tech, we pay them for it
 >
 > Hi [Name],
 >
-> Love your [specific video] — the breakdown on the Xbox HDMI repair was genuinely useful.
+> Love your [specific video]  -  the breakdown on the Xbox HDMI repair was genuinely useful.
 >
-> I run BrokeyDokey, a UK marketplace for broken and damaged tech. Your audience — people who watch repair content — are exactly who we're built for. Either they fix things themselves, or they buy broken stuff to fix.
+> I run BrokeyDokey, a UK marketplace for broken and damaged tech. Your audience  -  people who watch repair content  -  are exactly who we're built for. Either they fix things themselves, or they buy broken stuff to fix.
 >
-> No affiliate deal upfront — I'd just love to get you an account so you can see if it's useful for your community. If you end up mentioning it naturally in a video because it's genuinely useful, brilliant.
+> No affiliate deal upfront  -  I'd just love to get you an account so you can see if it's useful for your community. If you end up mentioning it naturally in a video because it's genuinely useful, brilliant.
 >
 > Worth a look?
 >
@@ -259,7 +259,7 @@ No upfront payment ask. You're offering them something useful. The mention comes
 
 ---
 
-### Day 14 — Week 2 Review (20 mins)
+### Day 14  -  Week 2 Review (20 mins)
 
 Listing count check. Target: 200.
 Respond to all outstanding messages.
@@ -267,21 +267,21 @@ Note which channel is driving listings (repair shops? Reddit? Facebook?). Double
 
 ---
 
-## WEEK 3 — BUILD MOMENTUM (Days 15–21)
+## WEEK 3  -  BUILD MOMENTUM (Days 15–21)
 
 **Goal:** 350 listings. Second piece of content live. First partnership confirmed.
 
-### Day 15 — Second SEO Blog Post (60 mins)
+### Day 15  -  Second SEO Blog Post (60 mins)
 
 **Title:** "The Complete Guide to Selling a Broken iPhone in the UK (2026)"
-**Target keyword:** "sell broken iPhone UK" (5,400 searches/month — this is your biggest SEO prize)
+**Target keyword:** "sell broken iPhone UK" (5,400 searches/month  -  this is your biggest SEO prize)
 
 Same format as the PS4 post. Give real valuations. Be honest about what condition matters.
 This is the post that will eventually drive organic seller traffic at scale. Plant it now.
 
 ---
 
-### Day 16 — Film Second YouTube Short (45 mins)
+### Day 16  -  Film Second YouTube Short (45 mins)
 
 Different item. Use the Roast My Junk template again.
 If the first Short got any views, reference them ("last week someone sent me their broken MacBook...").
@@ -290,7 +290,7 @@ Building a series identity is more valuable than one-off posts. "Roast My Junk" 
 
 ---
 
-### Day 17 — University Outreach (45 mins)
+### Day 17  -  University Outreach (45 mins)
 
 Students break laptops and phones constantly, and they're usually broke enough to care about getting £40 for a dead device.
 
@@ -301,27 +301,27 @@ Some societies will share this with their mailing list for free. That's a direct
 
 ---
 
-### Day 18 — Offer a "Founding Seller" Perk (30 mins)
+### Day 18  -  Offer a "Founding Seller" Perk (30 mins)
 
 Create a simple incentive for early listings:
 
-> "List before we hit 500 items — get 'Founding Seller' badge on your profile. Forever."
+> "List before we hit 500 items  -  get 'Founding Seller' badge on your profile. Forever."
 
 This is free to offer and creates scarcity/status. Founding seller badges work because humans value being early to something.
 
 Add this badge to the site and email it to everyone who's listed so far.
-Post about it on Reddit and in your Facebook groups: "We're at [X] listings — the first 500 get a Founding Seller badge."
+Post about it on Reddit and in your Facebook groups: "We're at [X] listings  -  the first 500 get a Founding Seller badge."
 
 ---
 
-### Day 19 — Follow Up With All YouTubers (15 mins)
+### Day 19  -  Follow Up With All YouTubers (15 mins)
 
-Anyone who didn't reply to Day 13's email — send a one-line follow-up.
-> "Hi [Name] — just checking this didn't get lost. Happy to jump on a quick call if easier."
+Anyone who didn't reply to Day 13's email  -  send a one-line follow-up.
+> "Hi [Name]  -  just checking this didn't get lost. Happy to jump on a quick call if easier."
 
 ---
 
-### Day 20 — Create a "How To List" Video (30 mins)
+### Day 20  -  Create a "How To List" Video (30 mins)
 
 Film a 60-second screen recording showing the listing process on BrokeyDokey.
 This is not a marketing video. It's a utility video.
@@ -331,18 +331,18 @@ Upload it to YouTube, embed it on the site. When you email repair shops or post 
 
 ---
 
-### Day 21 — Week 3 Review + Adjust (20 mins)
+### Day 21  -  Week 3 Review + Adjust (20 mins)
 
 Listing count target: 350.
 What's your best source of listings so far? Lean into it harder in Week 4.
 
 ---
 
-## WEEK 4 — CLOSE OUT THE SPRINT (Days 22–30)
+## WEEK 4  -  CLOSE OUT THE SPRINT (Days 22–30)
 
 **Goal:** 500 listings by Day 30. One repair shop partnership signed. Three YouTube Shorts live.
 
-### Day 22 — Third SEO Blog Post (60 mins)
+### Day 22  -  Third SEO Blog Post (60 mins)
 
 **Title:** "Broken Laptop? Here's What It's Actually Worth (And Where to Sell It)"
 **Target keyword:** "sell broken laptop UK" (2,400/month)
@@ -352,26 +352,26 @@ These three posts together cover a huge chunk of the "sell broken [device]" sear
 
 ---
 
-### Day 23 — Film Third YouTube Short (45 mins)
+### Day 23  -  Film Third YouTube Short (45 mins)
 
 By now you should have a feel for what format is landing.
 If Roast My Junk isn't working, try a different angle:
-- "I sold my broken PS5 for £X — here's how" (testimonial format)
+- "I sold my broken PS5 for £X  -  here's how" (testimonial format)
 - "Things people bin that are worth money" (listicle format)
 
 ---
 
-### Day 24 — Personal Outreach Blitz (60 mins)
+### Day 24  -  Personal Outreach Blitz (60 mins)
 
 Go through your phone contacts. Text anyone who might have broken tech:
-> "Hey — random question, but do you have any old broken tech lying around? Working on something and would love to help you get rid of it. Free listing on BrokeyDokey, you might get something for it."
+> "Hey  -  random question, but do you have any old broken tech lying around? Working on something and would love to help you get rid of it. Free listing on BrokeyDokey, you might get something for it."
 
 Text 30 people. Even 5 responses gets you 5–15 more listings.
 This is not below you. This is how every marketplace got its first listings. Airbnb's founders photographed people's apartments themselves.
 
 ---
 
-### Day 25 — Press Follow-Up (20 mins)
+### Day 25  -  Press Follow-Up (20 mins)
 
 Journalists who didn't reply to Day 6's pitch: send a one-line follow-up.
 Journalists who DID reply: schedule calls or send requested info.
@@ -380,7 +380,7 @@ If you've now got interesting data (e.g., "we went from 50 to 400 listings in 3 
 
 ---
 
-### Day 26 — Optimise Your Listing Flow (30 mins)
+### Day 26  -  Optimise Your Listing Flow (30 mins)
 
 By now you've watched real people try to list. Where did they get stuck?
 - Too many steps?
@@ -391,7 +391,7 @@ Fix one friction point. A 10% improvement in listing completion rate is worth mo
 
 ---
 
-### Day 27 — Targeted Reddit Post: The "We're Growing" Post (30 mins)
+### Day 27  -  Targeted Reddit Post: The "We're Growing" Post (30 mins)
 
 Post an honest update to a relevant subreddit (r/entrepreneur, r/startups, r/UKPersonalFinance):
 
@@ -403,7 +403,7 @@ Don't post this until you're actually at the numbers you're claiming.
 
 ---
 
-### Day 28 — Thank Your Early Sellers (20 mins)
+### Day 28  -  Thank Your Early Sellers (20 mins)
 
 Email everyone who's listed so far with a personal thank-you.
 Not a template. A short, genuine email from you.
@@ -414,20 +414,20 @@ Early users who feel appreciated become advocates. They tell people. Word of mou
 
 ---
 
-### Day 29 — Third Blog Post + Interlink All Three (30 mins)
+### Day 29  -  Third Blog Post + Interlink All Three (30 mins)
 
 Make sure your three blog posts all link to each other and to your key pages (how it works, list an item, BrokeyGuard™).
 Internal linking helps SEO and keeps readers in your ecosystem.
 
 ---
 
-### Day 30 — The Sprint Review (30 mins)
+### Day 30  -  The Sprint Review (30 mins)
 
 **Count your listings.** Are you at 500?
 
 If yes: you're ready to think about Google Ads. Specifically, the seller-targeting ones ("sell broken laptop", "sell broken PS5"). Not yet the buyer-targeting ones.
 
-If no: don't panic. Look at where you stalled and run the best-performing tactic again. The sprint logic still holds — just give it another two weeks before any paid spend.
+If no: don't panic. Look at where you stalled and run the best-performing tactic again. The sprint logic still holds  -  just give it another two weeks before any paid spend.
 
 **Review every channel:**
 
@@ -441,7 +441,7 @@ If no: don't panic. Look at where you stalled and run the best-performing tactic
 | Press outreach | | | £0 |
 | University outreach | | | £0 |
 
-Whatever drove the most listings with the least effort — that's your repeatable engine for Month 2.
+Whatever drove the most listings with the least effort  -  that's your repeatable engine for Month 2.
 
 ---
 
@@ -464,8 +464,8 @@ Whatever drove the most listings with the least effort — that's your repeatabl
 
 - **Don't run Google Ads.** 50 listings → 500 visits → 500 disappointed people → £200 wasted.
 - **Don't buy followers.** Fake followers are detectable and worthless.
-- **Don't post daily on Instagram.** You don't have the content volume yet and you said you don't enjoy social media. The YouTube Shorts cross-post to Reels automatically — that's enough for now.
-- **Don't wait until the site is "perfect."** Friction in the listing flow is a feature — it tells you what to fix. You learn faster from real users than from imagining them.
+- **Don't post daily on Instagram.** You don't have the content volume yet and you said you don't enjoy social media. The YouTube Shorts cross-post to Reels automatically  -  that's enough for now.
+- **Don't wait until the site is "perfect."** Friction in the listing flow is a feature  -  it tells you what to fix. You learn faster from real users than from imagining them.
 - **Don't measure followers.** Measure listings. Only listings matter this month.
 
 ---
