@@ -6,6 +6,11 @@ const BROWSE_URL = 'https://api.ebay.com/buy/browse/v1/item_summary/search';
 let tokenCache: { token: string; expires: number } | null = null;
 
 async function getToken(): Promise<string> {
+  // If a pre-generated token is provided in .env, use it directly
+  if (process.env.EBAY_ACCESS_TOKEN) {
+    return process.env.EBAY_ACCESS_TOKEN;
+  }
+
   if (tokenCache && Date.now() < tokenCache.expires) return tokenCache.token;
 
   const credentials = Buffer.from(
