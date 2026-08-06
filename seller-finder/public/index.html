@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrokeyDokey — Seller Finder</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117; --surface: #1a1d27; --border: #2a2d3a; --text: #e8eaf0;
+      --muted: #7a7e96; --accent: #ff6b2b; --green: #22c55e; --yellow: #eab308;
+      --blue: #3b82f6; --red: #ef4444;
+    }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+    .logo { font-size: 18px; font-weight: 700; color: var(--accent); }
+    .logo span { color: var(--text); }
+    .stats { display: flex; gap: 24px; margin-left: auto; }
+    .stat { text-align: center; }
+    .stat-value { font-size: 20px; font-weight: 700; }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .layout { display: grid; grid-template-columns: 320px 1fr; height: calc(100vh - 61px); }
+    .sidebar { background: var(--surface); border-right: 1px solid var(--border); overflow-y: auto; }
+    .filters { padding: 12px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-btn { padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; transition: all 0.15s; }
+    .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(255,107,43,0.1); }
+    .seller-item { padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+    .seller-item:hover { background: rgba(255,255,255,0.03); }
+    .seller-item.selected { background: rgba(255,107,43,0.08); border-left: 3px solid var(--accent); }
+    .seller-row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .seller-username { font-weight: 600; flex: 1; }
+    .score-badge { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+    .score-hot { background: rgba(255,107,43,0.2); color: var(--accent); }
+    .score-good { background: rgba(34,197,94,0.15); color: var(--green); }
+    .score-ok { background: rgba(234,179,8,0.15); color: var(--yellow); }
+    .score-low { background: rgba(122,126,150,0.15); color: var(--muted); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .status-new { background: var(--blue); } .status-contacted { background: var(--yellow); }
+    .status-replied { background: var(--green); } .status-listed { background: var(--accent); }
+    .status-declined { background: var(--red); }
+    .seller-row2 { font-size: 12px; color: var(--muted); display: flex; gap: 12px; }
+    .detail { padding: 24px; overflow-y: auto; }
+    .detail-empty { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--muted); }
+    .detail-header { margin-bottom: 20px; }
+    .detail-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .detail-meta { color: var(--muted); font-size: 13px; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .detail-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+    .detail-card-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .detail-card-value { font-size: 20px; font-weight: 700; }
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
+    .status-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    .status-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-size: 12px; transition: all 0.15s; }
+    .status-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .status-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .contact-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .field-group { display: flex; flex-direction: column; gap: 4px; }
+    .field-group label { font-size: 11px; color: var(--muted); }
+    .field-group input, .field-group textarea { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; color: var(--text); font-size: 13px; transition: border-color 0.15s; }
+    .field-group input:focus, .field-group textarea:focus { outline: none; border-color: var(--accent); }
+    .field-group.full { grid-column: 1 / -1; }
+    .field-group textarea { height: 60px; resize: vertical; font-family: inherit; }
+    .save-btn { margin-top: 8px; padding: 7px 16px; background: var(--accent); border: none; border-radius: 6px; color: white; cursor: pointer; font-size: 13px; font-weight: 600; }
+    .save-btn:hover { opacity: 0.9; }
+    .message-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .message-toolbar { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .message-subject-field { flex: 1; background: transparent; border: none; color: var(--text); font-size: 13px; font-weight: 600; }
+    .message-subject-field:focus { outline: none; }
+    .message-textarea { width: 100%; min-height: 200px; background: transparent; border: none; color: var(--text); font-size: 13px; line-height: 1.6; padding: 14px; resize: vertical; font-family: inherit; }
+    .message-textarea:focus { outline: none; }
+    .message-actions { padding: 10px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
+    .btn { padding: 7px 14px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-size: 12px; transition: all 0.15s; }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
+    .btn-primary:hover { opacity: 0.9; color: white; border-color: var(--accent); }
+    .btn-sm { padding: 4px 10px; font-size: 11px; }
+    .listings-grid { display: grid; gap: 8px; }
+    .listing-item { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start; }
+    .listing-img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; background: var(--border); flex-shrink: 0; }
+    .listing-title { font-size: 13px; flex: 1; }
+    .listing-price { font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .listing-link { font-size: 11px; color: var(--blue); text-decoration: none; }
+    .listing-link:hover { text-decoration: underline; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--green); color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+    .toast.show { opacity: 1; } .toast.error { background: var(--red); }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; background: rgba(255,255,255,0.07); margin: 2px; }
+    .ebay-link { font-size: 11px; color: var(--blue); text-decoration: none; }
+    .ebay-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">Brokey<span>Dokey</span> <span style="font-weight:400;color:var(--muted);font-size:14px;">Seller Finder</span></div>
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat-value" id="s-total">—</div><div class="stat-label">Total</div></div>
+    <div class="stat"><div class="stat-value" id="s-new" style="color:var(--blue)">—</div><div class="stat-label">New</div></div>
+    <div class="stat"><div class="stat-value" id="s-contacted" style="color:var(--yellow)">—</div><div class="stat-label">Contacted</div></div>
+    <div class="stat"><div class="stat-value" id="s-replied" style="color:var(--green)">—</div><div class="stat-label">Replied</div></div>
+    <div class="stat"><div class="stat-value" id="s-listed" style="color:var(--accent)">—</div><div class="stat-label">Listed</div></div>
+  </div>
+</header>
+<div class="layout">
+  <div class="sidebar">
+    <div class="filters">
+      <button class="filter-btn active" data-status="">All</button>
+      <button class="filter-btn" data-status="new">New</button>
+      <button class="filter-btn" data-status="contacted">Contacted</button>
+      <button class="filter-btn" data-status="replied">Replied</button>
+      <button class="filter-btn" data-status="listed">Listed</button>
+      <button class="filter-btn" data-status="declined">Declined</button>
+    </div>
+    <div class="seller-list" id="seller-list"></div>
+  </div>
+  <div class="detail" id="detail">
+    <div class="detail-empty">Select a seller to view details and generate outreach</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+  let sellers = [], currentSeller = null, currentFilter = '';
+  async function loadStats() {
+    const data = await fetch('/api/stats').then(r => r.json());
+    document.getElementById('s-total').textContent = data.total;
+    document.getElementById('s-new').textContent = data.new;
+    document.getElementById('s-contacted').textContent = data.contacted;
+    document.getElementById('s-replied').textContent = data.replied;
+    document.getElementById('s-listed').textContent = data.listed;
+  }
+  async function loadSellers(status = '') {
+    const url = status ? `/api/sellers?status=${status}` : '/api/sellers';
+    sellers = await fetch(url).then(r => r.json());
+    renderSellers();
+  }
+  function scoreLabel(score) {
+    if (score >= 80) return ['Hot', 'score-hot'];
+    if (score >= 60) return ['Good', 'score-good'];
+    if (score >= 40) return ['OK', 'score-ok'];
+    return ['Low', 'score-low'];
+  }
+  function renderSellers() {
+    const list = document.getElementById('seller-list');
+    if (!sellers.length) { list.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No sellers found.<br>Run <code>npm run crawl</code> first.</div>'; return; }
+    list.innerHTML = sellers.map(s => {
+      const [label, cls] = scoreLabel(s.score);
+      const cats = JSON.parse(s.categories || '[]').join(', ');
+      const isSelected = currentSeller && currentSeller.username === s.username ? ' selected' : '';
+      return `<div class="seller-item${isSelected}" data-username="${s.username}" onclick="selectSeller('${s.username}')">
+        <div class="seller-row1"><div class="status-dot status-${s.status}"></div><div class="seller-username">${s.username}</div><span class="score-badge ${cls}">${label} ${s.score}</span></div>
+        <div class="seller-row2"><span>${s.broken_listing_count} listings</span><span>FB: ${s.feedback_score}</span><span>${cats || '—'}</span></div>
+      </div>`;
+    }).join('');
+  }
+  async function selectSeller(username) {
+    document.querySelectorAll('.seller-item').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`[data-username="${username}"]`)?.classList.add('selected');
+    const [{ seller, listings }, { subject, message }] = await Promise.all([
+      fetch(`/api/sellers/${username}`).then(r => r.json()),
+      fetch(`/api/sellers/${username}/message`).then(r => r.json()),
+    ]);
+    currentSeller = seller;
+    const cats = JSON.parse(seller.categories || '[]');
+    const [scoreLabel_, scoreCls] = scoreLabel(seller.score);
+    document.getElementById('detail').innerHTML = `
+      <div class="detail-header">
+        <div class="detail-title">${seller.username} <span class="score-badge ${scoreCls}" style="font-size:14px;vertical-align:middle;margin-left:8px">${scoreLabel_} ${seller.score}</span></div>
+        <div class="detail-meta">FB: ${seller.feedback_score} (${seller.feedback_percentage}%) &nbsp;·&nbsp; ${seller.broken_listing_count} broken listings &nbsp;·&nbsp; Est. value £${Math.round(seller.total_listing_value)} &nbsp;·&nbsp; <a class="ebay-link" href="https://www.ebay.co.uk/usr/${seller.username}" target="_blank">View eBay store ↗</a></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card"><div class="detail-card-label">Feedback Score</div><div class="detail-card-value">${seller.feedback_score}</div></div>
+        <div class="detail-card"><div class="detail-card-label">Broken Listings</div><div class="detail-card-value">${seller.broken_listing_count}</div></div>
+        <div class="detail-card"><div class="detail-card-label">Total Listing Value</div><div class="detail-card-value">£${Math.round(seller.total_listing_value)}</div></div>
+        <div class="detail-card"><div class="detail-card-label">Categories</div><div style="margin-top:4px">${cats.map(c => `<span class="tag">${c}</span>`).join('')}</div></div>
+      </div>
+      <div class="section"><div class="section-title">Status</div><div class="status-buttons">${['new','contacted','replied','listed','declined'].map(s => `<button class="status-btn ${seller.status===s?'active':''}" onclick="setStatus('${username}','${s}')">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}</div></div>
+      <div class="section"><div class="section-title">Contact Details</div>
+        <div class="contact-fields">
+          <div class="field-group"><label>Email</label><input id="cf-email" type="email" value="${seller.email||''}" placeholder="email@example.com"></div>
+          <div class="field-group"><label>Instagram</label><input id="cf-instagram" type="text" value="${seller.instagram||''}" placeholder="@username"></div>
+          <div class="field-group"><label>TikTok</label><input id="cf-tiktok" type="text" value="${seller.tiktok||''}" placeholder="@username"></div>
+          <div class="field-group"><label>Website</label><input id="cf-website" type="text" value="${seller.website||''}" placeholder="https://..."></div>
+          <div class="field-group full"><label>Notes</label><textarea id="cf-notes">${seller.notes||''}</textarea></div>
+        </div>
+        <button class="save-btn" onclick="saveContact('${username}')">Save Contact Info</button>
+      </div>
+      <div class="section"><div class="section-title">Recent Listings</div><div class="listings-grid">${listings.slice(0,5).map(l => `<div class="listing-item">${l.image?`<img class="listing-img" src="${l.image}" alt="">`:'<div class="listing-img"></div>'}<div style="flex:1;min-width:0"><div class="listing-title">${l.title}</div><a class="listing-link" href="${l.url}" target="_blank">View on eBay ↗</a></div><div class="listing-price">£${l.price}</div></div>`).join('')}</div></div>
+      <div class="section"><div class="section-title">Outreach Message</div>
+        <div class="message-box">
+          <div class="message-toolbar"><span style="font-size:11px;color:var(--muted)">Subject:</span><input class="message-subject-field" id="msg-subject" value="${subject}"></div>
+          <textarea class="message-textarea" id="msg-body">${message}</textarea>
+          <div class="message-actions">${seller.email?`<button class="btn btn-primary" onclick="sendEmail('${username}')">Send Email</button>`:'<span style="color:var(--muted);font-size:12px">Add email above to send</span>'}<button class="btn" onclick="copyMessage()">Copy Message</button><button class="btn btn-sm" onclick="regenerateMessage('${username}')">Regenerate</button></div>
+        </div>
+      </div>`;
+  }
+  async function setStatus(username, status) {
+    await fetch(`/api/sellers/${username}/status`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+    toast('Status updated'); loadStats(); await loadSellers(currentFilter); selectSeller(username);
+  }
+  async function saveContact(username) {
+    const fields = {email:document.getElementById('cf-email')?.value||undefined,instagram:document.getElementById('cf-instagram')?.value||undefined,tiktok:document.getElementById('cf-tiktok')?.value||undefined,website:document.getElementById('cf-website')?.value||undefined,notes:document.getElementById('cf-notes')?.value||undefined};
+    await fetch(`/api/sellers/${username}/contact`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
+    toast('Contact info saved');
+  }
+  async function sendEmail(username) {
+    const email=document.getElementById('cf-email')?.value,subject=document.getElementById('msg-subject')?.value,message=document.getElementById('msg-body')?.value;
+    if (!email) { toast('Add an email address first',true); return; }
+    const data = await fetch(`/api/sellers/${username}/send-email`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,subject,message})}).then(r=>r.json());
+    if (data.ok) { toast('Email sent!'); loadStats(); loadSellers(currentFilter); } else { toast(data.error||'Failed to send',true); }
+  }
+  function copyMessage() { navigator.clipboard.writeText(document.getElementById('msg-body')?.value||'').then(()=>toast('Copied to clipboard')); }
+  async function regenerateMessage(username) {
+    const {subject,message} = await fetch(`/api/sellers/${username}/message`).then(r=>r.json());
+    document.getElementById('msg-subject').value=subject; document.getElementById('msg-body').value=message;
+  }
+  function toast(msg,isError=false) {
+    const el=document.getElementById('toast'); el.textContent=msg; el.className='toast show'+(isError?' error':'');
+    setTimeout(()=>el.className='toast',2500);
+  }
+  document.querySelectorAll('.filter-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+    currentFilter=btn.dataset.status; loadSellers(currentFilter);
+  }));
+  loadStats(); loadSellers();
+</script>
+</body>
+</html>
