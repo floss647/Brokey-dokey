@@ -1,41 +1,6 @@
 import fetch from 'node-fetch';
 
-const AUTH_URL = 'https://api.ebay.com/identity/v1/oauth2/token';
-const BROWSE_URL = 'https://api.ebay.com/buy/browse/v1/item_summary/search';
-
-let tokenCache: { token: string; expires: number } | null = null;
-
-async function getToken(): Promise<string> {
-  // If a pre-generated token is provided in .env, use it directly
-  if (process.env.EBAY_ACCESS_TOKEN) {
-    return process.env.EBAY_ACCESS_TOKEN;
-  }
-
-  if (tokenCache && Date.now() < tokenCache.expires) return tokenCache.token;
-
-  const credentials = Buffer.from(
-    `${process.env.EBAY_CLIENT_ID}:${process.env.EBAY_CLIENT_SECRET}`
-  ).toString('base64');
-
-  const res = await fetch(AUTH_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${credentials}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'grant_type=client_credentials&scope=https://api.ebay.com/oauth/api_scope',
-  });
-
-  const data = (await res.json()) as any;
-  if (!data.access_token) throw new Error(`eBay auth failed: ${JSON.stringify(data)}`);
-
-  tokenCache = {
-    token: data.access_token,
-    expires: Date.now() + data.expires_in * 1000 - 60000,
-  };
-
-  return tokenCache.token;
-}
+const FINDING_API = 'https://svcs.ebay.com/services/search/FindingService/v1';
 
 export interface EbayListing {
   itemId: string;
@@ -65,45 +30,52 @@ const SEARCH_QUERIES = ['spares repairs', 'broken', 'faulty', 'cracked screen', 
 export async function searchBrokenListings(
   query: string,
   categoryId: string,
-  offset = 0
+  page = 1
 ): Promise<{ items: EbayListing[]; total: number }> {
-  const token = await getToken();
+  const appId = process.env.EBAY_APP_ID;
+  if (!appId) throw new Error('EBAY_APP_ID not set in .env');
 
   const params = new URLSearchParams({
-    q: query,
-    category_ids: categoryId,
-    filter: 'conditionIds:{7000},itemLocationCountry:GB',
-    sort: 'newlyListed',
-    limit: '100',
-    offset: String(offset),
+    'OPERATION-NAME': 'findItemsByKeywords',
+    'SERVICE-VERSION': '1.13.0',
+    'SECURITY-APPNAME': appId,
+    'RESPONSE-DATA-FORMAT': 'JSON',
+    'keywords': query,
+    'categoryId': categoryId,
+    'itemFilter(0).name': 'Condition',
+    'itemFilter(0).value': '7000',
+    'itemFilter(1).name': 'LocatedIn',
+    'itemFilter(1).value': 'GB',
+    'paginationInput.entriesPerPage': '100',
+    'paginationInput.pageNumber': String(page),
+    'outputSelector(0)': 'SellerInfo',
+    'outputSelector(1)': 'GalleryInfo',
   });
 
-  const res = await fetch(`${BROWSE_URL}?${params}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'X-EBAY-C-MARKETPLACE-ID': 'EBAY_GB',
-      'X-EBAY-C-ENDUSERCTX': 'contextualLocation=country=GB',
-    },
-  });
-
+  const res = await fetch(`${FINDING_API}?${params}`);
   const data = (await res.json()) as any;
 
-  const items: EbayListing[] = (data.itemSummaries || []).map((item: any) => ({
-    itemId: item.itemId,
-    title: item.title,
-    price: parseFloat(item.price?.value || '0'),
+  const response = data.findItemsByKeywordsResponse?.[0];
+  const searchResult = response?.searchResult?.[0];
+  const rawItems = searchResult?.item || [];
+  const total = parseInt(response?.paginationOutput?.[0]?.totalEntries?.[0] || '0');
+
+  const items: EbayListing[] = rawItems.map((item: any) => ({
+    itemId: item.itemId?.[0] || '',
+    title: item.title?.[0] || '',
+    price: parseFloat(item.sellingStatus?.[0]?.currentPrice?.[0]?.['__value__'] || '0'),
     seller: {
-      username: item.seller?.username || '',
-      feedbackScore: item.seller?.feedbackScore || 0,
-      feedbackPercentage: parseFloat(item.seller?.feedbackPercentage || '0'),
+      username: item.sellerInfo?.[0]?.sellerUserName?.[0] || '',
+      feedbackScore: parseInt(item.sellerInfo?.[0]?.feedbackScore?.[0] || '0'),
+      feedbackPercentage: parseFloat(item.sellerInfo?.[0]?.positiveFeedbackPercent?.[0] || '0'),
     },
     categoryId,
     categoryName: CATEGORIES.find((c) => c.id === categoryId)?.name || categoryId,
-    itemWebUrl: item.itemWebUrl || '',
-    image: item.image?.imageUrl,
+    itemWebUrl: item.viewItemURL?.[0] || '',
+    image: item.galleryURL?.[0],
   }));
 
-  return { items, total: data.total || 0 };
+  return { items, total };
 }
 
 export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
@@ -114,7 +86,7 @@ export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
     for (const query of SEARCH_QUERIES) {
       console.log(`  Searching "${query}" in ${category.name}...`);
       try {
-        const { items, total } = await searchBrokenListings(query, category.id);
+        const { items, total } = await searchBrokenListings(query, category.id, 1);
         for (const item of items) {
           if (!seen.has(item.itemId)) {
             seen.add(item.itemId);
@@ -124,7 +96,7 @@ export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
         await new Promise((r) => setTimeout(r, 300));
 
         if (total > 100) {
-          const { items: more } = await searchBrokenListings(query, category.id, 100);
+          const { items: more } = await searchBrokenListings(query, category.id, 2);
           for (const item of more) {
             if (!seen.has(item.itemId)) {
               seen.add(item.itemId);
@@ -134,7 +106,7 @@ export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
           await new Promise((r) => setTimeout(r, 300));
         }
       } catch (err) {
-        console.warn(`  Failed ${query}/${category.name}:`, err);
+        console.warn(`  Failed "${query}" in ${category.name}:`, err);
       }
     }
   }
