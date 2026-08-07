@@ -29,15 +29,13 @@ app.get('/api/stats', (_req, res) => {
 
 app.get('/api/sellers', (req, res) => {
   const { status } = req.query as { status?: string };
-  const sellers = getSellers(status);
-  res.json(sellers);
+  res.json(getSellers(status));
 });
 
 app.get('/api/sellers/:username', (req, res) => {
   const seller = getSeller(req.params.username);
   if (!seller) return res.status(404).json({ error: 'Not found' });
-  const listings = getSellerListings(req.params.username);
-  res.json({ seller, listings });
+  res.json({ seller, listings: getSellerListings(req.params.username) });
 });
 
 app.get('/api/sellers/:username/message', (req, res) => {
@@ -45,35 +43,32 @@ app.get('/api/sellers/:username/message', (req, res) => {
   if (!seller) return res.status(404).json({ error: 'Not found' });
   const listings = getSellerListings(req.params.username) as any[];
 
-  const sellerAgg: SellerAggregate = {
+  const agg: SellerAggregate = {
     username: seller.username,
     feedbackScore: seller.feedback_score,
     feedbackPercentage: seller.feedback_percentage,
     brokenListingCount: seller.broken_listing_count,
     totalListingValue: seller.total_listing_value,
+    avgListingValue: seller.total_listing_value / Math.max(1, seller.broken_listing_count),
     categories: JSON.parse(seller.categories || '[]'),
     score: seller.score,
+    label: seller.score >= 80 ? 'Hot' : seller.score >= 60 ? 'Good' : seller.score >= 40 ? 'OK' : 'Low',
     listings: listings.map((l) => ({
       itemId: l.item_id,
       title: l.title,
       price: l.price,
       seller: { username: seller.username, feedbackScore: seller.feedback_score, feedbackPercentage: seller.feedback_percentage },
-      categoryId: l.category_id,
       categoryName: l.category_name,
       itemWebUrl: l.url,
       image: l.image,
     })),
   };
 
-  res.json({
-    subject: generateEmailSubject(sellerAgg),
-    message: generateOutreachMessage(sellerAgg),
-  });
+  res.json({ subject: generateEmailSubject(agg), message: generateOutreachMessage(agg) });
 });
 
 app.patch('/api/sellers/:username/status', (req, res) => {
-  const { status } = req.body as { status: string };
-  updateSellerStatus(req.params.username, status);
+  updateSellerStatus(req.params.username, req.body.status);
   res.json({ ok: true });
 });
 
@@ -83,8 +78,7 @@ app.patch('/api/sellers/:username/contact', (req, res) => {
 });
 
 app.post('/api/sellers/:username/outreach', (req, res) => {
-  const { channel, message } = req.body as { channel: string; message: string };
-  saveOutreach(req.params.username, channel, message);
+  saveOutreach(req.params.username, req.body.channel, req.body.message);
   res.json({ ok: true });
 });
 
@@ -113,7 +107,6 @@ app.post('/api/sellers/:username/send-email', async (req, res) => {
     saveOutreach(req.params.username, 'email', message);
     markOutreachSent(req.params.username);
     updateSellerStatus(req.params.username, 'contacted');
-
     res.json({ ok: true });
   } catch (err: any) {
     res.status(500).json({ error: err.message });

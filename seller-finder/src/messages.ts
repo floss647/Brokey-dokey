@@ -7,7 +7,7 @@ export function generateOutreachMessage(seller: SellerAggregate): string {
     .join(', ');
 
   const categoryList = seller.categories.join(', ');
-  const avgPrice = seller.totalListingValue / seller.brokenListingCount;
+  const avgPrice = seller.avgListingValue;
 
   const templates = [
     `Hi ${seller.username},
