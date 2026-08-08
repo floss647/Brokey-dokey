@@ -175,79 +175,96 @@ async function getPage(page: Page, url: string, waitFor?: string): Promise<strin
 
 export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
   console.log('Launching browser...');
-  const browser: Browser = await chromium.launch({ headless: true });
+  const browser: Browser = await chromium.launch({
+    headless: true,
+    args: [
+      '--disable-blink-features=AutomationControlled',
+      '--no-sandbox',
+      '--disable-dev-shm-usage',
+    ],
+  });
   const context = await browser.newContext({
     userAgent:
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     locale: 'en-GB',
+    viewport: { width: 1280, height: 800 },
+    deviceScaleFactor: 2,
     extraHTTPHeaders: {
       'Accept-Language': 'en-GB,en;q=0.9',
     },
   });
+
+  // Remove the webdriver flag that eBay/Cloudflare uses to detect bots
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+    // @ts-ignore
+    delete window.cdc_adoQpoasnfa76pfcZLmcfl_Array;
+    // @ts-ignore
+    delete window.cdc_adoQpoasnfa76pfcZLmcfl_Promise;
+    // @ts-ignore
+    delete window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol;
+  });
+
   const page = await context.newPage();
 
   // Visit eBay homepage and accept cookie consent
   await page.goto('https://www.ebay.co.uk', { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await sleep(2000);
+  await sleep(3000);
 
   const homeTitle = await page.title();
   console.log(`  Homepage title: "${homeTitle}"`);
 
-  // Save homepage HTML for debugging (first run only)
+  // Save screenshot + HTML for debugging
   try {
-    const homeHtml = await page.content();
-    writeFileSync('/tmp/ebay-home-debug.html', homeHtml);
-    console.log(`  Saved homepage HTML (${homeHtml.length} bytes) to /tmp/ebay-home-debug.html`);
+    await page.screenshot({ path: '/tmp/ebay-home.png', fullPage: false });
+    writeFileSync('/tmp/ebay-home-debug.html', await page.content());
+    console.log(`  Debug snapshot: /tmp/ebay-home.png + /tmp/ebay-home-debug.html`);
   } catch { /* ignore */ }
 
-  // Try: buttons in the main frame
+  // Accept GDPR consent — try main frame first
   let consentClicked = false;
-  try {
-    const acceptBtn = page.getByRole('button', { name: /accept all/i }).first();
-    if (await acceptBtn.isVisible({ timeout: 3000 })) {
-      await acceptBtn.click();
-      consentClicked = true;
-      console.log('  Accepted cookie consent (main frame, role)');
-      await sleep(1500);
-    }
-  } catch { /* not found */ }
-
-  // Try: eBay-specific selectors in main frame
-  if (!consentClicked) {
+  for (const attempt of [
+    () => page.getByRole('button', { name: /accept all/i }).first().click(),
+    () => page.$eval('[data-tracking="button-ACCEPT_ALL"]', (el: HTMLElement) => el.click()),
+    () => page.$eval('#gdpr-banner-accept, .gdpr-banner__accept', (el: HTMLElement) => el.click()),
+    () => page.$eval('button[class*="accept" i]', (el: HTMLElement) => el.click()),
+  ]) {
+    if (consentClicked) break;
     try {
-      const btn = await page.$('[data-tracking="button-ACCEPT_ALL"], #gdpr-banner-accept, .gdpr-banner__accept, button[id*="accept"], button[class*="accept"]');
-      if (btn) {
-        await btn.click();
-        consentClicked = true;
-        console.log('  Accepted cookie consent (main frame, selector)');
-        await sleep(1500);
-      }
-    } catch { /* ignore */ }
+      await attempt();
+      consentClicked = true;
+      console.log('  Accepted cookie consent (main frame)');
+      await sleep(1500);
+    } catch { /* try next */ }
   }
 
-  // Try: consent inside an iframe (common for CMP providers like Sourcepoint/Usercentrics)
+  // Try consent inside iframes (Sourcepoint CMP common on eBay UK)
   if (!consentClicked) {
     try {
+      await page.waitForSelector('iframe', { timeout: 3000 });
       for (const frame of page.frames()) {
+        if (consentClicked) break;
         const url = frame.url();
         if (!url || url === 'about:blank') continue;
-        const btn = await frame.$('button[title*="Accept" i], button[aria-label*="Accept" i], [id*="accept" i][role="button"], button');
-        if (btn) {
-          const text = await btn.innerText().catch(() => '');
-          if (/accept/i.test(text)) {
-            await btn.click();
-            consentClicked = true;
-            console.log(`  Accepted cookie consent (iframe: ${url.slice(0, 60)})`);
-            await sleep(1500);
-            break;
+        try {
+          const buttons = await frame.$$('button');
+          for (const btn of buttons) {
+            const text = (await btn.innerText().catch(() => '')).trim();
+            if (/^accept/i.test(text)) {
+              await btn.click();
+              consentClicked = true;
+              console.log(`  Accepted cookie consent (iframe ${url.slice(0, 50)})`);
+              await sleep(1500);
+              break;
+            }
           }
-        }
+        } catch { /* skip frame */ }
       }
-    } catch { /* ignore */ }
+    } catch { /* no iframes */ }
   }
 
   if (!consentClicked) {
-    console.log('  No cookie consent banner found — continuing anyway');
+    console.log('  No consent banner found — proceeding (may already have cookies)');
   }
 
   const all: EbayListing[] = [];
