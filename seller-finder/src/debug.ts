@@ -16,8 +16,10 @@ await new Promise(r => setTimeout(r, 2000));
 console.log('Searching...');
 await page.goto(
   'https://www.ebay.co.uk/sch/i.html?_nkw=broken+iphone+spares+repairs&LH_ItemCondition=7000&_sop=10&_ipg=20',
-  { waitUntil: 'networkidle', timeout: 30000 }
+  { waitUntil: 'domcontentloaded', timeout: 30000 }
 );
+// Wait for results or consent banner
+try { await page.waitForSelector('li.s-item, [id*="consent"], [class*="consent"], iframe', { timeout: 8000 }); } catch { /* ok */ }
 await new Promise(r => setTimeout(r, 3000));
 
 const html = await page.content();
