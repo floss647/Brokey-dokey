@@ -159,9 +159,16 @@ function parseItemHtml(html: string) {
   return { username, feedbackScore, feedbackPercentage };
 }
 
-async function getPage(page: Page, url: string): Promise<string> {
+async function getPage(page: Page, url: string, waitFor?: string): Promise<string> {
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await sleep(500 + Math.random() * 500);
+  if (waitFor) {
+    try {
+      await page.waitForSelector(waitFor, { timeout: 8000 });
+    } catch {
+      // element didn't appear — page may have no results
+    }
+  }
+  await sleep(800 + Math.random() * 400);
   return page.content();
 }
 
@@ -197,9 +204,11 @@ export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
         LH_ItemCondition: '7000',
         _sop: '10',
         _ipg: '120',
-        LH_BIN: '1',
       });
-      const html = await getPage(page, `${BASE}/sch/i.html?${params}`);
+      const html = await getPage(page, `${BASE}/sch/i.html?${params}`, 'li.s-item');
+      // Debug: log how many s-item elements the HTML contains
+      const rawCount = (html.match(/class="s-item/g) || []).length;
+      if (rawCount === 0) console.warn(`    [debug] No s-item elements in HTML — eBay may have changed layout`);
       const items = parseSearchHtml(html, search.category);
 
       let found = 0;
