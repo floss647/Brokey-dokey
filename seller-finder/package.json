@@ -4,13 +4,13 @@
   "description": "Find and contact eBay sellers of broken electronics for BrokeyDokey",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "start": "node --experimental-specifier-resolution=node dist/server.js",
-    "crawl": "tsx src/crawl.ts",
-    "build": "tsc"
+    "crawl": "npx tsx src/crawl.ts",
+    "server": "npx tsx src/server.ts",
+    "dev": "npx tsx src/server.ts"
   },
   "dependencies": {
     "better-sqlite3": "^9.4.3",
+    "cheerio": "^1.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "node-fetch": "^3.3.2",

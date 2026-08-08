@@ -24,19 +24,58 @@ export interface EbayListing {
   image?: string;
 }
 
+// Add or remove verticals here — each line is one search pass
 const SEARCHES = [
+  // ── Phones ──────────────────────────────────────────
   { query: 'broken iphone spares repairs', category: 'Phones' },
-  { query: 'faulty samsung phone spares', category: 'Phones' },
+  { query: 'faulty samsung phone spares repairs', category: 'Phones' },
+  { query: 'water damaged phone spares', category: 'Phones' },
+
+  // ── Laptops & Computers ─────────────────────────────
   { query: 'broken laptop spares not working', category: 'Laptops' },
   { query: 'broken macbook spares repairs', category: 'Laptops' },
-  { query: 'cracked ipad screen spares', category: 'Tablets' },
-  { query: 'broken playstation 5 faulty', category: 'Consoles' },
+  { query: 'faulty desktop pc spares', category: 'Computers' },
+
+  // ── Tablets ─────────────────────────────────────────
+  { query: 'cracked ipad faulty spares', category: 'Tablets' },
+  { query: 'broken android tablet spares', category: 'Tablets' },
+
+  // ── Games Consoles ──────────────────────────────────
+  { query: 'broken playstation 5 faulty spares', category: 'Consoles' },
   { query: 'broken nintendo switch spares', category: 'Consoles' },
-  { query: 'faulty camera spares repairs', category: 'Cameras' },
-  { query: 'water damaged phone spares', category: 'Phones' },
-  { query: 'broken iphone water damage', category: 'Phones' },
-  { query: 'broken tablet faulty', category: 'Tablets' },
-  { query: 'broken xbox series spares', category: 'Consoles' },
+  { query: 'broken xbox series faulty', category: 'Consoles' },
+
+  // ── Cameras ─────────────────────────────────────────
+  { query: 'broken dslr camera spares repairs', category: 'Cameras' },
+  { query: 'faulty mirrorless camera spares', category: 'Cameras' },
+
+  // ── White Goods ─────────────────────────────────────
+  { query: 'broken washing machine spares repairs', category: 'White Goods' },
+  { query: 'faulty dishwasher spares not working', category: 'White Goods' },
+  { query: 'broken fridge freezer spares', category: 'White Goods' },
+  { query: 'faulty tumble dryer spares', category: 'White Goods' },
+  { query: 'broken oven cooker spares', category: 'White Goods' },
+
+  // ── Power Tools ─────────────────────────────────────
+  { query: 'broken power tools spares repairs', category: 'Power Tools' },
+  { query: 'faulty cordless drill spares', category: 'Power Tools' },
+
+  // ── Garden & Outdoor ────────────────────────────────
+  { query: 'broken lawnmower spares not working', category: 'Garden' },
+  { query: 'faulty garden machinery spares', category: 'Garden' },
+
+  // ── E-bikes & Scooters ──────────────────────────────
+  { query: 'broken electric bike faulty spares', category: 'E-bikes' },
+  { query: 'faulty electric scooter spares', category: 'E-bikes' },
+
+  // ── Musical Instruments ─────────────────────────────
+  { query: 'broken guitar amp spares repairs', category: 'Music' },
+  { query: 'faulty keyboard synthesizer spares', category: 'Music' },
+
+  // ── Cars ────────────────────────────────────────────
+  { query: 'non runner car spares repairs', category: 'Cars' },
+  { query: 'salvage car spares not running', category: 'Cars' },
+  { query: 'non runner van spares repairs', category: 'Cars' },
 ];
 
 function sleep(ms: number) {
