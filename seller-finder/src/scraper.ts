@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import { chromium, type Browser, type Page } from 'playwright';
+import { writeFileSync } from 'fs';
 
 const BASE = 'https://www.ebay.co.uk';
 
@@ -189,27 +190,64 @@ export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
   await page.goto('https://www.ebay.co.uk', { waitUntil: 'domcontentloaded', timeout: 30000 });
   await sleep(2000);
 
-  // Accept GDPR cookie banner if it appears
+  const homeTitle = await page.title();
+  console.log(`  Homepage title: "${homeTitle}"`);
+
+  // Save homepage HTML for debugging (first run only)
+  try {
+    const homeHtml = await page.content();
+    writeFileSync('/tmp/ebay-home-debug.html', homeHtml);
+    console.log(`  Saved homepage HTML (${homeHtml.length} bytes) to /tmp/ebay-home-debug.html`);
+  } catch { /* ignore */ }
+
+  // Try: buttons in the main frame
+  let consentClicked = false;
   try {
     const acceptBtn = page.getByRole('button', { name: /accept all/i }).first();
-    if (await acceptBtn.isVisible({ timeout: 4000 })) {
+    if (await acceptBtn.isVisible({ timeout: 3000 })) {
       await acceptBtn.click();
-      console.log('  Accepted cookie consent');
+      consentClicked = true;
+      console.log('  Accepted cookie consent (main frame, role)');
       await sleep(1500);
     }
-  } catch {
-    // No cookie banner — carry on
+  } catch { /* not found */ }
+
+  // Try: eBay-specific selectors in main frame
+  if (!consentClicked) {
+    try {
+      const btn = await page.$('[data-tracking="button-ACCEPT_ALL"], #gdpr-banner-accept, .gdpr-banner__accept, button[id*="accept"], button[class*="accept"]');
+      if (btn) {
+        await btn.click();
+        consentClicked = true;
+        console.log('  Accepted cookie consent (main frame, selector)');
+        await sleep(1500);
+      }
+    } catch { /* ignore */ }
   }
 
-  // Also try eBay's specific consent selectors as fallback
-  try {
-    const btn = await page.$('[data-tracking="button-ACCEPT_ALL"], #gdpr-banner-accept, .gdpr-banner__accept');
-    if (btn) {
-      await btn.click();
-      await sleep(1500);
-    }
-  } catch {
-    // ignore
+  // Try: consent inside an iframe (common for CMP providers like Sourcepoint/Usercentrics)
+  if (!consentClicked) {
+    try {
+      for (const frame of page.frames()) {
+        const url = frame.url();
+        if (!url || url === 'about:blank') continue;
+        const btn = await frame.$('button[title*="Accept" i], button[aria-label*="Accept" i], [id*="accept" i][role="button"], button');
+        if (btn) {
+          const text = await btn.innerText().catch(() => '');
+          if (/accept/i.test(text)) {
+            await btn.click();
+            consentClicked = true;
+            console.log(`  Accepted cookie consent (iframe: ${url.slice(0, 60)})`);
+            await sleep(1500);
+            break;
+          }
+        }
+      }
+    } catch { /* ignore */ }
+  }
+
+  if (!consentClicked) {
+    console.log('  No cookie consent banner found — continuing anyway');
   }
 
   const all: EbayListing[] = [];
@@ -229,9 +267,12 @@ export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
         _ipg: '120',
       });
       const html = await getPage(page, `${BASE}/sch/i.html?${params}`, 'li.s-item');
-      // Debug: log how many s-item elements the HTML contains
       const rawCount = (html.match(/class="s-item/g) || []).length;
-      if (rawCount === 0) console.warn(`    [debug] No s-item elements in HTML — eBay may have changed layout`);
+      if (rawCount === 0) {
+        console.warn(`    [debug] No s-item elements — page title: "${await page.title()}"`);
+        try { writeFileSync('/tmp/ebay-search-debug.html', html); } catch { /* ignore */ }
+        console.warn(`    [debug] Search HTML saved to /tmp/ebay-search-debug.html`);
+      }
       const items = parseSearchHtml(html, search.category);
 
       let found = 0;
