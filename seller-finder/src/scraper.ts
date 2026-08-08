@@ -185,9 +185,32 @@ export async function crawlAllBrokenListings(): Promise<EbayListing[]> {
   });
   const page = await context.newPage();
 
-  // Visit eBay homepage first to get cookies
+  // Visit eBay homepage and accept cookie consent
   await page.goto('https://www.ebay.co.uk', { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await sleep(1500);
+  await sleep(2000);
+
+  // Accept GDPR cookie banner if it appears
+  try {
+    const acceptBtn = page.getByRole('button', { name: /accept all/i }).first();
+    if (await acceptBtn.isVisible({ timeout: 4000 })) {
+      await acceptBtn.click();
+      console.log('  Accepted cookie consent');
+      await sleep(1500);
+    }
+  } catch {
+    // No cookie banner — carry on
+  }
+
+  // Also try eBay's specific consent selectors as fallback
+  try {
+    const btn = await page.$('[data-tracking="button-ACCEPT_ALL"], #gdpr-banner-accept, .gdpr-banner__accept');
+    if (btn) {
+      await btn.click();
+      await sleep(1500);
+    }
+  } catch {
+    // ignore
+  }
 
   const all: EbayListing[] = [];
   const seen = new Set<string>();
