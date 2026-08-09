@@ -12,8 +12,14 @@ import {
   saveOutreach,
   markOutreachSent,
   getStats,
+  saveBdListing,
+  updateBdListing,
+  getBdListings,
+  getBdListing,
+  deleteBdListing,
 } from './db.js';
 import { generateOutreachMessage, generateEmailSubject } from './messages.js';
+import { importFromUrl } from './import-url.js';
 import type { SellerAggregate } from './scorer.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -111,6 +117,49 @@ app.post('/api/sellers/:username/send-email', async (req, res) => {
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// ── BD Listings ──────────────────────────────────────────────────────────────
+
+app.post('/api/import-url', async (req, res) => {
+  const { url } = req.body as { url: string };
+  if (!url) return res.status(400).json({ error: 'url required' });
+  try {
+    const data = await importFromUrl(url);
+    res.json(data);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/listings', (req, res) => {
+  const { status } = req.query as { status?: string };
+  res.json(getBdListings(status));
+});
+
+app.post('/api/listings', (req, res) => {
+  try {
+    const id = saveBdListing(req.body);
+    res.json({ id, ok: true });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/listings/:id', (req, res) => {
+  const listing = getBdListing(Number(req.params.id));
+  if (!listing) return res.status(404).json({ error: 'Not found' });
+  res.json(listing);
+});
+
+app.patch('/api/listings/:id', (req, res) => {
+  updateBdListing(Number(req.params.id), req.body);
+  res.json({ ok: true });
+});
+
+app.delete('/api/listings/:id', (req, res) => {
+  deleteBdListing(Number(req.params.id));
+  res.json({ ok: true });
 });
 
 app.listen(PORT, () => {

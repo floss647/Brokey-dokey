@@ -87,38 +87,120 @@
     .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; background: rgba(255,255,255,0.07); margin: 2px; }
     .ebay-link { font-size: 11px; color: var(--blue); text-decoration: none; }
     .ebay-link:hover { text-decoration: underline; }
+    .tab-bar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; }
+    .tab-btn { padding: 10px 20px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 600; border-bottom: 2px solid transparent; transition: all 0.15s; }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-content { display: none; } .tab-content.active { display: contents; }
+    .import-box { padding: 16px; border-bottom: 1px solid var(--border); }
+    .import-row { display: flex; gap: 8px; }
+    .import-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; color: var(--text); font-size: 13px; }
+    .import-input:focus { outline: none; border-color: var(--accent); }
+    .import-input::placeholder { color: var(--muted); }
+    .listing-card { padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+    .listing-card:hover { background: rgba(255,255,255,0.03); }
+    .listing-card.selected { background: rgba(255,107,43,0.08); border-left: 3px solid var(--accent); }
+    .listing-card-row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+    .listing-card-title { font-weight: 600; flex: 1; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .listing-card-price { color: var(--accent); font-weight: 700; white-space: nowrap; }
+    .listing-card-row2 { font-size: 11px; color: var(--muted); }
+    .status-pill { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+    .pill-draft { background: rgba(122,126,150,0.2); color: var(--muted); }
+    .pill-live { background: rgba(34,197,94,0.15); color: var(--green); }
+    .pill-archived { background: rgba(239,68,68,0.15); color: var(--red); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-field { display: flex; flex-direction: column; gap: 4px; }
+    .form-field label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-field input, .form-field textarea, .form-field select {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+      padding: 7px 10px; color: var(--text); font-size: 13px; font-family: inherit;
+    }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus { outline: none; border-color: var(--accent); }
+    .form-field select option { background: var(--surface); }
+    .form-field textarea { resize: vertical; min-height: 80px; }
+    .img-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; background: var(--border); }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 <header>
-  <div class="logo">Brokey<span>Dokey</span> <span style="font-weight:400;color:var(--muted);font-size:14px;">Seller Finder</span></div>
+  <div class="logo">Brokey<span>Dokey</span> <span style="font-weight:400;color:var(--muted);font-size:14px;">Admin</span></div>
   <div class="stats" id="stats">
-    <div class="stat"><div class="stat-value" id="s-total">—</div><div class="stat-label">Total</div></div>
+    <div class="stat"><div class="stat-value" id="s-total">—</div><div class="stat-label">Sellers</div></div>
     <div class="stat"><div class="stat-value" id="s-new" style="color:var(--blue)">—</div><div class="stat-label">New</div></div>
     <div class="stat"><div class="stat-value" id="s-contacted" style="color:var(--yellow)">—</div><div class="stat-label">Contacted</div></div>
     <div class="stat"><div class="stat-value" id="s-replied" style="color:var(--green)">—</div><div class="stat-label">Replied</div></div>
     <div class="stat"><div class="stat-value" id="s-listed" style="color:var(--accent)">—</div><div class="stat-label">Listed</div></div>
   </div>
 </header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('sellers')">Seller Finder</button>
+  <button class="tab-btn" onclick="switchTab('listings')">Listings <span id="listings-count" style="font-size:11px;opacity:0.6"></span></button>
+</div>
 <div class="layout">
-  <div class="sidebar">
-    <div class="filters">
-      <button class="filter-btn active" data-status="">All</button>
-      <button class="filter-btn" data-status="new">New</button>
-      <button class="filter-btn" data-status="contacted">Contacted</button>
-      <button class="filter-btn" data-status="replied">Replied</button>
-      <button class="filter-btn" data-status="listed">Listed</button>
-      <button class="filter-btn" data-status="declined">Declined</button>
+
+  <!-- ── SELLERS TAB ── -->
+  <div id="tab-sellers" class="tab-content active">
+    <div class="sidebar">
+      <div class="filters">
+        <button class="filter-btn active" data-status="">All</button>
+        <button class="filter-btn" data-status="new">New</button>
+        <button class="filter-btn" data-status="contacted">Contacted</button>
+        <button class="filter-btn" data-status="replied">Replied</button>
+        <button class="filter-btn" data-status="listed">Listed</button>
+        <button class="filter-btn" data-status="declined">Declined</button>
+      </div>
+      <div class="seller-list" id="seller-list"></div>
     </div>
-    <div class="seller-list" id="seller-list"></div>
+    <div class="detail" id="detail">
+      <div class="detail-empty">Select a seller to view details and generate outreach</div>
+    </div>
   </div>
-  <div class="detail" id="detail">
-    <div class="detail-empty">Select a seller to view details and generate outreach</div>
+
+  <!-- ── LISTINGS TAB ── -->
+  <div id="tab-listings" class="tab-content">
+    <div class="sidebar">
+      <div class="import-box">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Import from URL</div>
+        <div class="import-row">
+          <input class="import-input" id="import-url-input" placeholder="Paste AutoTrader / eBay / Gumtree URL…" type="url">
+          <button class="btn btn-primary" id="import-btn" onclick="importUrl()">Import</button>
+        </div>
+        <div id="import-status" style="font-size:12px;color:var(--muted);margin-top:6px"></div>
+      </div>
+      <div class="filters">
+        <button class="filter-btn active" data-lstatus="">All</button>
+        <button class="filter-btn" data-lstatus="draft">Draft</button>
+        <button class="filter-btn" data-lstatus="live">Live</button>
+        <button class="filter-btn" data-lstatus="archived">Archived</button>
+      </div>
+      <div id="listing-list"></div>
+    </div>
+    <div class="detail" id="listing-detail">
+      <div class="detail-empty">Import a listing or select one from the list</div>
+    </div>
   </div>
+
 </div>
 <div class="toast" id="toast"></div>
 <script>
+  // ── State ───────────────────────────────────────────────────────────────────
   let sellers = [], currentSeller = null, currentFilter = '';
+  let listings = [], currentListing = null, currentLFilter = '';
+  let activeTab = 'sellers';
+
+  // ── Tab switching ───────────────────────────────────────────────────────────
+  function switchTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['sellers','listings'][i] === tab));
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    if (tab === 'listings') loadListings(currentLFilter);
+  }
+
+  // ── Stats ───────────────────────────────────────────────────────────────────
   async function loadStats() {
     const data = await fetch('/api/stats').then(r => r.json());
     document.getElementById('s-total').textContent = data.total;
@@ -127,6 +209,8 @@
     document.getElementById('s-replied').textContent = data.replied;
     document.getElementById('s-listed').textContent = data.listed;
   }
+
+  // ── Sellers tab ─────────────────────────────────────────────────────────────
   async function loadSellers(status = '') {
     const url = status ? `/api/sellers?status=${status}` : '/api/sellers';
     sellers = await fetch(url).then(r => r.json());
@@ -154,7 +238,7 @@
   async function selectSeller(username) {
     document.querySelectorAll('.seller-item').forEach(el => el.classList.remove('selected'));
     document.querySelector(`[data-username="${username}"]`)?.classList.add('selected');
-    const [{ seller, listings }, { subject, message }] = await Promise.all([
+    const [{ seller, listings: sl }, { subject, message }] = await Promise.all([
       fetch(`/api/sellers/${username}`).then(r => r.json()),
       fetch(`/api/sellers/${username}/message`).then(r => r.json()),
     ]);
@@ -176,14 +260,14 @@
       <div class="section"><div class="section-title">Contact Details</div>
         <div class="contact-fields">
           <div class="field-group"><label>Email</label><input id="cf-email" type="email" value="${seller.email||''}" placeholder="email@example.com"></div>
-          <div class="field-group"><label>Instagram</label><input id="cf-instagram" type="text" value="${seller.instagram||''}" placeholder="@username"></div>
-          <div class="field-group"><label>TikTok</label><input id="cf-tiktok" type="text" value="${seller.tiktok||''}" placeholder="@username"></div>
-          <div class="field-group"><label>Website</label><input id="cf-website" type="text" value="${seller.website||''}" placeholder="https://..."></div>
+          <div class="field-group"><label>Instagram</label><input id="cf-instagram" value="${seller.instagram||''}" placeholder="@username"></div>
+          <div class="field-group"><label>TikTok</label><input id="cf-tiktok" value="${seller.tiktok||''}" placeholder="@username"></div>
+          <div class="field-group"><label>Website</label><input id="cf-website" value="${seller.website||''}" placeholder="https://..."></div>
           <div class="field-group full"><label>Notes</label><textarea id="cf-notes">${seller.notes||''}</textarea></div>
         </div>
         <button class="save-btn" onclick="saveContact('${username}')">Save Contact Info</button>
       </div>
-      <div class="section"><div class="section-title">Recent Listings</div><div class="listings-grid">${listings.slice(0,5).map(l => `<div class="listing-item">${l.image?`<img class="listing-img" src="${l.image}" alt="">`:'<div class="listing-img"></div>'}<div style="flex:1;min-width:0"><div class="listing-title">${l.title}</div><a class="listing-link" href="${l.url}" target="_blank">View on eBay ↗</a></div><div class="listing-price">£${l.price}</div></div>`).join('')}</div></div>
+      <div class="section"><div class="section-title">Recent Listings</div><div class="listings-grid">${sl.slice(0,5).map(l => `<div class="listing-item">${l.image?`<img class="listing-img" src="${l.image}" alt="">`:'<div class="listing-img"></div>'}<div style="flex:1;min-width:0"><div class="listing-title">${l.title}</div><a class="listing-link" href="${l.url}" target="_blank">View on eBay ↗</a></div><div class="listing-price">£${l.price}</div></div>`).join('')}</div></div>
       <div class="section"><div class="section-title">Outreach Message</div>
         <div class="message-box">
           <div class="message-toolbar"><span style="font-size:11px;color:var(--muted)">Subject:</span><input class="message-subject-field" id="msg-subject" value="${subject}"></div>
@@ -197,7 +281,7 @@
     toast('Status updated'); loadStats(); await loadSellers(currentFilter); selectSeller(username);
   }
   async function saveContact(username) {
-    const fields = {email:document.getElementById('cf-email')?.value||undefined,instagram:document.getElementById('cf-instagram')?.value||undefined,tiktok:document.getElementById('cf-tiktok')?.value||undefined,website:document.getElementById('cf-website')?.value||undefined,notes:document.getElementById('cf-notes')?.value||undefined};
+    const fields = {email:document.getElementById('cf-email')?.value,instagram:document.getElementById('cf-instagram')?.value,tiktok:document.getElementById('cf-tiktok')?.value,website:document.getElementById('cf-website')?.value,notes:document.getElementById('cf-notes')?.value};
     await fetch(`/api/sellers/${username}/contact`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
     toast('Contact info saved');
   }
@@ -212,15 +296,169 @@
     const {subject,message} = await fetch(`/api/sellers/${username}/message`).then(r=>r.json());
     document.getElementById('msg-subject').value=subject; document.getElementById('msg-body').value=message;
   }
-  function toast(msg,isError=false) {
+
+  // ── Listings tab ─────────────────────────────────────────────────────────────
+  async function loadListings(status = '') {
+    const url = status ? `/api/listings?status=${status}` : '/api/listings';
+    listings = await fetch(url).then(r => r.json());
+    document.getElementById('listings-count').textContent = listings.length ? `(${listings.length})` : '';
+    renderListings();
+  }
+  function renderListings() {
+    const el = document.getElementById('listing-list');
+    if (!listings.length) {
+      el.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No listings yet.<br>Paste a URL above to import one.</div>';
+      return;
+    }
+    el.innerHTML = listings.map(l => {
+      const isSelected = currentListing && currentListing.id === l.id ? ' selected' : '';
+      const pill = `<span class="status-pill pill-${l.status}">${l.status}</span>`;
+      const specs = [l.year, l.make, l.model].filter(Boolean).join(' ');
+      return `<div class="listing-card${isSelected}" onclick="selectListing(${l.id})">
+        <div class="listing-card-row1">${pill}<div class="listing-card-title">${l.title}</div>${l.price?`<div class="listing-card-price">£${l.price}</div>`:''}</div>
+        <div class="listing-card-row2">${[specs, l.mileage ? l.mileage.toLocaleString()+'mi' : '', l.location].filter(Boolean).join(' · ')}</div>
+      </div>`;
+    }).join('');
+  }
+  async function selectListing(id) {
+    document.querySelectorAll('.listing-card').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`.listing-card[onclick="selectListing(${id})"]`)?.classList.add('selected');
+    const l = await fetch(`/api/listings/${id}`).then(r => r.json());
+    currentListing = l;
+    const imgs = JSON.parse(l.images || '[]');
+    document.getElementById('listing-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <div style="flex:1;font-size:18px;font-weight:700">${l.title}</div>
+          <div style="display:flex;gap:8px">
+            ${['draft','live','archived'].map(s=>`<button class="btn ${l.status===s?'btn-primary':''}" onclick="setListingStatus(${l.id},'${s}')">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
+            <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="deleteListing(${l.id})">Delete</button>
+          </div>
+        </div>
+        ${imgs.length ? `<div class="img-strip">${imgs.slice(0,8).map(u=>`<img class="img-thumb" src="${u}">`).join('')}</div>` : ''}
+        <div style="margin:16px 0">
+          ${l.source_url ? `<a href="${l.source_url}" target="_blank" class="listing-link">View original listing ↗</a>` : ''}
+        </div>
+        <div class="form-grid">
+          <div class="form-field full"><label>Title</label><input id="lf-title" value="${esc(l.title)}"></div>
+          <div class="form-field"><label>Price (£)</label><input id="lf-price" type="number" value="${l.price||''}"></div>
+          <div class="form-field"><label>Category</label>
+            <select id="lf-category">
+              ${['Cars','Phones','Laptops','Tablets','Consoles','Cameras','White Goods','Power Tools','Garden','E-bikes','Music','General'].map(c=>`<option${l.category===c?' selected':''}>${c}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-field"><label>Make</label><input id="lf-make" value="${esc(l.make)}"></div>
+          <div class="form-field"><label>Model</label><input id="lf-model" value="${esc(l.model)}"></div>
+          <div class="form-field"><label>Year</label><input id="lf-year" type="number" value="${l.year||''}"></div>
+          <div class="form-field"><label>Mileage</label><input id="lf-mileage" type="number" value="${l.mileage||''}"></div>
+          <div class="form-field"><label>Fuel Type</label><input id="lf-fuel_type" value="${esc(l.fuel_type)}"></div>
+          <div class="form-field"><label>Engine Size</label><input id="lf-engine_size" value="${esc(l.engine_size)}"></div>
+          <div class="form-field"><label>Colour</label><input id="lf-colour" value="${esc(l.colour)}"></div>
+          <div class="form-field"><label>Transmission</label><input id="lf-transmission" value="${esc(l.transmission)}"></div>
+          <div class="form-field"><label>Body Type</label><input id="lf-body_type" value="${esc(l.body_type)}"></div>
+          <div class="form-field"><label>Doors</label><input id="lf-doors" type="number" value="${l.doors||''}"></div>
+          <div class="form-field"><label>MOT Expiry</label><input id="lf-mot_expiry" value="${esc(l.mot_expiry)}"></div>
+          <div class="form-field"><label>Location</label><input id="lf-location" value="${esc(l.location)}"></div>
+          <div class="form-field"><label>Postcode</label><input id="lf-postcode" value="${esc(l.postcode)}"></div>
+          <div class="form-field full"><label>Description</label><textarea id="lf-description" style="min-height:120px">${esc(l.description)}</textarea></div>
+        </div>
+        <button class="save-btn" style="margin-top:12px" onclick="saveListing(${l.id})">Save Changes</button>
+      </div>`;
+  }
+  function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+  async function setListingStatus(id, status) {
+    await fetch(`/api/listings/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+    toast('Status updated'); loadListings(currentLFilter); selectListing(id);
+  }
+  async function saveListing(id) {
+    const fields = {
+      title: document.getElementById('lf-title')?.value,
+      price: parseFloat(document.getElementById('lf-price')?.value)||null,
+      category: document.getElementById('lf-category')?.value,
+      make: document.getElementById('lf-make')?.value,
+      model: document.getElementById('lf-model')?.value,
+      year: parseInt(document.getElementById('lf-year')?.value)||null,
+      mileage: parseInt(document.getElementById('lf-mileage')?.value)||null,
+      fuel_type: document.getElementById('lf-fuel_type')?.value,
+      engine_size: document.getElementById('lf-engine_size')?.value,
+      colour: document.getElementById('lf-colour')?.value,
+      transmission: document.getElementById('lf-transmission')?.value,
+      body_type: document.getElementById('lf-body_type')?.value,
+      doors: parseInt(document.getElementById('lf-doors')?.value)||null,
+      mot_expiry: document.getElementById('lf-mot_expiry')?.value,
+      location: document.getElementById('lf-location')?.value,
+      postcode: document.getElementById('lf-postcode')?.value,
+      description: document.getElementById('lf-description')?.value,
+    };
+    await fetch(`/api/listings/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
+    toast('Saved'); loadListings(currentLFilter);
+  }
+  async function deleteListing(id) {
+    if (!confirm('Delete this listing?')) return;
+    await fetch(`/api/listings/${id}`, {method:'DELETE'});
+    toast('Deleted'); currentListing = null;
+    document.getElementById('listing-detail').innerHTML = '<div class="detail-empty">Import a listing or select one from the list</div>';
+    loadListings(currentLFilter);
+  }
+  async function importUrl() {
+    const urlInput = document.getElementById('import-url-input');
+    const url = urlInput.value.trim();
+    if (!url) return;
+    const btn = document.getElementById('import-btn');
+    const status = document.getElementById('import-status');
+    btn.innerHTML = '<span class="spinner"></span>Fetching…';
+    btn.disabled = true;
+    status.textContent = 'Loading page and extracting data…';
+    try {
+      const data = await fetch('/api/import-url', {
+        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({url})
+      }).then(r => r.json());
+      if (data.error) throw new Error(data.error);
+      // Save as draft
+      const { id } = await fetch('/api/listings', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          title: data.title, description: data.description,
+          price: data.price, category: data.category, status: 'draft',
+          source_url: data.sourceUrl, images: JSON.stringify(data.images),
+          location: data.location, postcode: data.postcode,
+          make: data.make, model: data.model, year: data.year,
+          mileage: data.mileage, fuel_type: data.fuelType, engine_size: data.engineSize,
+          colour: data.colour, transmission: data.transmission,
+          body_type: data.bodyType, doors: data.doors, mot_expiry: data.motExpiry,
+        })
+      }).then(r => r.json());
+      status.textContent = '';
+      urlInput.value = '';
+      toast('Imported as draft');
+      await loadListings(currentLFilter);
+      selectListing(id);
+    } catch(e) {
+      status.textContent = 'Error: ' + e.message;
+      toast('Import failed', true);
+    } finally {
+      btn.innerHTML = 'Import';
+      btn.disabled = false;
+    }
+  }
+
+  // ── Shared ───────────────────────────────────────────────────────────────────
+  function toast(msg, isError=false) {
     const el=document.getElementById('toast'); el.textContent=msg; el.className='toast show'+(isError?' error':'');
     setTimeout(()=>el.className='toast',2500);
   }
-  document.querySelectorAll('.filter-btn').forEach(btn=>btn.addEventListener('click',()=>{
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
-    currentFilter=btn.dataset.status; loadSellers(currentFilter);
+
+  // ── Init ─────────────────────────────────────────────────────────────────────
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+    const parent = btn.closest('.sidebar');
+    parent.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (btn.dataset.status !== undefined) { currentFilter = btn.dataset.status; loadSellers(currentFilter); }
+    if (btn.dataset.lstatus !== undefined) { currentLFilter = btn.dataset.lstatus; loadListings(currentLFilter); }
   }));
-  loadStats(); loadSellers();
+  document.getElementById('import-url-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') importUrl(); });
+  loadStats();
+  loadSellers();
 </script>
 </body>
 </html>

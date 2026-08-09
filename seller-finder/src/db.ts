@@ -45,6 +45,32 @@ function getDb(): Database.Database {
       scraped_at TEXT DEFAULT (datetime('now'))
     );
 
+    CREATE TABLE IF NOT EXISTS bd_listings (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT,
+      price REAL,
+      category TEXT DEFAULT 'Cars',
+      status TEXT DEFAULT 'draft',
+      source_url TEXT,
+      images TEXT DEFAULT '[]',
+      location TEXT,
+      postcode TEXT,
+      make TEXT,
+      model TEXT,
+      year INTEGER,
+      mileage INTEGER,
+      fuel_type TEXT,
+      engine_size TEXT,
+      colour TEXT,
+      transmission TEXT,
+      body_type TEXT,
+      doors INTEGER,
+      mot_expiry TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
+
     CREATE TABLE IF NOT EXISTS outreach (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       seller_username TEXT NOT NULL,
@@ -146,6 +172,75 @@ export function saveOutreach(username: string, channel: string, message: string)
 
 export function markOutreachSent(username: string) {
   getDb().prepare("UPDATE outreach SET status = 'sent', sent_at = datetime('now') WHERE seller_username = ? AND status = 'draft'").run(username);
+}
+
+export interface BdListing {
+  id: number;
+  title: string;
+  description: string | null;
+  price: number | null;
+  category: string;
+  status: string;
+  source_url: string | null;
+  images: string;
+  location: string | null;
+  postcode: string | null;
+  make: string | null;
+  model: string | null;
+  year: number | null;
+  mileage: number | null;
+  fuel_type: string | null;
+  engine_size: string | null;
+  colour: string | null;
+  transmission: string | null;
+  body_type: string | null;
+  doors: number | null;
+  mot_expiry: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export function saveBdListing(data: Partial<BdListing> & { title: string }): number {
+  const result = getDb().prepare(`
+    INSERT INTO bd_listings
+      (title, description, price, category, status, source_url, images, location, postcode,
+       make, model, year, mileage, fuel_type, engine_size, colour, transmission, body_type, doors, mot_expiry)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+  `).run(
+    data.title, data.description ?? null, data.price ?? null,
+    data.category ?? 'Cars', data.status ?? 'draft',
+    data.source_url ?? null, data.images ?? '[]',
+    data.location ?? null, data.postcode ?? null,
+    data.make ?? null, data.model ?? null, data.year ?? null,
+    data.mileage ?? null, data.fuel_type ?? null, data.engine_size ?? null,
+    data.colour ?? null, data.transmission ?? null, data.body_type ?? null,
+    data.doors ?? null, data.mot_expiry ?? null,
+  );
+  return result.lastInsertRowid as number;
+}
+
+export function updateBdListing(id: number, data: Partial<BdListing>) {
+  const fields = Object.entries(data)
+    .filter(([k]) => k !== 'id' && k !== 'created_at')
+    .map(([k]) => `${k} = ?`).join(', ');
+  const vals = Object.entries(data)
+    .filter(([k]) => k !== 'id' && k !== 'created_at')
+    .map(([, v]) => v);
+  if (!fields) return;
+  getDb().prepare(`UPDATE bd_listings SET ${fields}, updated_at = datetime('now') WHERE id = ?`).run(...vals, id);
+}
+
+export function getBdListings(status?: string): BdListing[] {
+  if (status) return getDb().prepare('SELECT * FROM bd_listings WHERE status = ? ORDER BY created_at DESC').all(status) as BdListing[];
+  return getDb().prepare('SELECT * FROM bd_listings ORDER BY created_at DESC').all() as BdListing[];
+}
+
+export function getBdListing(id: number): BdListing | null {
+  return getDb().prepare('SELECT * FROM bd_listings WHERE id = ?').get(id) as BdListing | null;
+}
+
+export function deleteBdListing(id: number) {
+  getDb().prepare('DELETE FROM bd_listings WHERE id = ?').run(id);
 }
 
 export function getStats() {
