@@ -71,6 +71,19 @@ function getDb(): Database.Database {
       updated_at TEXT DEFAULT (datetime('now'))
     );
 
+    CREATE TABLE IF NOT EXISTS posts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      slug TEXT UNIQUE NOT NULL,
+      title TEXT NOT NULL,
+      excerpt TEXT,
+      body TEXT,
+      image_url TEXT,
+      status TEXT DEFAULT 'draft',
+      published_at TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
+
     CREATE TABLE IF NOT EXISTS outreach (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       seller_username TEXT NOT NULL,
@@ -241,6 +254,70 @@ export function getBdListing(id: number): BdListing | null {
 
 export function deleteBdListing(id: number) {
   getDb().prepare('DELETE FROM bd_listings WHERE id = ?').run(id);
+}
+
+export interface Post {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  body: string | null;
+  image_url: string | null;
+  status: string;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+function slugify(title: string): string {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+export function savePost(data: { title: string; excerpt?: string; body?: string; image_url?: string; status?: string }): number {
+  const base = slugify(data.title);
+  let slug = base;
+  let n = 1;
+  while (getDb().prepare('SELECT id FROM posts WHERE slug = ?').get(slug)) {
+    slug = `${base}-${n++}`;
+  }
+  const result = getDb().prepare(`
+    INSERT INTO posts (slug, title, excerpt, body, image_url, status, published_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    slug, data.title, data.excerpt ?? null, data.body ?? null,
+    data.image_url ?? null, data.status ?? 'draft',
+    data.status === 'published' ? new Date().toISOString() : null,
+  );
+  return result.lastInsertRowid as number;
+}
+
+export function updatePost(id: number, data: Partial<Post>) {
+  const now = new Date().toISOString();
+  const publishedAt = data.status === 'published'
+    ? getDb().prepare('SELECT published_at FROM posts WHERE id = ?').get(id) as any
+    : null;
+  const entries = Object.entries(data).filter(([k]) => !['id','slug','created_at'].includes(k));
+  if (!entries.length) return;
+  const sql = entries.map(([k]) => `${k} = ?`).join(', ');
+  const vals = entries.map(([, v]) => v);
+  getDb().prepare(`UPDATE posts SET ${sql}, updated_at = ?, published_at = CASE WHEN status = 'published' AND published_at IS NULL THEN ? ELSE published_at END WHERE id = ?`).run(...vals, now, now, id);
+}
+
+export function getPosts(status?: string): Post[] {
+  if (status) return getDb().prepare('SELECT * FROM posts WHERE status = ? ORDER BY created_at DESC').all(status) as Post[];
+  return getDb().prepare('SELECT * FROM posts ORDER BY created_at DESC').all() as Post[];
+}
+
+export function getPost(id: number): Post | null {
+  return getDb().prepare('SELECT * FROM posts WHERE id = ?').get(id) as Post | null;
+}
+
+export function getPostBySlug(slug: string): Post | null {
+  return getDb().prepare('SELECT * FROM posts WHERE slug = ? AND status = ?').get(slug, 'published') as Post | null;
+}
+
+export function deletePost(id: number) {
+  getDb().prepare('DELETE FROM posts WHERE id = ?').run(id);
 }
 
 export function getStats() {

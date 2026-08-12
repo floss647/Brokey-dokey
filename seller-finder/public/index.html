@@ -138,6 +138,7 @@
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('sellers')">Seller Finder</button>
   <button class="tab-btn" onclick="switchTab('listings')">Listings <span id="listings-count" style="font-size:11px;opacity:0.6"></span></button>
+  <button class="tab-btn" onclick="switchTab('blog')">Blog</button>
 </div>
 <div class="layout">
 
@@ -183,6 +184,20 @@
     </div>
   </div>
 
+
+  <!-- ── BLOG TAB ── -->
+  <div id="tab-blog" class="tab-content">
+    <div class="sidebar">
+      <div style="padding:12px">
+        <button class="btn btn-primary" style="width:100%" onclick="newPost()">+ New Post</button>
+      </div>
+      <div id="post-list"></div>
+    </div>
+    <div class="detail" id="post-detail">
+      <div class="detail-empty">Select a post or create a new one</div>
+    </div>
+  </div>
+
 </div>
 <div class="toast" id="toast"></div>
 <script>
@@ -194,10 +209,11 @@
   // ── Tab switching ───────────────────────────────────────────────────────────
   function switchTab(tab) {
     activeTab = tab;
-    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['sellers','listings'][i] === tab));
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['sellers','listings','blog'][i] === tab));
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
     if (tab === 'listings') loadListings(currentLFilter);
+    if (tab === 'blog') loadPosts();
   }
 
   // ── Stats ───────────────────────────────────────────────────────────────────
@@ -440,6 +456,119 @@
       btn.innerHTML = 'Import';
       btn.disabled = false;
     }
+  }
+
+  // ── Blog tab ─────────────────────────────────────────────────────────────────
+  let posts = [], currentPost = null;
+
+  async function loadPosts() {
+    posts = await fetch('/api/posts').then(r => r.json());
+    renderPosts();
+  }
+  function renderPosts() {
+    const el = document.getElementById('post-list');
+    if (!posts.length) { el.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No posts yet.<br>Click New Post to start.</div>'; return; }
+    el.innerHTML = posts.map(p => {
+      const isSelected = currentPost && currentPost.id === p.id ? ' selected' : '';
+      const pill = `<span class="status-pill ${p.status==='published'?'pill-live':'pill-draft'}">${p.status}</span>`;
+      return `<div class="listing-card${isSelected}" onclick="selectPost(${p.id})">
+        <div class="listing-card-row1">${pill}<div class="listing-card-title">${p.title}</div></div>
+        <div class="listing-card-row2">${p.published_at ? new Date(p.published_at).toLocaleDateString('en-GB') : 'Draft'}</div>
+      </div>`;
+    }).join('');
+  }
+  async function selectPost(id) {
+    document.querySelectorAll('#post-list .listing-card').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`#post-list .listing-card[onclick="selectPost(${id})"]`)?.classList.add('selected');
+    const p = await fetch(`/api/posts/${id}`).then(r => r.json());
+    currentPost = p;
+    renderPostEditor(p);
+  }
+  function renderPostEditor(p) {
+    const postUrl = `${window.location.origin}/blog/${p.slug}`;
+    document.getElementById('post-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="flex:1;font-size:16px;font-weight:700">${p.status==='published' ? `<a href="${postUrl}" target="_blank" style="color:var(--accent)">${p.title} ↗</a>` : p.title}</div>
+          <div style="display:flex;gap:8px">
+            ${p.status !== 'published' ? `<button class="btn btn-primary" onclick="publishPost(${p.id})">Publish</button>` : `<button class="btn" onclick="unpublishPost(${p.id})">Unpublish</button>`}
+            <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="deletePostItem(${p.id})">Delete</button>
+          </div>
+        </div>
+        ${p.status==='published' ? `<div style="font-size:12px;color:var(--muted)">Public URL: <a href="${postUrl}" target="_blank" style="color:var(--blue)">${postUrl}</a> — <a href="https://developers.facebook.com/tools/debug/?q=${encodeURIComponent(postUrl)}" target="_blank" style="color:var(--blue)">Test Facebook preview ↗</a></div>` : ''}
+        <div class="form-grid">
+          <div class="form-field full"><label>Title</label><input id="pf-title" value="${esc(p.title)}"></div>
+          <div class="form-field full"><label>Excerpt (shown in Facebook preview and post list)</label><input id="pf-excerpt" value="${esc(p.excerpt)}" placeholder="One or two sentences that hook the reader…"></div>
+          <div class="form-field full"><label>Image URL (paste a link to your image — this appears on Facebook)</label><input id="pf-image_url" value="${esc(p.image_url)}" placeholder="https://…/your-image.jpg"></div>
+        </div>
+        <div class="form-field" style="flex:1;display:flex;flex-direction:column">
+          <label>Post content (use ## for headings, - for bullet points, blank lines between paragraphs)</label>
+          <textarea id="pf-body" style="flex:1;min-height:320px;resize:vertical;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;color:var(--text);font-size:14px;font-family:inherit;line-height:1.7">${esc(p.body)}</textarea>
+        </div>
+        <button class="save-btn" onclick="savePostEdits(${p.id})">Save Draft</button>
+      </div>`;
+  }
+  function newPost() {
+    document.getElementById('post-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%;display:flex;flex-direction:column;gap:16px">
+        <div style="font-size:16px;font-weight:700">New Post</div>
+        <div class="form-grid">
+          <div class="form-field full"><label>Title</label><input id="np-title" placeholder="Give your post a title…"></div>
+          <div class="form-field full"><label>Excerpt</label><input id="np-excerpt" placeholder="One or two sentences…"></div>
+          <div class="form-field full"><label>Image URL</label><input id="np-image_url" placeholder="https://…/image.jpg"></div>
+        </div>
+        <div class="form-field" style="flex:1;display:flex;flex-direction:column">
+          <label>Content</label>
+          <textarea id="np-body" style="flex:1;min-height:320px;resize:vertical;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;color:var(--text);font-size:14px;font-family:inherit;line-height:1.7" placeholder="Write your post here…&#10;&#10;Use ## for headings&#10;Use - for bullet points&#10;Leave a blank line between paragraphs"></textarea>
+        </div>
+        <button class="save-btn" onclick="createPost()">Save as Draft</button>
+      </div>`;
+    currentPost = null;
+    document.querySelectorAll('#post-list .listing-card').forEach(el => el.classList.remove('selected'));
+  }
+  async function createPost() {
+    const title = document.getElementById('np-title')?.value?.trim();
+    if (!title) { toast('Title required', true); return; }
+    const { id } = await fetch('/api/posts', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        title,
+        excerpt: document.getElementById('np-excerpt')?.value || '',
+        body: document.getElementById('np-body')?.value || '',
+        image_url: document.getElementById('np-image_url')?.value || '',
+        status: 'draft',
+      })
+    }).then(r => r.json());
+    toast('Saved as draft');
+    await loadPosts();
+    selectPost(id);
+  }
+  async function savePostEdits(id) {
+    await fetch(`/api/posts/${id}`, {
+      method: 'PATCH', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        title: document.getElementById('pf-title')?.value,
+        excerpt: document.getElementById('pf-excerpt')?.value,
+        body: document.getElementById('pf-body')?.value,
+        image_url: document.getElementById('pf-image_url')?.value,
+      })
+    });
+    toast('Saved'); loadPosts();
+  }
+  async function publishPost(id) {
+    await fetch(`/api/posts/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:'published'})});
+    toast('Published!'); await loadPosts(); selectPost(id);
+  }
+  async function unpublishPost(id) {
+    await fetch(`/api/posts/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:'draft'})});
+    toast('Moved to draft'); await loadPosts(); selectPost(id);
+  }
+  async function deletePostItem(id) {
+    if (!confirm('Delete this post?')) return;
+    await fetch(`/api/posts/${id}`, {method:'DELETE'});
+    toast('Deleted'); currentPost = null;
+    document.getElementById('post-detail').innerHTML = '<div class="detail-empty">Select a post or create a new one</div>';
+    loadPosts();
   }
 
   // ── Shared ───────────────────────────────────────────────────────────────────
