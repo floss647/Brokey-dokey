@@ -468,12 +468,15 @@
   function renderPosts() {
     const el = document.getElementById('post-list');
     if (!posts.length) { el.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No posts yet.<br>Click New Post to start.</div>'; return; }
+    const catLabel = { 'the-find': 'The Find', 'review': 'Review', 'rolling-stop': 'Rolling Stop', 'general': '' };
     el.innerHTML = posts.map(p => {
       const isSelected = currentPost && currentPost.id === p.id ? ' selected' : '';
       const pill = `<span class="status-pill ${p.status==='published'?'pill-live':'pill-draft'}">${p.status}</span>`;
+      const cat = p.category && catLabel[p.category] ? `<span style="font-size:10px;color:var(--accent);margin-left:4px">${catLabel[p.category]}</span>` : '';
+      const star = p.featured ? '<span style="color:#eab308;margin-left:4px" title="Featured">★</span>' : '';
       return `<div class="listing-card${isSelected}" onclick="selectPost(${p.id})">
-        <div class="listing-card-row1">${pill}<div class="listing-card-title">${p.title}</div></div>
-        <div class="listing-card-row2">${p.published_at ? new Date(p.published_at).toLocaleDateString('en-GB') : 'Draft'}</div>
+        <div class="listing-card-row1">${pill}<div class="listing-card-title">${p.title}</div>${star}</div>
+        <div class="listing-card-row2">${p.published_at ? new Date(p.published_at).toLocaleDateString('en-GB') : 'Draft'}${cat}</div>
       </div>`;
     }).join('');
   }
@@ -500,6 +503,18 @@
           <div class="form-field full"><label>Title</label><input id="pf-title" value="${esc(p.title)}"></div>
           <div class="form-field full"><label>Excerpt (shown in Facebook preview and post list)</label><input id="pf-excerpt" value="${esc(p.excerpt)}" placeholder="One or two sentences that hook the reader…"></div>
           <div class="form-field full"><label>Image URL (paste a link to your image — this appears on Facebook)</label><input id="pf-image_url" value="${esc(p.image_url)}" placeholder="https://…/your-image.jpg"></div>
+          <div class="form-field"><label>Section</label>
+            <select id="pf-category">
+              <option value="the-find"${p.category==='the-find'?' selected':''}>The Find</option>
+              <option value="review"${p.category==='review'?' selected':''}>Review</option>
+              <option value="rolling-stop"${p.category==='rolling-stop'?' selected':''}>Rolling Stop</option>
+              <option value="general"${(!p.category||p.category==='general')?' selected':''}>General</option>
+            </select>
+          </div>
+          <div class="form-field" style="flex-direction:row;align-items:center;gap:10px;padding-top:20px">
+            <input type="checkbox" id="pf-featured" style="width:16px;height:16px;accent-color:var(--accent)" ${p.featured?'checked':''}>
+            <label for="pf-featured" style="font-size:13px;text-transform:none;letter-spacing:0;cursor:pointer">Feature on homepage hero</label>
+          </div>
         </div>
         <div class="form-field" style="flex:1;display:flex;flex-direction:column">
           <label>Post content (use ## for headings, - for bullet points, blank lines between paragraphs)</label>
@@ -516,6 +531,18 @@
           <div class="form-field full"><label>Title</label><input id="np-title" placeholder="Give your post a title…"></div>
           <div class="form-field full"><label>Excerpt</label><input id="np-excerpt" placeholder="One or two sentences…"></div>
           <div class="form-field full"><label>Image URL</label><input id="np-image_url" placeholder="https://…/image.jpg"></div>
+          <div class="form-field"><label>Section</label>
+            <select id="np-category">
+              <option value="the-find">The Find</option>
+              <option value="review">Review</option>
+              <option value="rolling-stop">Rolling Stop</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+          <div class="form-field" style="flex-direction:row;align-items:center;gap:10px;padding-top:20px">
+            <input type="checkbox" id="np-featured" style="width:16px;height:16px;accent-color:var(--accent)">
+            <label for="np-featured" style="font-size:13px;text-transform:none;letter-spacing:0;cursor:pointer">Feature on homepage hero</label>
+          </div>
         </div>
         <div class="form-field" style="flex:1;display:flex;flex-direction:column">
           <label>Content</label>
@@ -536,6 +563,8 @@
         excerpt: document.getElementById('np-excerpt')?.value || '',
         body: document.getElementById('np-body')?.value || '',
         image_url: document.getElementById('np-image_url')?.value || '',
+        category: document.getElementById('np-category')?.value || 'general',
+        featured: document.getElementById('np-featured')?.checked ? 1 : 0,
         status: 'draft',
       })
     }).then(r => r.json());
@@ -551,6 +580,8 @@
         excerpt: document.getElementById('pf-excerpt')?.value,
         body: document.getElementById('pf-body')?.value,
         image_url: document.getElementById('pf-image_url')?.value,
+        category: document.getElementById('pf-category')?.value,
+        featured: document.getElementById('pf-featured')?.checked ? 1 : 0,
       })
     });
     toast('Saved'); loadPosts();

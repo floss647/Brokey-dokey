@@ -80,6 +80,8 @@ function getDb(): Database.Database {
       image_url TEXT,
       status TEXT DEFAULT 'draft',
       published_at TEXT,
+      category TEXT DEFAULT 'general',
+      featured INTEGER DEFAULT 0,
       created_at TEXT DEFAULT (datetime('now')),
       updated_at TEXT DEFAULT (datetime('now'))
     );
@@ -94,6 +96,9 @@ function getDb(): Database.Database {
       created_at TEXT DEFAULT (datetime('now'))
     );
   `);
+  // Migrate existing DBs that predate the category/featured columns
+  try { _db.exec(`ALTER TABLE posts ADD COLUMN category TEXT DEFAULT 'general'`); } catch {}
+  try { _db.exec(`ALTER TABLE posts ADD COLUMN featured INTEGER DEFAULT 0`); } catch {}
   return _db;
 }
 
@@ -265,6 +270,8 @@ export interface Post {
   image_url: string | null;
   status: string;
   published_at: string | null;
+  category: string;
+  featured: number;
   created_at: string;
   updated_at: string;
 }
@@ -273,7 +280,7 @@ function slugify(title: string): string {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-export function savePost(data: { title: string; excerpt?: string; body?: string; image_url?: string; status?: string }): number {
+export function savePost(data: { title: string; excerpt?: string; body?: string; image_url?: string; status?: string; category?: string; featured?: number }): number {
   const base = slugify(data.title);
   let slug = base;
   let n = 1;
@@ -281,12 +288,14 @@ export function savePost(data: { title: string; excerpt?: string; body?: string;
     slug = `${base}-${n++}`;
   }
   const result = getDb().prepare(`
-    INSERT INTO posts (slug, title, excerpt, body, image_url, status, published_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO posts (slug, title, excerpt, body, image_url, status, published_at, category, featured)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     slug, data.title, data.excerpt ?? null, data.body ?? null,
     data.image_url ?? null, data.status ?? 'draft',
     data.status === 'published' ? new Date().toISOString() : null,
+    data.category ?? 'general',
+    data.featured ?? 0,
   );
   return result.lastInsertRowid as number;
 }
@@ -306,6 +315,18 @@ export function updatePost(id: number, data: Partial<Post>) {
 export function getPosts(status?: string): Post[] {
   if (status) return getDb().prepare('SELECT * FROM posts WHERE status = ? ORDER BY created_at DESC').all(status) as Post[];
   return getDb().prepare('SELECT * FROM posts ORDER BY created_at DESC').all() as Post[];
+}
+
+export function getPostsByCategory(category: string, limit = 10): Post[] {
+  return getDb().prepare(
+    `SELECT * FROM posts WHERE category = ? AND status = 'published' ORDER BY published_at DESC LIMIT ?`
+  ).all(category, limit) as Post[];
+}
+
+export function getFeaturedPosts(limit = 3): Post[] {
+  return getDb().prepare(
+    `SELECT * FROM posts WHERE featured = 1 AND status = 'published' ORDER BY published_at DESC LIMIT ?`
+  ).all(limit) as Post[];
 }
 
 export function getPost(id: number): Post | null {
