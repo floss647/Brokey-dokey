@@ -554,8 +554,9 @@ ${post.image_url ? `<meta name="twitter:image" content="${esc(post.image_url)}">
 // ── Car listing pages ─────────────────────────────────────────────────────────
 
 function carTitle(l: BdListing): string {
+  if (l.title) return l.title;
   const parts = [l.year, l.make, l.model].filter(Boolean);
-  return parts.length ? parts.join(' ') : l.title;
+  return parts.join(' ') || 'Untitled';
 }
 
 function carSpecItem(label: string, value: string | number | null | undefined): string {
