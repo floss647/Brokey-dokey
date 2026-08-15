@@ -59,32 +59,47 @@ function parsePostcode(s: string): string {
 function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   const $ = cheerio.load(html);
 
+  // ── Meta / JSON-LD (always server-rendered, survives bot detection) ─────────
+  const ogTitle = clean($('meta[property="og:title"]').attr('content') ?? '');
+  const ogDesc = clean($('meta[property="og:description"], meta[name="description"]').first().attr('content') ?? '');
+  const ogImage = clean($('meta[property="og:image"]').attr('content') ?? '');
+
+  let jsonLd: any = null;
+  $('script[type="application/ld+json"]').each((_, el) => {
+    if (jsonLd) return;
+    try { jsonLd = JSON.parse($(el).text()); } catch { /* skip */ }
+  });
+  const ldPrice = jsonLd?.offers?.price ?? jsonLd?.price ?? null;
+  const ldDesc = clean(jsonLd?.description ?? '');
+
+  // ── Next.js data ────────────────────────────────────────────────────────────
   let nextData: any = null;
   try {
     const raw = $('#__NEXT_DATA__').text();
     if (raw) nextData = JSON.parse(raw);
   } catch { /* skip */ }
 
-  // AutoTrader has nested the advert under several possible keys over time
   const pp = nextData?.props?.pageProps ?? {};
   const advert: any = pp.advert ?? pp.vehicle ?? pp.car ?? pp.listing
     ?? pp.initialState?.advert ?? pp.initialState?.vehicle ?? null;
 
+  console.log('[import-url] advert keys:', advert ? Object.keys(advert).slice(0, 20) : 'null');
+
   let title = clean(advert?.title ?? advert?.heading ?? advert?.name ?? '');
-  if (!title) title = clean($('h1').first().text());
+  if (!title) title = ogTitle || clean($('h1').first().text());
 
   let price: number | null = null;
   if (advert?.price) price = parseNum(advert.price);
   if (!price) price = parseNum(advert?.priceGBP ?? advert?.advertisedPrice ?? '');
+  if (!price && ldPrice) price = parseNum(ldPrice);
   if (!price) price = parseNum($('[data-testid="hero-price"], [data-testid*="price"], .hero-price, [class*="price"]').first().text());
 
-  // Description: try known field names in Next data before falling back to DOM
+  // Description: try known field names in Next data before falling back to meta/DOM
   let description = clean(
     advert?.description ?? advert?.sellerComments ?? advert?.sellerDescription ??
     advert?.fullDescription ?? advert?.advertDescription ?? ''
   );
   if (!description) {
-    // Search nextData for known description field names (targeted, not a generic string search)
     const KEYS = ['description', 'sellercomments', 'sellerdescription', 'sellertext', 'advertdescription', 'comments'];
     const findByKey = (obj: any, depth = 0): string => {
       if (depth > 10 || !obj || typeof obj !== 'object') return '';
@@ -97,12 +112,15 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     };
     description = clean(findByKey(nextData));
   }
+  if (!description) description = ogDesc || ldDesc;
   if (!description) {
     description = clean(
       $('[data-testid="advert-description"], [data-testid*="description"], .seller-comments, .advert-description, [class*="description"]')
         .first().text()
     );
   }
+
+  console.log('[import-url] title:', title.slice(0, 60), '| price:', price, '| desc chars:', description.length);
 
   let images: string[] = [];
   if (advert?.imageUrls?.length) images = advert.imageUrls;
@@ -114,8 +132,9 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     });
     images = images.slice(0, 10);
   }
+  if (!images.length && ogImage) images = [ogImage];
 
-  // Location: prefer town/postcode from structured data; ignore distance strings like "5 miles away"
+  // Location: prefer town/postcode from structured data; ignore distance strings
   let location = clean(
     advert?.location?.town ?? advert?.location?.postTown ?? advert?.location?.county ??
     advert?.dealerProfile?.location?.town ?? advert?.dealerAddress?.town ??
@@ -126,7 +145,6 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     const cleaned = locEl.replace(/\d+(\.\d+)?\s*miles?\s*(away)?/gi, '').trim();
     if (cleaned) location = cleaned;
   }
-  // Strip any residual distance text
   location = location.replace(/\d+(\.\d+)?\s*miles?\s*(away)?/gi, '').trim();
 
   const postcode = parsePostcode(location || html.slice(0, 50000));
