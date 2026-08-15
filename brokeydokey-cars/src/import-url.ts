@@ -98,10 +98,18 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     ?? pp.initialState?.advert ?? pp.initialState?.vehicle ?? null;
 
   console.log('[import-url] advert keys:', advert ? Object.keys(advert).slice(0, 20) : 'null');
-  console.log('[import-url] ogTitle:', ogTitle.slice(0, 60));
+  console.log('[import-url] ogTitle:', ogTitle.slice(0, 80));
+
+  // Parse OG title: "[Year] [Make Model] for sale in [LOCATION] - Autotrader"
+  const ogTitleClean = ogTitle.replace(/\s*[-–]\s*Find your perfect car.*$/i, '').trim();
+  const ogForSale = ogTitleClean.match(/^(.+?)\s+for sale in\s+(.+)$/i);
+  const ogCarPart = ogForSale ? ogForSale[1].trim() : ogTitleClean;
+  const ogLocationPart = ogForSale ? ogForSale[2].trim() : '';
+  const ogYearFromTitle = parseYear(ogCarPart);
+  const ogMakeModel = ogCarPart.replace(/^\d{4}\s*/, '').trim();
 
   let title = clean(advert?.title ?? advert?.heading ?? advert?.name ?? '');
-  if (!title) title = ogTitle || clean($('h1').first().text());
+  if (!title) title = ogCarPart || clean($('h1').first().text());
 
   let price: number | null = null;
   if (advert?.price) price = parseNum(advert.price);
@@ -159,6 +167,9 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     if (cleaned) location = cleaned;
   }
   location = location.replace(/\d+(\.\d+)?\s*miles?\s*(away)?/gi, '').trim();
+  if (!location && ogLocationPart) {
+    location = ogLocationPart.split(',').map((s: string) => s.trim()).join(', ');
+  }
 
   const postcode = parsePostcode(location || html.slice(0, 50000));
 
@@ -172,9 +183,13 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     if (kv.length === 2) specs[kv[0].toLowerCase().trim()] = kv[1].trim();
   });
 
-  const make = clean(advert?.make ?? specs['make'] ?? '');
-  const model = clean(advert?.model ?? specs['model'] ?? '');
-  const year = parseYear(advert?.year ?? specs['year'] ?? advert?.derivative ?? title);
+  const ogMakeParts = ogMakeModel.split(' ');
+  const ogMake = ogMakeParts[0] ?? '';
+  const ogModel = ogMakeParts.slice(1).join(' ');
+
+  const make = clean(advert?.make ?? specs['make'] ?? ogMake);
+  const model = clean(advert?.model ?? specs['model'] ?? ogModel);
+  const year = parseYear(advert?.year ?? specs['year'] ?? advert?.derivative ?? '') ?? ogYearFromTitle;
   const mileage = parseMileage(advert?.mileage ?? specs['mileage'] ?? specs['miles'] ?? '');
   const fuelType = clean(advert?.fuelType ?? specs['fuel type'] ?? specs['fuel'] ?? '');
   const engineSize = clean(advert?.engineSize ?? specs['engine size'] ?? specs['engine'] ?? '');
@@ -281,12 +296,10 @@ export async function importFromUrl(url: string): Promise<ImportedListing> {
   const site = detectSite(url);
 
   if (site === 'autotrader') {
-    // Plain fetch avoids Playwright bot detection on AutoTrader
     const html = await fetchHtml(url);
     return scrapeAutoTraderHtml(html, url);
   }
 
-  // eBay and Gumtree need JS rendering for full content
   const html = await playwrightFetch(url);
 
   switch (site) {
