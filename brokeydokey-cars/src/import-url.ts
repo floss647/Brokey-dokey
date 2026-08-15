@@ -65,19 +65,43 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     if (raw) nextData = JSON.parse(raw);
   } catch { /* skip */ }
 
-  const advert: any = nextData?.props?.pageProps?.advert
-    ?? nextData?.props?.pageProps?.vehicle
-    ?? null;
+  // AutoTrader has nested the advert under several possible keys over time
+  const pp = nextData?.props?.pageProps ?? {};
+  const advert: any = pp.advert ?? pp.vehicle ?? pp.car ?? pp.listing
+    ?? pp.initialState?.advert ?? pp.initialState?.vehicle ?? null;
 
-  let title = clean(advert?.title ?? advert?.heading ?? '');
+  let title = clean(advert?.title ?? advert?.heading ?? advert?.name ?? '');
   if (!title) title = clean($('h1').first().text());
 
   let price: number | null = null;
   if (advert?.price) price = parseNum(advert.price);
-  if (!price) price = parseNum($('[data-testid="hero-price"], .hero-price, [class*="price"]').first().text());
+  if (!price) price = parseNum(advert?.priceGBP ?? advert?.advertisedPrice ?? '');
+  if (!price) price = parseNum($('[data-testid="hero-price"], [data-testid*="price"], .hero-price, [class*="price"]').first().text());
 
-  let description = clean(advert?.description ?? advert?.sellerComments ?? '');
-  if (!description) description = clean($('[data-testid="advert-description"], .seller-comments, [class*="description"]').first().text());
+  // Description: try many paths in the Next data before falling back to DOM
+  let description = clean(
+    advert?.description ?? advert?.sellerComments ?? advert?.sellerDescription ??
+    advert?.fullDescription ?? advert?.advertDescription ?? ''
+  );
+  if (!description) {
+    // Walk entire nextData looking for a long string that reads like a description
+    const findDesc = (obj: any, depth = 0): string => {
+      if (depth > 8 || !obj || typeof obj !== 'object') return '';
+      for (const v of Object.values(obj)) {
+        if (typeof v === 'string' && v.length > 100 && /[a-z]{3}/i.test(v) && !v.startsWith('http')) return v;
+        const found = findDesc(v, depth + 1);
+        if (found) return found;
+      }
+      return '';
+    };
+    description = clean(findDesc(nextData));
+  }
+  if (!description) {
+    description = clean(
+      $('[data-testid="advert-description"], [data-testid*="description"], .seller-comments, .advert-description, [class*="description"]')
+        .first().text()
+    );
+  }
 
   let images: string[] = [];
   if (advert?.imageUrls?.length) images = advert.imageUrls;
@@ -90,8 +114,19 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     images = images.slice(0, 10);
   }
 
-  let location = clean(advert?.location?.town ?? advert?.dealerAddress?.postcode ?? advert?.location ?? '');
-  if (!location) location = clean($('[data-testid="seller-location"], [class*="location"]').first().text());
+  // Location: prefer town/postcode from structured data; ignore distance strings like "5 miles away"
+  let location = clean(
+    advert?.location?.town ?? advert?.location?.postTown ?? advert?.location?.county ??
+    advert?.dealerProfile?.location?.town ?? advert?.dealerAddress?.town ??
+    advert?.dealerAddress?.postcode ?? ''
+  );
+  if (!location || /miles?\s+away/i.test(location)) {
+    const locEl = $('[data-testid="seller-location"], [data-testid*="location"]').first().text();
+    const cleaned = locEl.replace(/\d+(\.\d+)?\s*miles?\s*(away)?/gi, '').trim();
+    if (cleaned) location = cleaned;
+  }
+  // Strip any residual distance text
+  location = location.replace(/\d+(\.\d+)?\s*miles?\s*(away)?/gi, '').trim();
 
   const postcode = parsePostcode(location || html.slice(0, 50000));
 
@@ -200,8 +235,8 @@ export async function importFromUrl(url: string): Promise<ImportedListing> {
   const page = await context.newPage();
 
   try {
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await new Promise(r => setTimeout(r, 3000));
+    await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+    await new Promise(r => setTimeout(r, 2000));
 
     for (const sel of ['button[id*="accept" i]', 'button[class*="accept" i]', '[data-testid*="accept" i]']) {
       try {
