@@ -48,14 +48,16 @@ function getDb(): Database.Database {
       body_type    TEXT,
       doors        INTEGER,
       mot_expiry   TEXT,
+      contact_info TEXT DEFAULT '',
       created_at   TEXT DEFAULT (datetime('now')),
       updated_at   TEXT DEFAULT (datetime('now'))
     );
   `);
+  try { _db.exec(`ALTER TABLE listings ADD COLUMN contact_info TEXT DEFAULT ''`); } catch { /* already exists */ }
   return _db;
 }
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────────────────────────────
 
 export interface Post {
   id: number;
@@ -93,11 +95,12 @@ export interface Listing {
   body_type: string | null;
   doors: number | null;
   mot_expiry: string | null;
+  contact_info: string | null;
   created_at: string;
   updated_at: string;
 }
 
-// ── Posts ─────────────────────────────────────────────────────────────────────
+// ── Posts ───────────────────────────────────────────────────────────────────────────
 
 function slugify(title: string): string {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -165,14 +168,14 @@ export function deletePost(id: number): void {
   getDb().prepare('DELETE FROM posts WHERE id = ?').run(id);
 }
 
-// ── Listings ──────────────────────────────────────────────────────────────────
+// ── Listings ─────────────────────────────────────────────────────────────────────────────
 
 export function saveListing(data: Partial<Listing> & { title: string }): number {
   const result = getDb().prepare(`
     INSERT INTO listings
       (title, description, price, status, source_url, images, location, postcode,
-       make, model, year, mileage, fuel_type, engine_size, colour, transmission, body_type, doors, mot_expiry)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+       make, model, year, mileage, fuel_type, engine_size, colour, transmission, body_type, doors, mot_expiry, contact_info)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).run(
     data.title, data.description ?? null, data.price ?? null,
     data.status ?? 'draft', data.source_url ?? null, data.images ?? '[]',
@@ -180,6 +183,7 @@ export function saveListing(data: Partial<Listing> & { title: string }): number 
     data.make ?? null, data.model ?? null, data.year ?? null, data.mileage ?? null,
     data.fuel_type ?? null, data.engine_size ?? null, data.colour ?? null,
     data.transmission ?? null, data.body_type ?? null, data.doors ?? null, data.mot_expiry ?? null,
+    data.contact_info ?? '',
   );
   return result.lastInsertRowid as number;
 }

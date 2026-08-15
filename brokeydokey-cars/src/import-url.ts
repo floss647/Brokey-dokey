@@ -2,6 +2,22 @@ import { chromium } from 'playwright';
 import * as cheerio from 'cheerio';
 import { existsSync } from 'fs';
 
+async function fetchHtml(url: string): Promise<string> {
+  const res = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+      'Accept-Language': 'en-GB,en;q=0.5',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+      'Upgrade-Insecure-Requests': '1',
+    },
+    redirect: 'follow',
+    signal: AbortSignal.timeout(20000),
+  });
+  return res.text();
+}
+
 export interface ImportedListing {
   title: string;
   description: string;
@@ -59,7 +75,6 @@ function parsePostcode(s: string): string {
 function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   const $ = cheerio.load(html);
 
-  // ── Meta / JSON-LD (always server-rendered, survives bot detection) ─────────
   const ogTitle = clean($('meta[property="og:title"]').attr('content') ?? '');
   const ogDesc = clean($('meta[property="og:description"], meta[name="description"]').first().attr('content') ?? '');
   const ogImage = clean($('meta[property="og:image"]').attr('content') ?? '');
@@ -72,7 +87,6 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   const ldPrice = jsonLd?.offers?.price ?? jsonLd?.price ?? null;
   const ldDesc = clean(jsonLd?.description ?? '');
 
-  // ── Next.js data ────────────────────────────────────────────────────────────
   let nextData: any = null;
   try {
     const raw = $('#__NEXT_DATA__').text();
@@ -84,6 +98,7 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     ?? pp.initialState?.advert ?? pp.initialState?.vehicle ?? null;
 
   console.log('[import-url] advert keys:', advert ? Object.keys(advert).slice(0, 20) : 'null');
+  console.log('[import-url] ogTitle:', ogTitle.slice(0, 60));
 
   let title = clean(advert?.title ?? advert?.heading ?? advert?.name ?? '');
   if (!title) title = ogTitle || clean($('h1').first().text());
@@ -94,7 +109,6 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   if (!price && ldPrice) price = parseNum(ldPrice);
   if (!price) price = parseNum($('[data-testid="hero-price"], [data-testid*="price"], .hero-price, [class*="price"]').first().text());
 
-  // Description: try known field names in Next data before falling back to meta/DOM
   let description = clean(
     advert?.description ?? advert?.sellerComments ?? advert?.sellerDescription ??
     advert?.fullDescription ?? advert?.advertDescription ?? ''
@@ -134,7 +148,6 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   }
   if (!images.length && ogImage) images = [ogImage];
 
-  // Location: prefer town/postcode from structured data; ignore distance strings
   let location = clean(
     advert?.location?.town ?? advert?.location?.postTown ?? advert?.location?.county ??
     advert?.dealerProfile?.location?.town ?? advert?.dealerAddress?.town ??
@@ -231,9 +244,7 @@ function scrapeGumtreeHtml(html: string, url: string): ImportedListing {
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export async function importFromUrl(url: string): Promise<ImportedListing> {
-  const site = detectSite(url);
-
+async function playwrightFetch(url: string): Promise<string> {
   const executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH
     || (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined);
 
@@ -250,38 +261,46 @@ export async function importFromUrl(url: string): Promise<ImportedListing> {
   await context.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
-
   const page = await context.newPage();
-
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await new Promise(r => setTimeout(r, 4000));
-
+    await new Promise(r => setTimeout(r, 3000));
     for (const sel of ['button[id*="accept" i]', 'button[class*="accept" i]', '[data-testid*="accept" i]']) {
       try {
         const btn = await page.$(sel);
-        if (btn) { await btn.click(); await new Promise(r => setTimeout(r, 1000)); break; }
+        if (btn) { await btn.click(); await new Promise(r => setTimeout(r, 800)); break; }
       } catch { /* skip */ }
     }
-
-    const html = await page.content();
-
-    switch (site) {
-      case 'autotrader': return scrapeAutoTraderHtml(html, url);
-      case 'ebay':       return scrapeEbayHtml(html, url);
-      case 'gumtree':    return scrapeGumtreeHtml(html, url);
-      default: {
-        const $ = cheerio.load(html);
-        return {
-          title: clean($('h1').first().text()) || 'Imported listing',
-          description: clean($('main, article, [class*="description"]').first().text().slice(0, 2000)),
-          price: null, images: [], location: '', postcode: '', sourceUrl: url,
-          make: '', model: '', year: null, mileage: null,
-          fuelType: '', engineSize: '', colour: '', transmission: '', bodyType: '', doors: null, motExpiry: '',
-        };
-      }
-    }
+    return await page.content();
   } finally {
     await browser.close();
+  }
+}
+
+export async function importFromUrl(url: string): Promise<ImportedListing> {
+  const site = detectSite(url);
+
+  if (site === 'autotrader') {
+    // Plain fetch avoids Playwright bot detection on AutoTrader
+    const html = await fetchHtml(url);
+    return scrapeAutoTraderHtml(html, url);
+  }
+
+  // eBay and Gumtree need JS rendering for full content
+  const html = await playwrightFetch(url);
+
+  switch (site) {
+    case 'ebay':    return scrapeEbayHtml(html, url);
+    case 'gumtree': return scrapeGumtreeHtml(html, url);
+    default: {
+      const $ = cheerio.load(html);
+      return {
+        title: clean($('h1').first().text()) || 'Imported listing',
+        description: clean($('main, article, [class*="description"]').first().text().slice(0, 2000)),
+        price: null, images: [], location: '', postcode: '', sourceUrl: url,
+        make: '', model: '', year: null, mileage: null,
+        fuelType: '', engineSize: '', colour: '', transmission: '', bodyType: '', doors: null, motExpiry: '',
+      };
+    }
   }
 }
