@@ -99,39 +99,53 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .nav-links a:hover { color: var(--text); }
 
-/* ─── Hero ─── */
-.hero {
-  position: relative; height: 88vh; min-height: 520px;
-  overflow: hidden; background: #111;
+/* ─── Three-panel hero ─── */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 88vh;
+  min-height: 540px;
 }
-.hero-bg {
+.hp {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  background: #111;
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+.hp:last-child { border-right: none; }
+.hp-bg {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; opacity: 0.68;
+  background-size: cover; background-position: center;
+  opacity: 0.5;
+  transition: opacity 0.4s ease, transform 0.7s ease;
 }
-.hero-placeholder {
+.hp:hover .hp-bg { opacity: 0.68; transform: scale(1.05); }
+.hp-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 100%);
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.15) 100%);
 }
-.hero-content {
+.hp-label {
+  position: absolute; top: 28px; left: 28px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.hp-body {
   position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 60px 56px;
-  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 55%, transparent 100%);
+  padding: 32px 28px;
 }
-.hero-tag {
-  display: inline-block; font-size: 11px; font-weight: 600;
-  letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px;
-}
-.hero-title {
+.hp-title {
   font-family: var(--serif);
-  font-size: clamp(2.2rem, 5.5vw, 4.75rem);
-  line-height: 1.03; color: #fff; max-width: 820px; margin-bottom: 20px;
+  font-size: clamp(1.05rem, 1.6vw, 1.5rem);
+  line-height: 1.22; color: #fff; text-wrap: balance;
 }
-.hero-title a { color: inherit; }
-.hero-title a:hover { opacity: 0.88; }
-.hero-excerpt {
-  font-size: 17px; color: rgba(255,255,255,0.68); max-width: 520px;
-  line-height: 1.65; font-weight: 300;
+.hp-cta {
+  display: inline-block; margin-top: 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
 }
+.hp:hover .hp-cta { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.5); }
 
 /* ─── Section ─── */
 .section { padding: 80px 56px; border-top: 1px solid var(--border); }
@@ -236,11 +250,15 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
   .wcard { grid-template-columns: 1fr; gap: 32px; }
   .wcard-img { max-height: 380px; }
 }
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; height: auto; }
+  .hp { height: 40vh; min-height: 260px; }
+  .hp:first-child { height: 52vh; }
+}
 @media (max-width: 720px) {
   .nav { padding: 0 20px; height: 56px; }
   .nav-links { gap: 20px; }
   .nav-links a { font-size: 11px; }
-  .hero-content { padding: 40px 24px; }
   .section { padding: 56px 24px; }
   .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
   .grid-3, .grid-2, .sp-grid { grid-template-columns: 1fr; }
@@ -343,27 +361,27 @@ export function homepageHtml(
   rollingStop: Post[],
 ): string {
   const siteUrl = process.env.SITE_URL || 'https://brokeydokey.co.uk';
-  const hero = featured[0] || theFind[0] || reviews[0] || rollingStop[0] || null;
 
-  const heroSection = hero
-    ? `<section class="hero">
-        ${hero.image_url ? `<img class="hero-bg" src="${esc(hero.image_url)}" alt="">` : '<div class="hero-placeholder"></div>'}
-        <div class="hero-content">
-          ${hero.category && CATEGORY_META[hero.category]?.label
-            ? `<span class="hero-tag">${CATEGORY_META[hero.category].label}</span>`
-            : '<span class="hero-tag">BrokeyDokey</span>'}
-          <h1 class="hero-title"><a href="/blog/${hero.slug}">${esc(hero.title)}</a></h1>
-          ${hero.excerpt ? `<p class="hero-excerpt">${esc(hero.excerpt)}</p>` : ''}
-        </div>
-      </section>`
-    : `<section class="hero">
-        <div class="hero-placeholder"></div>
-        <div class="hero-content">
-          <span class="hero-tag">Welcome</span>
-          <h1 class="hero-title">Cars worth knowing about.</h1>
-          <p class="hero-excerpt">The best secondhand finds, honest reviews, and stories from the road.</p>
-        </div>
-      </section>`;
+  function heroPanel(label: string, color: string, href: string, post: Post | null, fallback: string): string {
+    const bgStyle = post?.image_url
+      ? `background-image:url('${esc(post.image_url)}')`
+      : `background:${fallback}`;
+    return `<a class="hp" href="${href}">
+      <div class="hp-bg" style="${bgStyle}"></div>
+      <div class="hp-overlay"></div>
+      <div class="hp-label" style="color:${color}">${label}</div>
+      <div class="hp-body">
+        <h2 class="hp-title">${post ? esc(post.title) : 'Coming soon'}</h2>
+        <span class="hp-cta">${post ? 'Read →' : 'On its way →'}</span>
+      </div>
+    </a>`;
+  }
+
+  const heroSection = `<div class="hero-grid">
+    ${heroPanel('The Find',     '#e8470a', '/the-find',    theFind[0]    || null, 'linear-gradient(160deg,#1a1410,#2d1f14)')}
+    ${heroPanel('Reviews',      '#5a9cf5', '/reviews',     reviews[0]    || null, 'linear-gradient(160deg,#0f1420,#181f2c)')}
+    ${heroPanel('Rolling Stop', '#4dba70', '/rolling-stop',rollingStop[0]|| null, 'linear-gradient(160deg,#101a12,#162014)')}
+  </div>`;
 
   const theFindSection = `<section class="section">
     <div class="section-header">
