@@ -376,6 +376,7 @@
           <div class="form-field"><label>MOT Expiry</label><input id="lf-mot_expiry" value="${esc(l.mot_expiry)}"></div>
           <div class="form-field"><label>Location</label><input id="lf-location" value="${esc(l.location)}"></div>
           <div class="form-field"><label>Postcode</label><input id="lf-postcode" value="${esc(l.postcode)}"></div>
+          <div class="form-field full"><label>Contact / WhatsApp / Phone</label><input id="lf-contact_info" placeholder="e.g. 07700 900000 or wa.me/447700900000" value="${esc(l.contact_info)}"></div>
           <div class="form-field full"><label>Description</label><textarea id="lf-description" style="min-height:120px">${esc(l.description)}</textarea></div>
         </div>
         <button class="save-btn" style="margin-top:12px" onclick="saveListing(${l.id})">Save Changes</button>
@@ -404,6 +405,7 @@
       mot_expiry: document.getElementById('lf-mot_expiry')?.value,
       location: document.getElementById('lf-location')?.value,
       postcode: document.getElementById('lf-postcode')?.value,
+      contact_info: document.getElementById('lf-contact_info')?.value,
       description: document.getElementById('lf-description')?.value,
     };
     await fetch(`/api/listings/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});

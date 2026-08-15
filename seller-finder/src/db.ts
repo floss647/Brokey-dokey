@@ -67,6 +67,7 @@ function getDb(): Database.Database {
       body_type TEXT,
       doors INTEGER,
       mot_expiry TEXT,
+      contact_info TEXT DEFAULT '',
       created_at TEXT DEFAULT (datetime('now')),
       updated_at TEXT DEFAULT (datetime('now'))
     );
@@ -99,6 +100,7 @@ function getDb(): Database.Database {
   // Migrate existing DBs that predate the category/featured columns
   try { _db.exec(`ALTER TABLE posts ADD COLUMN category TEXT DEFAULT 'general'`); } catch {}
   try { _db.exec(`ALTER TABLE posts ADD COLUMN featured INTEGER DEFAULT 0`); } catch {}
+  try { _db.exec(`ALTER TABLE bd_listings ADD COLUMN contact_info TEXT DEFAULT ''`); } catch {}
   return _db;
 }
 
@@ -214,6 +216,7 @@ export interface BdListing {
   body_type: string | null;
   doors: number | null;
   mot_expiry: string | null;
+  contact_info: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -222,8 +225,8 @@ export function saveBdListing(data: Partial<BdListing> & { title: string }): num
   const result = getDb().prepare(`
     INSERT INTO bd_listings
       (title, description, price, category, status, source_url, images, location, postcode,
-       make, model, year, mileage, fuel_type, engine_size, colour, transmission, body_type, doors, mot_expiry)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+       make, model, year, mileage, fuel_type, engine_size, colour, transmission, body_type, doors, mot_expiry, contact_info)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).run(
     data.title, data.description ?? null, data.price ?? null,
     data.category ?? 'Cars', data.status ?? 'draft',
@@ -232,7 +235,7 @@ export function saveBdListing(data: Partial<BdListing> & { title: string }): num
     data.make ?? null, data.model ?? null, data.year ?? null,
     data.mileage ?? null, data.fuel_type ?? null, data.engine_size ?? null,
     data.colour ?? null, data.transmission ?? null, data.body_type ?? null,
-    data.doors ?? null, data.mot_expiry ?? null,
+    data.doors ?? null, data.mot_expiry ?? null, data.contact_info ?? '',
   );
   return result.lastInsertRowid as number;
 }

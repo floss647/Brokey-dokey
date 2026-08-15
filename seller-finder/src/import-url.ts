@@ -1,5 +1,22 @@
 import { chromium } from 'playwright';
 import * as cheerio from 'cheerio';
+import { existsSync } from 'fs';
+
+async function fetchHtml(url: string): Promise<string> {
+  const res = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+      'Accept-Language': 'en-GB,en;q=0.5',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+      'Upgrade-Insecure-Requests': '1',
+    },
+    redirect: 'follow',
+    signal: AbortSignal.timeout(20000),
+  });
+  return res.text();
+}
 
 export interface ImportedListing {
   title: string;
@@ -59,32 +76,98 @@ function parsePostcode(s: string): string {
 function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   const $ = cheerio.load(html);
 
-  // Try Next.js __NEXT_DATA__ first (most reliable)
+  // ── Meta / JSON-LD (server-rendered, survives bot detection) ─────────────────
+  const ogTitleRaw = clean($('meta[property="og:title"]').attr('content') ?? '');
+  // Fall back to <title> tag — AutoTrader plain-fetch often lacks OG meta
+  const pageTitleRaw = clean($('title').first().text())
+    .replace(/\s*[|–-]\s*(autotrader|find your perfect car).*$/i, '').trim();
+  const ogTitle = ogTitleRaw || pageTitleRaw;
+  const ogDesc = clean($('meta[property="og:description"], meta[name="description"]').first().attr('content') ?? '');
+  const ogImage = clean($('meta[property="og:image"]').attr('content') ?? '');
+
+  // Collect ALL JSON-LD blocks; prefer a Vehicle/Car/Product schema
+  let jsonLd: any = null;
+  $('script[type="application/ld+json"]').each((_, el) => {
+    try {
+      const parsed = JSON.parse($(el).text());
+      const t = parsed?.['@type'] ?? '';
+      if (!jsonLd || /car|vehicle|product/i.test(t)) jsonLd = parsed;
+    } catch { /* skip */ }
+  });
+  const ldPrice = jsonLd?.offers?.price ?? jsonLd?.price ?? null;
+  const ldDesc = clean(jsonLd?.description ?? '');
+
+  // Vehicle-specific JSON-LD properties (Schema.org Vehicle type)
+  const ldMake = clean(jsonLd?.brand?.name ?? jsonLd?.manufacturer?.name ?? '');
+  const ldModel = clean(jsonLd?.model ?? '');
+  const ldYear = parseYear(jsonLd?.vehicleModelDate ?? jsonLd?.productionDate ?? '');
+  const ldMileage = parseMileage(String(jsonLd?.mileageFromOdometer?.value ?? jsonLd?.mileageFromOdometer ?? ''));
+  const ldFuelType = clean(jsonLd?.fuelType ?? '');
+  const ldTransmission = clean(jsonLd?.vehicleTransmission ?? '');
+  const ldColour = clean(jsonLd?.color ?? jsonLd?.colour ?? '');
+  const ldBodyType = clean(jsonLd?.bodyType ?? '');
+  const ldDoors = parseNum(String(jsonLd?.numberOfDoors ?? ''));
+
+  // ── Next.js data ─────────────────────────────────────────────────────────────
   let nextData: any = null;
   try {
     const raw = $('#__NEXT_DATA__').text();
     if (raw) nextData = JSON.parse(raw);
   } catch { /* skip */ }
 
-  // Walk into the advert data if present
-  const advert: any = nextData?.props?.pageProps?.advert
-    ?? nextData?.props?.pageProps?.vehicle
-    ?? null;
+  const pp = nextData?.props?.pageProps ?? {};
+  const advert: any = pp.advert ?? pp.vehicle ?? pp.car ?? pp.listing
+    ?? pp.initialState?.advert ?? pp.initialState?.vehicle ?? null;
 
-  // Title
-  let title = clean(advert?.title ?? advert?.heading ?? '');
-  if (!title) title = clean($('h1').first().text());
+  console.log('[import-url] advert keys:', advert ? Object.keys(advert).slice(0, 20) : 'null');
+  console.log('[import-url] ogTitle:', ogTitle.slice(0, 80));
+  console.log('[import-url] jsonLd type:', jsonLd?.['@type'] ?? 'null', '| ldMake:', ldMake, '| ldModel:', ldModel, '| ldYear:', ldYear);
 
-  // Price
+  // Parse OG/page title: "[Year] [Make Model] for sale in [LOCATION]"
+  const ogTitleClean = ogTitle.replace(/\s*[-–]\s*Find your perfect car.*$/i, '').trim();
+  const ogForSale = ogTitleClean.match(/^(.+?)\s+for sale\b.*?in\s+(.+)$/i);
+  const ogCarPart = ogForSale ? ogForSale[1].trim() : ogTitleClean;
+  const ogLocationPart = ogForSale ? ogForSale[2].trim() : '';
+  const ogYearFromTitle = parseYear(ogCarPart);
+  const ogMakeModel = ogCarPart.replace(/^\d{4}\s*/, '').trim();
+
+  let title = clean(advert?.title ?? advert?.heading ?? advert?.name ?? '');
+  if (!title) title = ogCarPart || clean($('h1').first().text());
+
   let price: number | null = null;
   if (advert?.price) price = parseNum(advert.price);
-  if (!price) price = parseNum($('[data-testid="hero-price"], .hero-price, [class*="price"]').first().text());
+  if (!price) price = parseNum(advert?.priceGBP ?? advert?.advertisedPrice ?? '');
+  if (!price && ldPrice) price = parseNum(ldPrice);
+  if (!price) price = parseNum($('[data-testid="hero-price"], [data-testid*="price"], .hero-price, [class*="price"]').first().text());
 
-  // Description
-  let description = clean(advert?.description ?? advert?.sellerComments ?? '');
-  if (!description) description = clean($('[data-testid="advert-description"], .seller-comments, [class*="description"]').first().text());
+  // Description: try many paths before falling back to DOM
+  let description = clean(
+    advert?.description ?? advert?.sellerComments ?? advert?.sellerDescription ??
+    advert?.fullDescription ?? advert?.advertDescription ?? ''
+  );
+  if (!description) {
+    const KEYS = ['description', 'sellercomments', 'sellerdescription', 'sellertext', 'advertdescription', 'comments'];
+    const findByKey = (obj: any, depth = 0): string => {
+      if (depth > 10 || !obj || typeof obj !== 'object') return '';
+      for (const [k, v] of Object.entries(obj)) {
+        if (KEYS.includes(k.toLowerCase()) && typeof v === 'string' && v.length > 20) return v;
+        const found = findByKey(v, depth + 1);
+        if (found) return found;
+      }
+      return '';
+    };
+    description = clean(findByKey(nextData));
+  }
+  if (!description) description = ogDesc || ldDesc;
+  if (!description) {
+    description = clean(
+      $('[data-testid="advert-description"], [data-testid*="description"], .seller-comments, .advert-description, [class*="description"]')
+        .first().text()
+    );
+  }
 
-  // Images
+  console.log('[import-url] title:', title.slice(0, 60), '| price:', price, '| desc chars:', description.length);
+
   let images: string[] = [];
   if (advert?.imageUrls?.length) images = advert.imageUrls;
   else if (advert?.images?.length) images = advert.images.map((i: any) => i.url ?? i.src ?? i);
@@ -95,59 +178,58 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
     });
     images = images.slice(0, 10);
   }
+  if (!images.length && ogImage) images = [ogImage];
 
-  // Location
-  let location = clean(advert?.location?.town ?? advert?.dealerAddress?.postcode ?? advert?.location ?? '');
-  if (!location) location = clean($('[data-testid="seller-location"], [class*="location"]').first().text());
+  // Location: prefer structured data; ignore distance strings like "5 miles away"
+  let location = clean(
+    advert?.location?.town ?? advert?.location?.postTown ?? advert?.location?.county ??
+    advert?.dealerProfile?.location?.town ?? advert?.dealerAddress?.town ??
+    advert?.dealerAddress?.postcode ?? ''
+  );
+  if (!location || /miles?\s+away/i.test(location)) {
+    const locEl = $('[data-testid="seller-location"], [data-testid*="location"]').first().text();
+    const cleaned = locEl.replace(/\d+(\.\d+)?\s*miles?\s*(away)?/gi, '').trim();
+    if (cleaned) location = cleaned;
+  }
+  location = location.replace(/\d+(\.\d+)?\s*miles?\s*(away)?/gi, '').trim();
+  if (!location && ogLocationPart) {
+    location = ogLocationPart.split(',').map((s: string) => s.trim()).join(', ');
+  }
 
   const postcode = parsePostcode(location || html.slice(0, 50000));
 
-  // Key specs — from advert object or from key facts HTML
   const specs: Record<string, string> = {};
   if (advert?.keyFacts) {
     for (const [k, v] of Object.entries(advert.keyFacts)) specs[k.toLowerCase()] = clean(v);
   }
-  // Also scrape the key facts HTML section
   $('[data-testid*="key-fact"], [data-testid*="spec"], li, .key-facts li, .specs li').each((_, el) => {
     const text = $(el).text().trim();
     const kv = text.split(/:\s*/);
     if (kv.length === 2) specs[kv[0].toLowerCase().trim()] = kv[1].trim();
   });
 
-  const make = clean(advert?.make ?? specs['make'] ?? '');
-  const model = clean(advert?.model ?? specs['model'] ?? '');
-  const year = parseYear(advert?.year ?? specs['year'] ?? advert?.derivative ?? title);
-  const mileage = parseMileage(advert?.mileage ?? specs['mileage'] ?? specs['miles'] ?? '');
-  const fuelType = clean(advert?.fuelType ?? specs['fuel type'] ?? specs['fuel'] ?? '');
-  const engineSize = clean(advert?.engineSize ?? specs['engine size'] ?? specs['engine'] ?? '');
-  const colour = clean(advert?.colour ?? advert?.color ?? specs['colour'] ?? specs['color'] ?? '');
-  const transmission = clean(advert?.transmission ?? specs['transmission'] ?? specs['gearbox'] ?? '');
-  const bodyType = clean(advert?.bodyType ?? specs['body type'] ?? specs['body style'] ?? '');
-  const doors = parseNum(advert?.doors ?? specs['doors'] ?? '');
+  const ogMakeParts = ogMakeModel.split(' ');
+  const ogMake = ogMakeParts[0] ?? '';
+  const ogModel = ogMakeParts.slice(1).join(' ');
 
-  // MOT — often in description or a separate field
+  const make = clean(advert?.make ?? specs['make'] ?? ldMake ?? ogMake);
+  const model = clean(advert?.model ?? specs['model'] ?? ldModel ?? ogModel);
+  const year = parseYear(advert?.year ?? specs['year'] ?? advert?.derivative ?? '') ?? ldYear ?? ogYearFromTitle;
+  const mileage = parseMileage(advert?.mileage ?? specs['mileage'] ?? specs['miles'] ?? '') ?? ldMileage;
+  const fuelType = clean(advert?.fuelType ?? specs['fuel type'] ?? specs['fuel'] ?? ldFuelType ?? '');
+  const engineSize = clean(advert?.engineSize ?? specs['engine size'] ?? specs['engine'] ?? '');
+  const colour = clean(advert?.colour ?? advert?.color ?? specs['colour'] ?? specs['color'] ?? ldColour ?? '');
+  const transmission = clean(advert?.transmission ?? specs['transmission'] ?? specs['gearbox'] ?? ldTransmission ?? '');
+  const bodyType = clean(advert?.bodyType ?? specs['body type'] ?? specs['body style'] ?? ldBodyType ?? '');
+  const doors = parseNum(advert?.doors ?? specs['doors'] ?? '') ?? ldDoors;
   const motExpiry = clean(advert?.motExpiry ?? advert?.mot ?? specs['mot'] ?? specs['mot expiry'] ?? '');
 
   return {
     title: title || 'Untitled listing',
-    description,
-    price,
-    images,
-    location,
-    postcode,
-    category: 'Cars',
-    sourceUrl: url,
-    make,
-    model,
-    year,
-    mileage,
-    fuelType,
-    engineSize,
-    colour,
-    transmission,
-    bodyType,
-    doors: doors ? Math.round(doors) : null,
-    motExpiry,
+    description, price, images, location, postcode,
+    category: 'Cars', sourceUrl: url,
+    make, model, year, mileage, fuelType, engineSize, colour, transmission, bodyType,
+    doors: doors ? Math.round(doors) : null, motExpiry,
   };
 }
 
@@ -169,16 +251,10 @@ function scrapeEbayHtml(html: string, url: string): ImportedListing {
 
   return {
     title: title || 'Untitled eBay listing',
-    description,
-    price,
-    images: images.slice(0, 10),
-    location,
-    postcode: parsePostcode(location),
-    category: 'General',
-    sourceUrl: url,
+    description, price, images: images.slice(0, 10), location,
+    postcode: parsePostcode(location), category: 'General', sourceUrl: url,
     make: '', model: '', year: null, mileage: null,
-    fuelType: '', engineSize: '', colour: '',
-    transmission: '', bodyType: '', doors: null, motExpiry: '',
+    fuelType: '', engineSize: '', colour: '', transmission: '', bodyType: '', doors: null, motExpiry: '',
   };
 }
 
@@ -200,25 +276,21 @@ function scrapeGumtreeHtml(html: string, url: string): ImportedListing {
 
   return {
     title: title || 'Untitled Gumtree listing',
-    description,
-    price,
-    images: images.slice(0, 10),
-    location,
-    postcode: parsePostcode(location),
-    category: 'General',
-    sourceUrl: url,
+    description, price, images: images.slice(0, 10), location,
+    postcode: parsePostcode(location), category: 'General', sourceUrl: url,
     make: '', model: '', year: parseYear(title + ' ' + description), mileage: parseMileage(description),
-    fuelType: '', engineSize: '', colour: '',
-    transmission: '', bodyType: '', doors: null, motExpiry: '',
+    fuelType: '', engineSize: '', colour: '', transmission: '', bodyType: '', doors: null, motExpiry: '',
   };
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export async function importFromUrl(url: string): Promise<ImportedListing> {
-  const site = detectSite(url);
+async function playwrightFetch(url: string): Promise<string> {
+  const executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH
+    || (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined);
 
   const browser = await chromium.launch({
+    ...(executablePath ? { executablePath } : {}),
     headless: true,
     args: ['--disable-blink-features=AutomationControlled', '--no-sandbox', '--disable-dev-shm-usage'],
   });
@@ -230,43 +302,47 @@ export async function importFromUrl(url: string): Promise<ImportedListing> {
   await context.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
-
   const page = await context.newPage();
-
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    // Wait a bit for React/Next.js hydration
     await new Promise(r => setTimeout(r, 3000));
-
-    // Try accepting any cookie consent
     for (const sel of ['button[id*="accept" i]', 'button[class*="accept" i]', '[data-testid*="accept" i]']) {
       try {
         const btn = await page.$(sel);
-        if (btn) { await btn.click(); await new Promise(r => setTimeout(r, 1000)); break; }
+        if (btn) { await btn.click(); await new Promise(r => setTimeout(r, 800)); break; }
       } catch { /* skip */ }
     }
-
-    const html = await page.content();
-
-    switch (site) {
-      case 'autotrader': return scrapeAutoTraderHtml(html, url);
-      case 'ebay':       return scrapeEbayHtml(html, url);
-      case 'gumtree':    return scrapeGumtreeHtml(html, url);
-      default: {
-        // Generic fallback
-        const $ = cheerio.load(html);
-        return {
-          title: clean($('h1').first().text()) || 'Imported listing',
-          description: clean($('main, article, [class*="description"]').first().text().slice(0, 2000)),
-          price: null, images: [], location: '', postcode: '',
-          category: 'General', sourceUrl: url,
-          make: '', model: '', year: null, mileage: null,
-          fuelType: '', engineSize: '', colour: '',
-          transmission: '', bodyType: '', doors: null, motExpiry: '',
-        };
-      }
-    }
+    return await page.content();
   } finally {
     await browser.close();
+  }
+}
+
+export async function importFromUrl(url: string): Promise<ImportedListing> {
+  const site = detectSite(url);
+
+  if (site === 'autotrader') {
+    // Plain fetch avoids Playwright bot detection on AutoTrader
+    const html = await fetchHtml(url);
+    return scrapeAutoTraderHtml(html, url);
+  }
+
+  // eBay and Gumtree need JS rendering
+  const html = await playwrightFetch(url);
+
+  switch (site) {
+    case 'ebay':    return scrapeEbayHtml(html, url);
+    case 'gumtree': return scrapeGumtreeHtml(html, url);
+    default: {
+      const $ = cheerio.load(html);
+      return {
+        title: clean($('h1').first().text()) || 'Imported listing',
+        description: clean($('main, article, [class*="description"]').first().text().slice(0, 2000)),
+        price: null, images: [], location: '', postcode: '',
+        category: 'General', sourceUrl: url,
+        make: '', model: '', year: null, mileage: null,
+        fuelType: '', engineSize: '', colour: '', transmission: '', bodyType: '', doors: null, motExpiry: '',
+      };
+    }
   }
 }
