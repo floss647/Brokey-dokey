@@ -78,23 +78,24 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   if (!price) price = parseNum(advert?.priceGBP ?? advert?.advertisedPrice ?? '');
   if (!price) price = parseNum($('[data-testid="hero-price"], [data-testid*="price"], .hero-price, [class*="price"]').first().text());
 
-  // Description: try many paths in the Next data before falling back to DOM
+  // Description: try known field names in Next data before falling back to DOM
   let description = clean(
     advert?.description ?? advert?.sellerComments ?? advert?.sellerDescription ??
     advert?.fullDescription ?? advert?.advertDescription ?? ''
   );
   if (!description) {
-    // Walk entire nextData looking for a long string that reads like a description
-    const findDesc = (obj: any, depth = 0): string => {
-      if (depth > 8 || !obj || typeof obj !== 'object') return '';
-      for (const v of Object.values(obj)) {
-        if (typeof v === 'string' && v.length > 100 && /[a-z]{3}/i.test(v) && !v.startsWith('http')) return v;
-        const found = findDesc(v, depth + 1);
+    // Search nextData for known description field names (targeted, not a generic string search)
+    const KEYS = ['description', 'sellercomments', 'sellerdescription', 'sellertext', 'advertdescription', 'comments'];
+    const findByKey = (obj: any, depth = 0): string => {
+      if (depth > 10 || !obj || typeof obj !== 'object') return '';
+      for (const [k, v] of Object.entries(obj)) {
+        if (KEYS.includes(k.toLowerCase()) && typeof v === 'string' && v.length > 20) return v;
+        const found = findByKey(v, depth + 1);
         if (found) return found;
       }
       return '';
     };
-    description = clean(findDesc(nextData));
+    description = clean(findByKey(nextData));
   }
   if (!description) {
     description = clean(
@@ -235,8 +236,8 @@ export async function importFromUrl(url: string): Promise<ImportedListing> {
   const page = await context.newPage();
 
   try {
-    await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
-    await new Promise(r => setTimeout(r, 2000));
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await new Promise(r => setTimeout(r, 4000));
 
     for (const sel of ['button[id*="accept" i]', 'button[class*="accept" i]', '[data-testid*="accept" i]']) {
       try {
