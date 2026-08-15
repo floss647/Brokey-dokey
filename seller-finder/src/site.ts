@@ -1,4 +1,4 @@
-import type { Post } from './db.js';
+import type { Post, BdListing } from './db.js';
 
 function esc(s: string | null | undefined): string {
   return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -243,12 +243,65 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
 .ft-nav a { font-size: 13px; color: rgba(255,255,255,0.45); transition: color 0.15s; font-weight: 300; }
 .ft-nav a:hover { color: #fff; }
 
+/* ─── Cars listing page ─── */
+.cars-header { padding: 80px 56px 56px; border-bottom: 1px solid var(--border); }
+.cars-grid { padding: 56px 56px; display: grid; grid-template-columns: repeat(3,1fr); gap: 44px; }
+
+/* ─── Car card ─── */
+.lcard { display: block; }
+.lcard-img { aspect-ratio: 16/10; overflow: hidden; background: #e4e4e0; margin-bottom: 16px; position: relative; }
+.lcard-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.lcard:hover .lcard-img img { transform: scale(1.04); }
+.lcard-price {
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(0,0,0,0.82); color: #fff; font-size: 14px; font-weight: 700;
+  padding: 5px 11px; border-radius: 4px; letter-spacing: -0.2px;
+}
+.lcard-title { font-family: var(--serif); font-size: 1.25rem; line-height: 1.22; color: var(--text); margin-bottom: 8px; transition: color 0.15s; }
+.lcard:hover .lcard-title { color: var(--accent); }
+.lcard-specs { display: flex; gap: 0; flex-wrap: wrap; }
+.lcard-spec { font-size: 12px; color: var(--muted); font-weight: 500; }
+.lcard-spec:not(:last-child)::after { content: ' · '; white-space: pre; color: var(--border); }
+
+/* ─── Car detail page ─── */
+.car-hero { width: 100%; max-height: 560px; object-fit: cover; display: block; background: #e4e4e0; }
+.car-wrap { max-width: 1080px; margin: 0 auto; padding: 0 48px; }
+.car-header { padding: 48px 0 36px; display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.car-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.08; }
+.car-price { font-family: var(--serif); font-size: 2.75rem; color: var(--accent); font-weight: 400; white-space: nowrap; }
+.car-specs-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 52px; }
+.car-spec-item { padding: 18px 22px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.car-spec-item:nth-child(3n) { border-right: none; }
+.car-spec-label { font-size: 10px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.car-spec-value { font-size: 15px; font-weight: 500; color: var(--text); }
+.car-gallery { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin: 0 0 48px; }
+.car-gallery-img { flex: 0 0 220px; height: 148px; overflow: hidden; background: #e4e4e0; border-radius: 4px; }
+.car-gallery-img img { width: 100%; height: 100%; object-fit: cover; }
+.car-desc-head { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 20px; }
+.car-desc { font-size: 1.025rem; line-height: 1.85; color: var(--text); max-width: 680px; margin-bottom: 56px; white-space: pre-wrap; }
+.car-contact { border-top: 1px solid var(--border); padding: 40px 0 80px; }
+.car-contact-head { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.car-contact-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; background: var(--text); color: #fff;
+  font-size: 14px; font-weight: 600; border-radius: 6px; transition: background 0.15s; text-decoration: none;
+}
+.car-contact-btn:hover { background: var(--accent); color: #fff; }
+.car-source { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 1px; }
+.car-source:hover { color: var(--text); }
+.car-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--muted); padding: 28px 0 0; transition: color 0.15s; }
+.car-back:hover { color: var(--text); }
+
 /* ─── Responsive ─── */
 @media (max-width: 1024px) {
   .grid-3 { grid-template-columns: repeat(2,1fr); }
   .sp-grid { grid-template-columns: repeat(2,1fr); }
   .wcard { grid-template-columns: 1fr; gap: 32px; }
   .wcard-img { max-height: 380px; }
+  .cars-grid { grid-template-columns: repeat(2,1fr); padding: 48px 40px; }
+  .car-specs-grid { grid-template-columns: repeat(2,1fr); }
+  .car-spec-item:nth-child(3n) { border-right: 1px solid var(--border); }
+  .car-spec-item:nth-child(2n) { border-right: none; }
 }
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; height: auto; }
@@ -269,6 +322,13 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
   .empty { padding: 56px 24px; }
   footer { padding: 44px 24px; flex-direction: column; gap: 32px; align-items: flex-start; }
   .ft-nav { align-items: flex-start; }
+  .cars-header { padding: 56px 24px 40px; }
+  .cars-grid { grid-template-columns: 1fr; padding: 40px 24px; }
+  .car-wrap { padding: 0 20px; }
+  .car-header { padding: 36px 0 28px; flex-direction: column; gap: 12px; }
+  .car-specs-grid { grid-template-columns: repeat(2,1fr); }
+  .car-spec-item:nth-child(3n) { border-right: 1px solid var(--border); }
+  .car-spec-item:nth-child(2n) { border-right: none; }
 }
 `;
 
@@ -279,6 +339,7 @@ function navHtml(): string {
     <li><a href="/the-find">The Find</a></li>
     <li><a href="/reviews">Reviews</a></li>
     <li><a href="/rolling-stop">Rolling Stop</a></li>
+    <li><a href="/cars">Cars</a></li>
   </ul>
 </nav>`;
 }
@@ -293,6 +354,7 @@ function footerHtml(): string {
     <a href="/the-find">The Find</a>
     <a href="/reviews">Reviews</a>
     <a href="/rolling-stop">Rolling Stop</a>
+    <a href="/cars">Cars for Sale</a>
   </nav>
 </footer>`;
 }
@@ -487,6 +549,137 @@ ${post.image_url ? `<meta name="twitter:image" content="${esc(post.image_url)}">
   </div>`;
 
   return layout(post.title, meta, body);
+}
+
+// ── Car listing pages ─────────────────────────────────────────────────────────
+
+function carTitle(l: BdListing): string {
+  const parts = [l.year, l.make, l.model].filter(Boolean);
+  return parts.length ? parts.join(' ') : l.title;
+}
+
+function carSpecItem(label: string, value: string | number | null | undefined): string {
+  if (!value && value !== 0) return '';
+  return `<div class="car-spec-item">
+    <div class="car-spec-label">${label}</div>
+    <div class="car-spec-value">${esc(String(value))}</div>
+  </div>`;
+}
+
+export function carsHtml(listings: BdListing[]): string {
+  const siteUrl = process.env.SITE_URL || 'https://brokeydokey.co.uk';
+
+  const meta = `<meta name="description" content="Cars for sale from BrokeyDokey — hand-picked, honestly described.">
+<meta property="og:title" content="Cars for Sale — BrokeyDokey">
+<meta property="og:url" content="${siteUrl}/cars">
+<meta property="og:type" content="website">`;
+
+  const cards = listings.map(l => {
+    const imgs = JSON.parse(l.images || '[]') as string[];
+    const headline = carTitle(l);
+    const specs = [
+      l.mileage ? l.mileage.toLocaleString('en-GB') + ' miles' : '',
+      l.fuel_type || '',
+      l.transmission || '',
+      l.location || '',
+    ].filter(Boolean);
+
+    return `<a class="lcard" href="/cars/${l.id}">
+      <div class="lcard-img">
+        ${imgs[0] ? `<img src="${esc(imgs[0])}" alt="${esc(headline)}" loading="lazy">` : ''}
+        ${l.price ? `<div class="lcard-price">£${l.price.toLocaleString('en-GB')}</div>` : ''}
+      </div>
+      <h3 class="lcard-title">${esc(headline)}</h3>
+      <div class="lcard-specs">${specs.map(s => `<span class="lcard-spec">${esc(s)}</span>`).join('')}</div>
+    </a>`;
+  }).join('');
+
+  const body = `<div class="cars-header">
+    <div class="sp-tag">For Sale</div>
+    <h1 class="sp-title">Cars</h1>
+    <p class="sp-desc">Hand-picked. Honestly described. No distance readings, no mystery mileage.</p>
+  </div>
+  ${listings.length
+    ? `<div class="cars-grid">${cards}</div>`
+    : `<div class="empty"><div class="empty-h">Nothing listed yet.</div><p>Check back soon — cars are added regularly.</p></div>`}`;
+
+  return layout('Cars for Sale', meta, body);
+}
+
+export function carDetailHtml(l: BdListing): string {
+  const siteUrl = process.env.SITE_URL || 'https://brokeydokey.co.uk';
+  const imgs = JSON.parse(l.images || '[]') as string[];
+  const headline = carTitle(l);
+
+  const meta = `<meta name="description" content="${esc(l.description?.slice(0, 160) || headline)}">
+<meta property="og:title" content="${esc(headline)} — BrokeyDokey">
+<meta property="og:description" content="${esc(l.description?.slice(0, 200) || '')}">
+<meta property="og:url" content="${siteUrl}/cars/${l.id}">
+<meta property="og:type" content="website">
+${imgs[0] ? `<meta property="og:image" content="${esc(imgs[0])}">` : ''}`;
+
+  const heroImg = imgs[0]
+    ? `<img class="car-hero" src="${esc(imgs[0])}" alt="${esc(headline)}">`
+    : `<div class="car-hero" style="height:320px"></div>`;
+
+  const gallery = imgs.slice(1).length
+    ? `<div class="car-gallery">${imgs.slice(1, 9).map(u => `<div class="car-gallery-img"><img src="${esc(u)}" alt="" loading="lazy"></div>`).join('')}</div>`
+    : '';
+
+  const specs = [
+    carSpecItem('Mileage', l.mileage ? l.mileage.toLocaleString('en-GB') + ' miles' : null),
+    carSpecItem('Fuel', l.fuel_type),
+    carSpecItem('Transmission', l.transmission),
+    carSpecItem('Engine', l.engine_size),
+    carSpecItem('Colour', l.colour),
+    carSpecItem('Body', l.body_type),
+    carSpecItem('Doors', l.doors),
+    carSpecItem('MOT', l.mot_expiry),
+    carSpecItem('Location', l.location),
+  ].filter(Boolean).join('');
+
+  const contactInfo = l.contact_info || '';
+  const isWhatsApp = contactInfo.toLowerCase().includes('wa.me') || contactInfo.toLowerCase().includes('whatsapp');
+  const isPhone = /^[\d\s+()-]{7,}$/.test(contactInfo);
+  const contactHref = isWhatsApp
+    ? (contactInfo.startsWith('http') ? contactInfo : `https://wa.me/${contactInfo.replace(/\D/g, '')}`)
+    : isPhone
+      ? `tel:${contactInfo.replace(/\s/g, '')}`
+      : contactInfo;
+  const contactLabel = isWhatsApp ? 'Message on WhatsApp' : isPhone ? `Call ${contactInfo}` : 'Get in touch';
+
+  const descSection = l.description
+    ? `<div class="car-desc-head">About this car</div>
+       <div class="car-desc">${esc(l.description)}</div>`
+    : '';
+
+  const contactSection = contactInfo
+    ? `<div class="car-contact">
+        <div class="car-contact-head">Enquire</div>
+        <a class="car-contact-btn" href="${esc(contactHref)}">${contactLabel} →</a>
+        ${l.source_url ? `<br><a class="car-source" href="${esc(l.source_url)}" target="_blank" rel="noopener">View original listing ↗</a>` : ''}
+      </div>`
+    : l.source_url
+      ? `<div class="car-contact">
+          <div class="car-contact-head">Interested?</div>
+          <a class="car-contact-btn" href="${esc(l.source_url)}" target="_blank" rel="noopener">View original listing ↗</a>
+        </div>`
+      : '';
+
+  const body = `${heroImg}
+  <div class="car-wrap">
+    <div class="car-header">
+      <h1 class="car-title">${esc(headline)}</h1>
+      ${l.price ? `<div class="car-price">£${l.price.toLocaleString('en-GB')}</div>` : ''}
+    </div>
+    ${specs ? `<div class="car-specs-grid">${specs}</div>` : ''}
+    ${gallery}
+    ${descSection}
+    ${contactSection}
+    <a class="car-back" href="/cars">← All cars</a>
+  </div>`;
+
+  return layout(headline, meta, body);
 }
 
 export function allPostsHtml(posts: Post[]): string {

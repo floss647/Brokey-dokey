@@ -26,7 +26,7 @@ import {
   getPostsByCategory,
   getFeaturedPosts,
 } from './db.js';
-import { homepageHtml, sectionHtml, articleHtml, allPostsHtml } from './site.js';
+import { homepageHtml, sectionHtml, articleHtml, allPostsHtml, carsHtml, carDetailHtml } from './site.js';
 import { generateOutreachMessage, generateEmailSubject } from './messages.js';
 import { importFromUrl } from './import-url.js';
 import type { SellerAggregate } from './scorer.js';
@@ -57,6 +57,16 @@ app.get('/reviews', (_req, res) => {
 
 app.get('/rolling-stop', (_req, res) => {
   res.send(sectionHtml('rolling-stop', getPostsByCategory('rolling-stop', 30)));
+});
+
+app.get('/cars', (_req, res) => {
+  res.send(carsHtml(getBdListings('live')));
+});
+
+app.get('/cars/:id', (req, res) => {
+  const listing = getBdListing(Number(req.params.id));
+  if (!listing || listing.status !== 'live') return res.status(404).send('<h1>Not found</h1>');
+  res.send(carDetailHtml(listing));
 });
 
 // ── Admin dashboard ───────────────────────────────────────────────────────────
