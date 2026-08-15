@@ -21,10 +21,14 @@ export function renderBody(text: string): string {
 }
 
 const CATEGORY_META: Record<string, { label: string; url: string; color: string }> = {
-  'the-find':     { label: 'The Find',     url: '/the-find',    color: '#e8470a' },
-  'review':       { label: 'Review',       url: '/reviews',     color: '#2563eb' },
-  'rolling-stop': { label: 'Rolling Stop', url: '/rolling-stop', color: '#16a34a' },
-  'general':      { label: '',             url: '/',            color: '#6b6b6b' },
+  'the-find':      { label: 'The Find',                 url: '/the-find',         color: '#e8470a' },
+  'review':        { label: 'Review',                   url: '/reviews',          color: '#2563eb' },
+  'new-review':    { label: 'New Review',               url: '/new-reviews',      color: '#2563eb' },
+  'classic-review':{ label: 'Classic Review',           url: '/classic-reviews',  color: '#7c3aed' },
+  'rolling-stop':  { label: 'Rolling Stop',             url: '/rolling-stop',     color: '#16a34a' },
+  'restoration':   { label: 'Restoration',              url: '/restorations',     color: '#b45309' },
+  'classic-sell':  { label: 'Classic Sell of the Week', url: '/classic-sell',     color: '#0891b2' },
+  'general':       { label: '',                         url: '/',                 color: '#6b6b6b' },
 };
 
 const SECTION_CONFIG: Record<string, { title: string; tag: string; description: string }> = {
@@ -38,29 +42,49 @@ const SECTION_CONFIG: Record<string, { title: string; tag: string; description: 
     tag: 'Behind the Wheel',
     description: 'New cars, classic cars. First drives and long-term tests. Honest opinions, every time.',
   },
+  'new-review': {
+    title: 'New Reviews',
+    tag: 'First Drive',
+    description: 'Fresh out of the showroom. First drives, long-term tests, and honest verdicts on the cars on sale now.',
+  },
+  'classic-review': {
+    title: 'Classic Reviews',
+    tag: 'Into the Past',
+    description: 'The cars that defined eras. Driven, assessed, and put in context.',
+  },
   'rolling-stop': {
     title: 'Rolling Stop',
     tag: 'On the Road',
     description: "We get on our bikes, find cool cars, and stop to talk to the people who own them.",
   },
+  'restoration': {
+    title: 'Restorations',
+    tag: 'Back from the Dead',
+    description: 'Barn finds, basket cases, and the people bringing them back to life. The long road from wreck to road.',
+  },
+  'classic-sell': {
+    title: 'Classic Sell of the Week',
+    tag: "Worth Your Money",
+    description: 'One classic on the market, each week. Why it matters, what to look for, and whether the money is right.',
+  },
 };
 
 const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">`;
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">`;
 
 const CSS = `
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #fafaf8;
-  --text: #111110;
+  --bg: #f8f8f7;
+  --text: #0d0d0c;
   --muted: #6b6b6b;
-  --border: #e4e4e0;
+  --border: #e2e2df;
   --accent: #e8470a;
   --white: #ffffff;
-  --serif: 'DM Serif Display', Georgia, 'Times New Roman', serif;
-  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 html { font-size: 16px; scroll-behavior: smooth; }
@@ -89,15 +113,16 @@ img { display: block; max-width: 100%; height: auto; }
   height: 64px;
 }
 .nav-logo {
-  font-family: var(--serif);
-  font-size: 23px; letter-spacing: -0.4px; color: var(--text);
+  font-family: var(--display);
+  font-size: 26px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; color: var(--text);
 }
-.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
 .nav-links a {
-  font-size: 12px; font-weight: 600; letter-spacing: 0.07em;
-  text-transform: uppercase; color: var(--muted); transition: color 0.15s;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--muted); transition: color 0.15s; white-space: nowrap;
 }
 .nav-links a:hover { color: var(--text); }
+.nav-divider { width: 1px; height: 16px; background: var(--border); align-self: center; }
 
 /* ─── Three-panel hero ─── */
 .hero-grid {
@@ -134,9 +159,9 @@ img { display: block; max-width: 100%; height: auto; }
   padding: 32px 28px;
 }
 .hp-title {
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 1.6vw, 1.5rem);
-  line-height: 1.22; color: #fff; text-wrap: balance;
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 2.2vw, 2.1rem); font-weight: 700;
+  line-height: 1.1; color: #fff; text-wrap: balance; letter-spacing: 0.01em;
 }
 .hp-cta {
   display: inline-block; margin-top: 14px;
@@ -154,7 +179,7 @@ img { display: block; max-width: 100%; height: auto; }
   justify-content: space-between; margin-bottom: 52px;
 }
 .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.section-heading { font-family: var(--serif); font-size: 2.25rem; line-height: 1.15; }
+.section-heading { font-family: var(--display); font-size: 2.5rem; font-weight: 800; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; }
 .section-more {
   font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.5;
   border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: opacity 0.15s;
@@ -174,8 +199,8 @@ img { display: block; max-width: 100%; height: auto; }
 .card:hover .card-img img { transform: scale(1.04); }
 .card-cat { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
 .card-title {
-  font-family: var(--serif); font-size: 1.3rem; line-height: 1.22;
-  color: var(--text); margin-bottom: 10px; transition: color 0.15s;
+  font-family: var(--display); font-size: 1.45rem; font-weight: 700; line-height: 1.12;
+  color: var(--text); margin-bottom: 10px; transition: color 0.15s; letter-spacing: 0.01em;
 }
 .card:hover .card-title { color: var(--accent); }
 .card-blurb { font-size: 14px; color: var(--muted); line-height: 1.65;
@@ -190,8 +215,9 @@ img { display: block; max-width: 100%; height: auto; }
 .wcard:hover .wcard-img img { transform: scale(1.03); }
 .wcard-cat { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
 .wcard-title {
-  font-family: var(--serif);
-  font-size: clamp(1.75rem, 3vw, 2.75rem); line-height: 1.12; margin-bottom: 20px; transition: color 0.15s;
+  font-family: var(--display);
+  font-size: clamp(2rem, 3.5vw, 3.25rem); font-weight: 800; line-height: 1.05; letter-spacing: 0.01em;
+  margin-bottom: 20px; transition: color 0.15s; text-transform: uppercase;
 }
 .wcard:hover .wcard-title { color: var(--accent); }
 .wcard-blurb { font-size: 16px; color: var(--muted); line-height: 1.75; margin-bottom: 28px; font-weight: 300; }
@@ -204,7 +230,7 @@ img { display: block; max-width: 100%; height: auto; }
 /* ─── Section page ─── */
 .sp-header { padding: 80px 56px 56px; border-bottom: 1px solid var(--border); }
 .sp-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
-.sp-title { font-family: var(--serif); font-size: clamp(2.75rem, 5vw, 4.5rem); line-height: 1.06; margin-bottom: 16px; }
+.sp-title { font-family: var(--display); font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 800; line-height: 1.0; letter-spacing: 0.01em; text-transform: uppercase; margin-bottom: 16px; }
 .sp-desc { font-size: 1.1rem; color: var(--muted); max-width: 500px; line-height: 1.65; font-weight: 300; }
 .sp-grid { padding: 64px 56px; display: grid; grid-template-columns: repeat(3,1fr); gap: 52px 44px; }
 
@@ -216,28 +242,28 @@ img { display: block; max-width: 100%; height: auto; }
   letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px;
 }
 .art-cat:hover { opacity: 0.75; }
-.art-title { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.75rem); line-height: 1.07; margin-bottom: 24px; }
-.art-lede { font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: var(--muted); line-height: 1.58; margin-bottom: 28px; }
+.art-title { font-family: var(--display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 800; line-height: 1.02; letter-spacing: 0.01em; text-transform: uppercase; margin-bottom: 24px; }
+.art-lede { font-family: var(--sans); font-size: 1.2rem; font-weight: 300; color: var(--muted); line-height: 1.65; margin-bottom: 28px; }
 .art-meta { font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 20px; }
 .art-hero { width: 100%; max-height: 600px; object-fit: cover; margin-bottom: 64px; display: block; }
 .art-body { max-width: 680px; font-size: 1.05rem; line-height: 1.88; padding-bottom: 96px; }
 .art-body p { margin-bottom: 1.5em; }
-.art-body h2 { font-family: var(--serif); font-size: 1.85rem; line-height: 1.14; margin: 2.5em 0 0.75em; }
-.art-body h3 { font-family: var(--serif); font-size: 1.35rem; line-height: 1.22; margin: 2em 0 0.6em; }
+.art-body h2 { font-family: var(--display); font-size: 2.1rem; font-weight: 800; line-height: 1.05; text-transform: uppercase; letter-spacing: 0.01em; margin: 2.5em 0 0.75em; }
+.art-body h3 { font-family: var(--display); font-size: 1.6rem; font-weight: 700; line-height: 1.1; margin: 2em 0 0.6em; }
 .art-body ul, .art-body ol { padding-left: 1.5em; margin-bottom: 1.5em; }
 .art-body li { margin-bottom: 0.5em; }
 .art-body blockquote {
-  font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--muted);
-  border-left: 3px solid var(--accent); padding: 4px 0 4px 24px; margin: 2em 0; line-height: 1.48;
+  font-family: var(--display); font-size: 1.6rem; font-weight: 700; color: var(--text);
+  border-left: 4px solid var(--accent); padding: 4px 0 4px 24px; margin: 2em 0; line-height: 1.25; letter-spacing: 0.01em;
 }
 
 /* ─── Empty ─── */
 .empty { padding: 80px 56px; color: var(--muted); }
-.empty-h { font-family: var(--serif); font-size: 2rem; color: var(--text); margin-bottom: 12px; }
+.empty-h { font-family: var(--display); font-size: 2rem; color: var(--text); margin-bottom: 12px; }
 
 /* ─── Footer ─── */
 footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex; justify-content: space-between; align-items: flex-end; }
-.ft-logo { font-family: var(--serif); font-size: 30px; color: #fff; display: block; margin-bottom: 8px; }
+.ft-logo { font-family: var(--display); font-size: 32px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; display: block; margin-bottom: 8px; }
 .ft-sub { font-size: 13px; color: rgba(255,255,255,0.42); font-weight: 300; }
 .ft-nav { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 .ft-nav a { font-size: 13px; color: rgba(255,255,255,0.45); transition: color 0.15s; font-weight: 300; }
@@ -257,7 +283,7 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
   background: rgba(0,0,0,0.82); color: #fff; font-size: 14px; font-weight: 700;
   padding: 5px 11px; border-radius: 4px; letter-spacing: -0.2px;
 }
-.lcard-title { font-family: var(--serif); font-size: 1.25rem; line-height: 1.22; color: var(--text); margin-bottom: 8px; transition: color 0.15s; }
+.lcard-title { font-family: var(--display); font-size: 1.4rem; font-weight: 700; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text); margin-bottom: 8px; transition: color 0.15s; }
 .lcard:hover .lcard-title { color: var(--accent); }
 .lcard-specs { display: flex; gap: 0; flex-wrap: wrap; }
 .lcard-spec { font-size: 12px; color: var(--muted); font-weight: 500; }
@@ -267,8 +293,8 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
 .car-hero { width: 100%; max-height: 560px; object-fit: cover; display: block; background: #e4e4e0; }
 .car-wrap { max-width: 1080px; margin: 0 auto; padding: 0 48px; }
 .car-header { padding: 48px 0 36px; display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
-.car-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.08; }
-.car-price { font-family: var(--serif); font-size: 2.75rem; color: var(--accent); font-weight: 400; white-space: nowrap; }
+.car-title { font-family: var(--display); font-size: clamp(2.25rem, 4.5vw, 3.75rem); font-weight: 800; line-height: 1.02; text-transform: uppercase; letter-spacing: 0.01em; }
+.car-price { font-family: var(--display); font-size: 2.75rem; color: var(--accent); font-weight: 400; white-space: nowrap; }
 .car-specs-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 52px; }
 .car-spec-item { padding: 18px 22px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .car-spec-item:nth-child(3n) { border-right: none; }
@@ -277,7 +303,7 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
 .car-gallery { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin: 0 0 48px; }
 .car-gallery-img { flex: 0 0 220px; height: 148px; overflow: hidden; background: #e4e4e0; border-radius: 4px; }
 .car-gallery-img img { width: 100%; height: 100%; object-fit: cover; }
-.car-desc-head { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 20px; }
+.car-desc-head { font-family: var(--display); font-size: 1.5rem; margin-bottom: 20px; }
 .car-desc { font-size: 1.025rem; line-height: 1.85; color: var(--text); max-width: 680px; margin-bottom: 56px; white-space: pre-wrap; }
 .car-contact { border-top: 1px solid var(--border); padding: 40px 0 80px; }
 .car-contact-head { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
@@ -337,8 +363,13 @@ function navHtml(): string {
   <a class="nav-logo" href="/">BrokeyDokey</a>
   <ul class="nav-links">
     <li><a href="/the-find">The Find</a></li>
-    <li><a href="/reviews">Reviews</a></li>
+    <li><a href="/classic-sell">Classic Sell</a></li>
+    <li class="nav-divider"></li>
+    <li><a href="/new-reviews">New Reviews</a></li>
+    <li><a href="/classic-reviews">Classic Reviews</a></li>
+    <li><a href="/restorations">Restorations</a></li>
     <li><a href="/rolling-stop">Rolling Stop</a></li>
+    <li class="nav-divider"></li>
     <li><a href="/cars">Cars</a></li>
   </ul>
 </nav>`;
@@ -352,7 +383,10 @@ function footerHtml(): string {
   </div>
   <nav class="ft-nav">
     <a href="/the-find">The Find</a>
-    <a href="/reviews">Reviews</a>
+    <a href="/classic-sell">Classic Sell of the Week</a>
+    <a href="/new-reviews">New Reviews</a>
+    <a href="/classic-reviews">Classic Reviews</a>
+    <a href="/restorations">Restorations</a>
     <a href="/rolling-stop">Rolling Stop</a>
     <a href="/cars">Cars for Sale</a>
   </nav>
@@ -421,6 +455,10 @@ export function homepageHtml(
   theFind: Post[],
   reviews: Post[],
   rollingStop: Post[],
+  newReviews: Post[],
+  classicReviews: Post[],
+  restorations: Post[],
+  classicSell: Post[],
 ): string {
   const siteUrl = process.env.SITE_URL || 'https://brokeydokey.co.uk';
 
@@ -440,49 +478,59 @@ export function homepageHtml(
   }
 
   const heroSection = `<div class="hero-grid">
-    ${heroPanel('The Find',     '#e8470a', '/the-find',    theFind[0]    || null, 'linear-gradient(160deg,#1a1410,#2d1f14)')}
-    ${heroPanel('Reviews',      '#5a9cf5', '/reviews',     reviews[0]    || null, 'linear-gradient(160deg,#0f1420,#181f2c)')}
-    ${heroPanel('Rolling Stop', '#4dba70', '/rolling-stop',rollingStop[0]|| null, 'linear-gradient(160deg,#101a12,#162014)')}
+    ${heroPanel('The Find',     '#e8470a', '/the-find',    theFind[0]      || null, 'linear-gradient(160deg,#1a1410,#2d1f14)')}
+    ${heroPanel('Classic Sell', '#38bdf8', '/classic-sell',classicSell[0]  || null, 'linear-gradient(160deg,#071520,#0c2030)')}
+    ${heroPanel('Restorations', '#c2843a', '/restorations',restorations[0] || null, 'linear-gradient(160deg,#1a1205,#2a1e0a)')}
   </div>`;
 
-  const theFindSection = `<section class="section">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">This Week</div>
-        <h2 class="section-heading">The Find</h2>
+  function section(eyebrow: string, heading: string, moreHref: string, moreLabel: string, content: string): string {
+    return `<section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">${eyebrow}</div>
+          <h2 class="section-heading">${heading}</h2>
+        </div>
+        <a class="section-more" href="${moreHref}">${moreLabel}</a>
       </div>
-      ${theFind.length ? `<a class="section-more" href="/the-find">All finds →</a>` : ''}
-    </div>
-    ${theFind.length
+      ${content}
+    </section>`;
+  }
+
+  const theFindSection = section('This Week', 'The Find', '/the-find', 'All finds →',
+    theFind.length
       ? `<div class="grid-3">${theFind.slice(0,3).map(p => smallCard(p)).join('')}</div>`
-      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>The best secondhand finds, posted weekly.</p></div>`}
-  </section>`;
+      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>The best secondhand finds, posted weekly.</p></div>`
+  );
 
-  const reviewsSection = `<section class="section">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">Behind the Wheel</div>
-        <h2 class="section-heading">Reviews</h2>
-      </div>
-      ${reviews.length > 1 ? `<a class="section-more" href="/reviews">All reviews →</a>` : ''}
-    </div>
-    ${reviews.length
-      ? wideCard(reviews[0], 'Review', '#2563eb')
-      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>New cars and classic cars. Honest opinions, every time.</p></div>`}
-  </section>`;
+  const classicSellSection = section('Worth Your Money', 'Classic Sell of the Week', '/classic-sell', 'All picks →',
+    classicSell.length
+      ? wideCard(classicSell[0], 'Classic Sell', '#0891b2')
+      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>One classic on the market, each week.</p></div>`
+  );
 
-  const rollingStopSection = `<section class="section">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">On the Road</div>
-        <h2 class="section-heading">Rolling Stop</h2>
-      </div>
-      ${rollingStop.length > 1 ? `<a class="section-more" href="/rolling-stop">All episodes →</a>` : ''}
-    </div>
-    ${rollingStop.length
+  const newReviewsSection = section('First Drive', 'New Reviews', '/new-reviews', 'All new reviews →',
+    newReviews.length
+      ? wideCard(newReviews[0], 'New Review', '#2563eb')
+      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>Fresh out of the showroom.</p></div>`
+  );
+
+  const classicReviewsSection = section('Into the Past', 'Classic Reviews', '/classic-reviews', 'All classic reviews →',
+    classicReviews.length
+      ? `<div class="grid-3">${classicReviews.slice(0,3).map(p => smallCard(p)).join('')}</div>`
+      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>The cars that defined eras.</p></div>`
+  );
+
+  const restorationsSection = section('Back from the Dead', 'Restorations', '/restorations', 'All restorations →',
+    restorations.length
+      ? `<div class="grid-3">${restorations.slice(0,3).map(p => smallCard(p)).join('')}</div>`
+      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>Barn finds and rebuilds.</p></div>`
+  );
+
+  const rollingStopSection = section('On the Road', 'Rolling Stop', '/rolling-stop', 'All episodes →',
+    rollingStop.length
       ? wideCard(rollingStop[0], 'Rolling Stop', '#16a34a')
-      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>On the bike, finding cool cars, meeting their owners.</p></div>`}
-  </section>`;
+      : `<div class="empty"><div class="empty-h">Coming soon.</div><p>On the bike, finding cool cars, meeting their owners.</p></div>`
+  );
 
   const meta = `<meta name="description" content="BrokeyDokey — the best secondhand car finds, honest reviews, and stories from the road.">
 <meta property="og:title" content="BrokeyDokey — Cars worth knowing about">
@@ -490,7 +538,7 @@ export function homepageHtml(
 <meta property="og:url" content="${siteUrl}">
 <meta property="og:type" content="website">`;
 
-  return layout('BrokeyDokey', meta, `${heroSection}${theFindSection}${reviewsSection}${rollingStopSection}`);
+  return layout('BrokeyDokey', meta, `${heroSection}${theFindSection}${classicSellSection}${newReviewsSection}${classicReviewsSection}${restorationsSection}${rollingStopSection}`);
 }
 
 export function sectionHtml(category: string, posts: Post[]): string {

@@ -508,8 +508,12 @@
           <div class="form-field"><label>Section</label>
             <select id="pf-category">
               <option value="the-find"${p.category==='the-find'?' selected':''}>The Find</option>
-              <option value="review"${p.category==='review'?' selected':''}>Review</option>
+              <option value="classic-sell"${p.category==='classic-sell'?' selected':''}>Classic Sell of the Week</option>
+              <option value="new-review"${p.category==='new-review'?' selected':''}>New Review</option>
+              <option value="classic-review"${p.category==='classic-review'?' selected':''}>Classic Review</option>
+              <option value="restoration"${p.category==='restoration'?' selected':''}>Restoration</option>
               <option value="rolling-stop"${p.category==='rolling-stop'?' selected':''}>Rolling Stop</option>
+              <option value="review"${p.category==='review'?' selected':''}>Review (legacy)</option>
               <option value="general"${(!p.category||p.category==='general')?' selected':''}>General</option>
             </select>
           </div>

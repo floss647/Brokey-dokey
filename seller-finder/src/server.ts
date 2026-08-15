@@ -44,7 +44,11 @@ app.get('/', (_req, res) => {
   const theFind = getPostsByCategory('the-find', 3);
   const reviews = getPostsByCategory('review', 1);
   const rollingStop = getPostsByCategory('rolling-stop', 1);
-  res.send(homepageHtml(featured, theFind, reviews, rollingStop));
+  const newReviews = getPostsByCategory('new-review', 1);
+  const classicReviews = getPostsByCategory('classic-review', 3);
+  const restorations = getPostsByCategory('restoration', 3);
+  const classicSell = getPostsByCategory('classic-sell', 1);
+  res.send(homepageHtml(featured, theFind, reviews, rollingStop, newReviews, classicReviews, restorations, classicSell));
 });
 
 app.get('/the-find', (_req, res) => {
@@ -57,6 +61,22 @@ app.get('/reviews', (_req, res) => {
 
 app.get('/rolling-stop', (_req, res) => {
   res.send(sectionHtml('rolling-stop', getPostsByCategory('rolling-stop', 30)));
+});
+
+app.get('/new-reviews', (_req, res) => {
+  res.send(sectionHtml('new-review', getPostsByCategory('new-review', 30)));
+});
+
+app.get('/classic-reviews', (_req, res) => {
+  res.send(sectionHtml('classic-review', getPostsByCategory('classic-review', 30)));
+});
+
+app.get('/restorations', (_req, res) => {
+  res.send(sectionHtml('restoration', getPostsByCategory('restoration', 30)));
+});
+
+app.get('/classic-sell', (_req, res) => {
+  res.send(sectionHtml('classic-sell', getPostsByCategory('classic-sell', 30)));
 });
 
 app.get('/cars', (_req, res) => {
