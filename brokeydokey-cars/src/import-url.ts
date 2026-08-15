@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import * as cheerio from 'cheerio';
+import { existsSync } from 'fs';
 
 export interface ImportedListing {
   title: string;
@@ -52,6 +53,8 @@ function parsePostcode(s: string): string {
   const m = s.match(/\b[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}\b/i);
   return m ? m[0].toUpperCase() : '';
 }
+
+// ── AutoTrader ────────────────────────────────────────────────────────────────
 
 function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   const $ = cheerio.load(html);
@@ -122,17 +125,22 @@ function scrapeAutoTraderHtml(html: string, url: string): ImportedListing {
   };
 }
 
+// ── eBay item page ────────────────────────────────────────────────────────────
+
 function scrapeEbayHtml(html: string, url: string): ImportedListing {
   const $ = cheerio.load(html);
+
   const title = clean($('h1.x-item-title__mainTitle, h1').first().text());
   const price = parseNum($('.x-price-primary, [data-testid="x-price-primary"]').first().text());
   const description = clean($('#desc_div, .item-desc, [data-testid="DESCRIPTION"]').first().text().slice(0, 2000));
   const location = clean($('.ux-seller-section__item--seller span, [data-testid="ux-seller-section"] .ux-textspans').first().text());
+
   const images: string[] = [];
   $('img.ux-image-carousel-item, .ux-image-magnify img').each((_, el) => {
     const src = $(el).attr('src') ?? '';
     if (src.startsWith('http')) images.push(src);
   });
+
   return {
     title: title || 'Untitled eBay listing',
     description, price, images: images.slice(0, 10), location,
@@ -142,17 +150,22 @@ function scrapeEbayHtml(html: string, url: string): ImportedListing {
   };
 }
 
+// ── Gumtree ───────────────────────────────────────────────────────────────────
+
 function scrapeGumtreeHtml(html: string, url: string): ImportedListing {
   const $ = cheerio.load(html);
+
   const title = clean($('h1').first().text());
   const price = parseNum($('.ad-price, [class*="price"]').first().text());
   const description = clean($('.ad-description, [itemprop="description"]').first().text().slice(0, 2000));
   const location = clean($('.ad-location, [class*="location"]').first().text());
+
   const images: string[] = [];
   $('[class*="gallery"] img, [class*="carousel"] img').each((_, el) => {
     const src = $(el).attr('src') ?? $(el).attr('data-src') ?? '';
     if (src.startsWith('http') && !src.includes('placeholder')) images.push(src);
   });
+
   return {
     title: title || 'Untitled Gumtree listing',
     description, price, images: images.slice(0, 10), location,
@@ -162,10 +175,16 @@ function scrapeGumtreeHtml(html: string, url: string): ImportedListing {
   };
 }
 
+// ── Main export ───────────────────────────────────────────────────────────────
+
 export async function importFromUrl(url: string): Promise<ImportedListing> {
   const site = detectSite(url);
+
+  const executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH
+    || (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined);
+
   const browser = await chromium.launch({
-    executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || '/opt/pw-browsers/chromium',
+    ...(executablePath ? { executablePath } : {}),
     headless: true,
     args: ['--disable-blink-features=AutomationControlled', '--no-sandbox', '--disable-dev-shm-usage'],
   });
@@ -177,17 +196,22 @@ export async function importFromUrl(url: string): Promise<ImportedListing> {
   await context.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
+
   const page = await context.newPage();
+
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await new Promise(r => setTimeout(r, 3000));
+
     for (const sel of ['button[id*="accept" i]', 'button[class*="accept" i]', '[data-testid*="accept" i]']) {
       try {
         const btn = await page.$(sel);
         if (btn) { await btn.click(); await new Promise(r => setTimeout(r, 1000)); break; }
       } catch { /* skip */ }
     }
+
     const html = await page.content();
+
     switch (site) {
       case 'autotrader': return scrapeAutoTraderHtml(html, url);
       case 'ebay':       return scrapeEbayHtml(html, url);
