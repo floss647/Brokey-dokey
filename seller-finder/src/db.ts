@@ -96,6 +96,26 @@ function getDb(): Database.Database {
       sent_at TEXT,
       created_at TEXT DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS buying_guides (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      slug TEXT UNIQUE NOT NULL,
+      make TEXT NOT NULL,
+      model TEXT NOT NULL,
+      generation TEXT,
+      year_from INTEGER,
+      year_to INTEGER,
+      overview TEXT,
+      pros TEXT DEFAULT '[]',
+      cons TEXT DEFAULT '[]',
+      watch_for TEXT,
+      price_range TEXT,
+      image_url TEXT,
+      verdict TEXT,
+      status TEXT DEFAULT 'published',
+      created_at TEXT DEFAULT (datetime('now')),
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
   `);
   // Migrate existing DBs that predate the category/featured columns
   try { _db.exec(`ALTER TABLE posts ADD COLUMN category TEXT DEFAULT 'general'`); } catch {}
@@ -342,6 +362,79 @@ export function getPostBySlug(slug: string): Post | null {
 
 export function deletePost(id: number) {
   getDb().prepare('DELETE FROM posts WHERE id = ?').run(id);
+}
+
+export interface BuyingGuide {
+  id: number;
+  slug: string;
+  make: string;
+  model: string;
+  generation: string | null;
+  year_from: number | null;
+  year_to: number | null;
+  overview: string | null;
+  pros: string;
+  cons: string;
+  watch_for: string | null;
+  price_range: string | null;
+  image_url: string | null;
+  verdict: string | null;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+function guideSlugify(make: string, model: string, generation?: string): string {
+  const parts = [make, model, generation].filter(Boolean).join(' ');
+  return parts.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+export function saveBuyingGuide(data: Omit<BuyingGuide, 'id' | 'slug' | 'created_at' | 'updated_at'> & { slug?: string }): number {
+  const slug = data.slug || guideSlugify(data.make, data.model, data.generation || undefined);
+  let finalSlug = slug;
+  let n = 1;
+  while (getDb().prepare('SELECT id FROM buying_guides WHERE slug = ?').get(finalSlug)) {
+    finalSlug = `${slug}-${n++}`;
+  }
+  const result = getDb().prepare(`
+    INSERT INTO buying_guides (slug, make, model, generation, year_from, year_to, overview, pros, cons, watch_for, price_range, image_url, verdict, status)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+  `).run(
+    finalSlug, data.make, data.model, data.generation ?? null,
+    data.year_from ?? null, data.year_to ?? null,
+    data.overview ?? null,
+    typeof data.pros === 'string' ? data.pros : JSON.stringify(data.pros),
+    typeof data.cons === 'string' ? data.cons : JSON.stringify(data.cons),
+    data.watch_for ?? null, data.price_range ?? null,
+    data.image_url ?? null, data.verdict ?? null,
+    data.status ?? 'published',
+  );
+  return result.lastInsertRowid as number;
+}
+
+export function updateBuyingGuide(id: number, data: Partial<BuyingGuide>) {
+  const entries = Object.entries(data).filter(([k]) => !['id', 'slug', 'created_at'].includes(k));
+  if (!entries.length) return;
+  const sql = entries.map(([k]) => `${k} = ?`).join(', ');
+  const vals = entries.map(([, v]) => v);
+  getDb().prepare(`UPDATE buying_guides SET ${sql}, updated_at = datetime('now') WHERE id = ?`).run(...vals, id);
+}
+
+export function getBuyingGuides(status?: string): BuyingGuide[] {
+  if (status) return getDb().prepare('SELECT * FROM buying_guides WHERE status = ? ORDER BY make, model').all(status) as BuyingGuide[];
+  return getDb().prepare('SELECT * FROM buying_guides ORDER BY make, model').all() as BuyingGuide[];
+}
+
+export function getBuyingGuide(id: number): BuyingGuide | null {
+  return getDb().prepare('SELECT * FROM buying_guides WHERE id = ?').get(id) as BuyingGuide | null;
+}
+
+export function getBuyingGuideBySlug(slug: string): BuyingGuide | null {
+  return getDb().prepare("SELECT * FROM buying_guides WHERE slug = ? AND status = 'published'").get(slug) as BuyingGuide | null;
+}
+
+export function deleteBuyingGuide(id: number) {
+  getDb().prepare('DELETE FROM buying_guides WHERE id = ?').run(id);
 }
 
 export function getStats() {

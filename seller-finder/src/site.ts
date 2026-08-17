@@ -1,4 +1,4 @@
-import type { Post, BdListing } from './db.js';
+import type { Post, BdListing, BuyingGuide } from './db.js';
 
 function esc(s: string | null | undefined): string {
   return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -318,6 +318,46 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
 .car-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--muted); padding: 28px 0 0; transition: color 0.15s; }
 .car-back:hover { color: var(--text); }
 
+/* ─── Buying guides ─── */
+.guides-header { padding: 80px 56px 56px; border-bottom: 1px solid var(--border); }
+.guides-grid { padding: 56px 56px; display: grid; grid-template-columns: repeat(3,1fr); gap: 44px; }
+.gcard { display: block; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+.gcard:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.09); transform: translateY(-2px); }
+.gcard-img { aspect-ratio: 16/9; overflow: hidden; background: #e4e4e0; }
+.gcard-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.gcard:hover .gcard-img img { transform: scale(1.04); }
+.gcard-body { padding: 22px 24px 26px; }
+.gcard-gen { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.gcard-title { font-family: var(--display); font-size: 1.5rem; font-weight: 800; line-height: 1.08; text-transform: uppercase; letter-spacing: 0.01em; color: var(--text); margin-bottom: 10px; transition: color 0.15s; }
+.gcard:hover .gcard-title { color: var(--accent); }
+.gcard-verdict { font-size: 13px; color: var(--muted); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.gcard-price { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--accent); }
+
+.guide-wrap { max-width: 1080px; margin: 0 auto; padding: 0 48px; }
+.guide-header { padding: 64px 0 48px; max-width: 820px; }
+.guide-gen { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.guide-title { font-family: var(--display); font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 800; line-height: 1.0; letter-spacing: 0.01em; text-transform: uppercase; margin-bottom: 20px; }
+.guide-price { font-size: 1.05rem; font-weight: 500; color: var(--muted); margin-bottom: 0; }
+.guide-hero { width: 100%; max-height: 560px; object-fit: cover; display: block; margin-bottom: 64px; background: #e4e4e0; }
+.guide-overview { max-width: 700px; font-size: 1.08rem; line-height: 1.88; color: var(--text); margin-bottom: 64px; }
+.guide-overview p { margin-bottom: 1.5em; }
+.guide-pm { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 56px; border-top: 1px solid var(--border); padding-top: 48px; }
+.guide-pm-col h3 { font-family: var(--display); font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 20px; }
+.guide-pros h3 { color: #16a34a; }
+.guide-cons h3 { color: #dc2626; }
+.guide-pm-col ul { list-style: none; padding: 0; }
+.guide-pm-col li { font-size: 0.975rem; line-height: 1.6; padding: 9px 0; border-bottom: 1px solid var(--border); color: var(--text); }
+.guide-pm-col li:last-child { border-bottom: none; }
+.guide-pros li::before { content: '+  '; font-weight: 700; color: #16a34a; }
+.guide-cons li::before { content: '−  '; font-weight: 700; color: #dc2626; }
+.guide-watch { border-top: 1px solid var(--border); padding: 48px 0 56px; max-width: 700px; }
+.guide-watch h3 { font-family: var(--display); font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 20px; }
+.guide-watch-body { font-size: 0.975rem; line-height: 1.85; color: var(--text); }
+.guide-watch-body p { margin-bottom: 1.25em; }
+.guide-verdict { border-top: 1px solid var(--border); padding: 40px 0 80px; }
+.guide-verdict-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.guide-verdict-text { font-family: var(--display); font-size: clamp(1.5rem, 2.5vw, 2.1rem); font-weight: 700; line-height: 1.2; color: var(--text); max-width: 700px; letter-spacing: 0.01em; }
+
 /* ─── Responsive ─── */
 @media (max-width: 1024px) {
   .grid-3 { grid-template-columns: repeat(2,1fr); }
@@ -328,6 +368,7 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
   .car-specs-grid { grid-template-columns: repeat(2,1fr); }
   .car-spec-item:nth-child(3n) { border-right: 1px solid var(--border); }
   .car-spec-item:nth-child(2n) { border-right: none; }
+  .guides-grid { grid-template-columns: repeat(2,1fr); padding: 48px 40px; }
 }
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; height: auto; }
@@ -355,6 +396,11 @@ footer { background: var(--text); color: #fff; padding: 60px 56px; display: flex
   .car-specs-grid { grid-template-columns: repeat(2,1fr); }
   .car-spec-item:nth-child(3n) { border-right: 1px solid var(--border); }
   .car-spec-item:nth-child(2n) { border-right: none; }
+  .guides-header { padding: 56px 24px 40px; }
+  .guides-grid { grid-template-columns: 1fr; padding: 40px 24px; }
+  .guide-wrap { padding: 0 20px; }
+  .guide-header { padding: 48px 0 32px; }
+  .guide-pm { grid-template-columns: 1fr; gap: 32px; }
 }
 `;
 
@@ -370,6 +416,7 @@ function navHtml(): string {
     <li><a href="/restorations">Restorations</a></li>
     <li><a href="/rolling-stop">Rolling Stop</a></li>
     <li class="nav-divider"></li>
+    <li><a href="/guides">Buying Guides</a></li>
     <li><a href="/cars">Cars</a></li>
   </ul>
 </nav>`;
@@ -388,6 +435,7 @@ function footerHtml(): string {
     <a href="/classic-reviews">Classic Reviews</a>
     <a href="/restorations">Restorations</a>
     <a href="/rolling-stop">Rolling Stop</a>
+    <a href="/guides">Buying Guides</a>
     <a href="/cars">Cars for Sale</a>
   </nav>
 </footer>`;
@@ -729,6 +777,106 @@ ${imgs[0] ? `<meta property="og:image" content="${esc(imgs[0])}">` : ''}`;
   </div>`;
 
   return layout(headline, meta, body);
+}
+
+// ── Buying guide pages ────────────────────────────────────────────────────────
+
+export function guidesHtml(guides: BuyingGuide[]): string {
+  const siteUrl = process.env.SITE_URL || 'https://brokeydokey.co.uk';
+
+  const meta = `<meta name="description" content="Buying guides for every major secondhand car in the UK — honest, opinionated, and actually useful.">
+<meta property="og:title" content="Buying Guides — BrokeyDokey">
+<meta property="og:url" content="${siteUrl}/guides">
+<meta property="og:type" content="website">`;
+
+  const cards = guides.map(g => {
+    const yearRange = g.year_from && g.year_to ? `${g.year_from}–${g.year_to}` : g.year_from ? `from ${g.year_from}` : '';
+    const genLabel = [g.generation, yearRange].filter(Boolean).join(' · ');
+    return `<a class="gcard" href="/guides/${g.slug}">
+      <div class="gcard-img">
+        ${g.image_url ? `<img src="${esc(g.image_url)}" alt="${esc(g.make)} ${esc(g.model)}" loading="lazy">` : '<div style="width:100%;height:100%;background:#e4e4e0"></div>'}
+      </div>
+      <div class="gcard-body">
+        ${genLabel ? `<div class="gcard-gen">${esc(genLabel)}</div>` : ''}
+        <h3 class="gcard-title">${esc(g.make)} ${esc(g.model)}</h3>
+        ${g.verdict ? `<p class="gcard-verdict">${esc(g.verdict)}</p>` : ''}
+        ${g.price_range ? `<div class="gcard-price">${esc(g.price_range)}</div>` : ''}
+      </div>
+    </a>`;
+  }).join('');
+
+  const body = `<div class="guides-header">
+    <div class="sp-tag">Know Before You Buy</div>
+    <h1 class="sp-title">Buying Guides</h1>
+    <p class="sp-desc">Every major secondhand car in the UK, honestly assessed. What's good, what's terrible, and what to look for before you hand over your money.</p>
+  </div>
+  ${guides.length
+    ? `<div class="guides-grid">${cards}</div>`
+    : `<div class="empty"><div class="empty-h">Coming soon.</div><p>Guides are on their way.</p></div>`}`;
+
+  return layout('Buying Guides', meta, body);
+}
+
+export function guideDetailHtml(g: BuyingGuide): string {
+  const siteUrl = process.env.SITE_URL || 'https://brokeydokey.co.uk';
+  const yearRange = g.year_from && g.year_to ? `${g.year_from}–${g.year_to}` : g.year_from ? `from ${g.year_from}` : '';
+  const genLabel = [g.generation, yearRange].filter(Boolean).join(' · ');
+  const pageTitle = `${g.make} ${g.model}${g.generation ? ' ' + g.generation : ''}`;
+
+  const pros: string[] = JSON.parse(g.pros || '[]');
+  const cons: string[] = JSON.parse(g.cons || '[]');
+
+  const meta = `<meta name="description" content="${esc(g.verdict || `Buying guide for the ${g.make} ${g.model}. Pros, cons, what to watch for, and what to pay.`)}">
+<meta property="og:title" content="${esc(pageTitle)} Buying Guide — BrokeyDokey">
+<meta property="og:description" content="${esc(g.verdict || '')}">
+<meta property="og:url" content="${siteUrl}/guides/${g.slug}">
+<meta property="og:type" content="article">
+${g.image_url ? `<meta property="og:image" content="${esc(g.image_url)}">` : ''}`;
+
+  const heroImg = g.image_url
+    ? `<img class="guide-hero" src="${esc(g.image_url)}" alt="${esc(pageTitle)}">`
+    : '';
+
+  const overviewHtml = g.overview
+    ? `<div class="guide-overview">${g.overview.split('\n\n').map(p => `<p>${esc(p)}</p>`).join('\n')}</div>`
+    : '';
+
+  const pmHtml = (pros.length || cons.length) ? `<div class="guide-pm">
+    <div class="guide-pm-col guide-pros">
+      <h3>The Good</h3>
+      <ul>${pros.map(p => `<li>${esc(p)}</li>`).join('')}</ul>
+    </div>
+    <div class="guide-pm-col guide-cons">
+      <h3>The Bad</h3>
+      <ul>${cons.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+    </div>
+  </div>` : '';
+
+  const watchHtml = g.watch_for ? `<div class="guide-watch">
+    <h3>What to Watch For</h3>
+    <div class="guide-watch-body">${g.watch_for.split('\n\n').map(p => `<p>${esc(p)}</p>`).join('\n')}</div>
+  </div>` : '';
+
+  const verdictHtml = g.verdict ? `<div class="guide-verdict">
+    <div class="guide-verdict-label">The Verdict</div>
+    <div class="guide-verdict-text">${esc(g.verdict)}</div>
+  </div>` : '';
+
+  const body = `${heroImg}
+  <div class="guide-wrap">
+    <div class="guide-header">
+      ${genLabel ? `<div class="guide-gen">${esc(genLabel)}</div>` : ''}
+      <h1 class="guide-title">${esc(g.make)} ${esc(g.model)}</h1>
+      ${g.price_range ? `<p class="guide-price">Typical prices: ${esc(g.price_range)}</p>` : ''}
+    </div>
+    ${overviewHtml}
+    ${pmHtml}
+    ${watchHtml}
+    ${verdictHtml}
+    <a class="car-back" href="/guides">← All buying guides</a>
+  </div>`;
+
+  return layout(pageTitle + ' Buying Guide', meta, body);
 }
 
 export function allPostsHtml(posts: Post[]): string {

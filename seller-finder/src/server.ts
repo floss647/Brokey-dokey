@@ -25,8 +25,10 @@ import {
   deletePost,
   getPostsByCategory,
   getFeaturedPosts,
+  getBuyingGuides,
+  getBuyingGuideBySlug,
 } from './db.js';
-import { homepageHtml, sectionHtml, articleHtml, allPostsHtml, carsHtml, carDetailHtml } from './site.js';
+import { homepageHtml, sectionHtml, articleHtml, allPostsHtml, carsHtml, carDetailHtml, guidesHtml, guideDetailHtml } from './site.js';
 import { generateOutreachMessage, generateEmailSubject } from './messages.js';
 import { importFromUrl } from './import-url.js';
 import type { SellerAggregate } from './scorer.js';
@@ -77,6 +79,16 @@ app.get('/restorations', (_req, res) => {
 
 app.get('/classic-sell', (_req, res) => {
   res.send(sectionHtml('classic-sell', getPostsByCategory('classic-sell', 30)));
+});
+
+app.get('/guides', (_req, res) => {
+  res.send(guidesHtml(getBuyingGuides('published')));
+});
+
+app.get('/guides/:slug', (req, res) => {
+  const guide = getBuyingGuideBySlug(req.params.slug);
+  if (!guide) return res.status(404).send('<h1>Guide not found</h1>');
+  res.send(guideDetailHtml(guide));
 });
 
 app.get('/cars', (_req, res) => {
