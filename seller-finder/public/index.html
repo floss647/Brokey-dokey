@@ -139,6 +139,7 @@
   <button class="tab-btn active" onclick="switchTab('sellers')">Seller Finder</button>
   <button class="tab-btn" onclick="switchTab('listings')">Listings <span id="listings-count" style="font-size:11px;opacity:0.6"></span></button>
   <button class="tab-btn" onclick="switchTab('blog')">Blog</button>
+  <button class="tab-btn" onclick="switchTab('guides')">Guides <span id="guides-count" style="font-size:11px;opacity:0.6"></span></button>
 </div>
 <div class="layout">
 
@@ -185,6 +186,19 @@
   </div>
 
 
+  <!-- ── GUIDES TAB ── -->
+  <div id="tab-guides" class="tab-content">
+    <div class="sidebar">
+      <div style="padding:12px;border-bottom:1px solid var(--border)">
+        <input class="import-input" id="guide-search" placeholder="Search guides…" oninput="filterGuides(this.value)" style="width:100%">
+      </div>
+      <div id="guide-list"></div>
+    </div>
+    <div class="detail" id="guide-detail">
+      <div class="detail-empty">Select a guide to edit its image and details</div>
+    </div>
+  </div>
+
   <!-- ── BLOG TAB ── -->
   <div id="tab-blog" class="tab-content">
     <div class="sidebar">
@@ -209,11 +223,12 @@
   // ── Tab switching ───────────────────────────────────────────────────────────
   function switchTab(tab) {
     activeTab = tab;
-    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['sellers','listings','blog'][i] === tab));
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['sellers','listings','blog','guides'][i] === tab));
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
     if (tab === 'listings') loadListings(currentLFilter);
     if (tab === 'blog') loadPosts();
+    if (tab === 'guides') loadGuides();
   }
 
   // ── Stats ───────────────────────────────────────────────────────────────────
@@ -606,6 +621,120 @@
     toast('Deleted'); currentPost = null;
     document.getElementById('post-detail').innerHTML = '<div class="detail-empty">Select a post or create a new one</div>';
     loadPosts();
+  }
+
+  // ── Guides tab ───────────────────────────────────────────────────────────────
+  let guides = [], currentGuide = null, guideSearchQuery = '';
+
+  async function loadGuides() {
+    guides = await fetch('/api/guides').then(r => r.json());
+    document.getElementById('guides-count').textContent = guides.length ? `(${guides.length})` : '';
+    renderGuides();
+  }
+
+  function filterGuides(q) {
+    guideSearchQuery = q.toLowerCase();
+    renderGuides();
+  }
+
+  function renderGuides() {
+    const el = document.getElementById('guide-list');
+    const filtered = guides.filter(g =>
+      !guideSearchQuery ||
+      (g.make + ' ' + g.model + ' ' + (g.generation||'')).toLowerCase().includes(guideSearchQuery)
+    );
+    if (!filtered.length) { el.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No guides found.</div>'; return; }
+    el.innerHTML = filtered.map(g => {
+      const isSelected = currentGuide && currentGuide.id === g.id ? ' selected' : '';
+      const pill = `<span class="status-pill ${g.status==='published'?'pill-live':'pill-draft'}">${g.status}</span>`;
+      const hasImg = g.image_url ? '📷 ' : '';
+      return `<div class="listing-card${isSelected}" onclick="selectGuide(${g.id})">
+        <div class="listing-card-row1">${pill}<div class="listing-card-title">${hasImg}${g.make} ${g.model}</div></div>
+        <div class="listing-card-row2">${[g.generation, g.price_range].filter(Boolean).join(' · ')}</div>
+      </div>`;
+    }).join('');
+  }
+
+  async function selectGuide(id) {
+    document.querySelectorAll('#guide-list .listing-card').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`#guide-list .listing-card[onclick="selectGuide(${id})"]`)?.classList.add('selected');
+    const g = await fetch(`/api/guides/${id}`).then(r => r.json());
+    currentGuide = g;
+    renderGuideEditor(g);
+  }
+
+  function renderGuideEditor(g) {
+    const guideUrl = `${window.location.origin}/guides/${g.slug}`;
+    const pros = JSON.parse(g.pros || '[]').join('\n');
+    const cons = JSON.parse(g.cons || '[]').join('\n');
+    document.getElementById('guide-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="flex:1;font-size:18px;font-weight:700">${g.make} ${g.model} <span style="color:var(--muted);font-weight:400;font-size:14px">${g.generation||''}</span></div>
+          <div style="display:flex;gap:8px">
+            <a href="${guideUrl}" target="_blank" class="btn">View ↗</a>
+            ${g.status==='published'
+              ? `<button class="btn" onclick="setGuideStatus(${g.id},'draft')">Unpublish</button>`
+              : `<button class="btn btn-primary" onclick="setGuideStatus(${g.id},'published')">Publish</button>`}
+            <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="deleteGuide(${g.id})">Delete</button>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-field full">
+            <label>Image URL — paste a Wikimedia Commons or press photo URL</label>
+            <input id="gf-image_url" value="${esc(g.image_url)}" placeholder="https://upload.wikimedia.org/…" oninput="previewGuideImg(this.value)">
+          </div>
+          ${g.image_url ? `<div class="form-field full"><img src="${esc(g.image_url)}" id="gf-img-preview" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;border:1px solid var(--border)"></div>` : `<div class="form-field full"><div id="gf-img-preview" style="height:0"></div></div>`}
+          <div class="form-field"><label>Price Range</label><input id="gf-price_range" value="${esc(g.price_range)}" placeholder="£5,000–£18,000"></div>
+          <div class="form-field full"><label>Verdict (one punchy sentence)</label><input id="gf-verdict" value="${esc(g.verdict)}" placeholder="The verdict…"></div>
+          <div class="form-field full"><label>Overview (paragraphs — blank line between each)</label><textarea id="gf-overview" style="min-height:180px">${esc(g.overview)}</textarea></div>
+          <div class="form-field"><label>Pros (one per line)</label><textarea id="gf-pros" style="min-height:160px">${esc(pros)}</textarea></div>
+          <div class="form-field"><label>Cons (one per line)</label><textarea id="gf-cons" style="min-height:160px">${esc(cons)}</textarea></div>
+          <div class="form-field full"><label>What to Watch For (paragraphs — blank line between each)</label><textarea id="gf-watch_for" style="min-height:140px">${esc(g.watch_for)}</textarea></div>
+        </div>
+        <button class="save-btn" onclick="saveGuide(${g.id})">Save Changes</button>
+      </div>`;
+  }
+
+  function previewGuideImg(url) {
+    const el = document.getElementById('gf-img-preview');
+    if (!el) return;
+    if (url) {
+      el.outerHTML = `<img src="${url}" id="gf-img-preview" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">`;
+    } else {
+      el.outerHTML = `<div id="gf-img-preview" style="height:0"></div>`;
+    }
+  }
+
+  async function saveGuide(id) {
+    const prosRaw = document.getElementById('gf-pros')?.value || '';
+    const consRaw = document.getElementById('gf-cons')?.value || '';
+    const fields = {
+      image_url: document.getElementById('gf-image_url')?.value || null,
+      price_range: document.getElementById('gf-price_range')?.value || null,
+      verdict: document.getElementById('gf-verdict')?.value || null,
+      overview: document.getElementById('gf-overview')?.value || null,
+      pros: JSON.stringify(prosRaw.split('\n').map(s=>s.trim()).filter(Boolean)),
+      cons: JSON.stringify(consRaw.split('\n').map(s=>s.trim()).filter(Boolean)),
+      watch_for: document.getElementById('gf-watch_for')?.value || null,
+    };
+    await fetch(`/api/guides/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
+    toast('Guide saved');
+    await loadGuides();
+    renderGuides();
+  }
+
+  async function setGuideStatus(id, status) {
+    await fetch(`/api/guides/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+    toast('Status updated'); await loadGuides(); selectGuide(id);
+  }
+
+  async function deleteGuide(id) {
+    if (!confirm('Delete this buying guide?')) return;
+    await fetch(`/api/guides/${id}`, {method:'DELETE'});
+    toast('Deleted'); currentGuide = null;
+    document.getElementById('guide-detail').innerHTML = '<div class="detail-empty">Select a guide to edit its image and details</div>';
+    loadGuides();
   }
 
   // ── Shared ───────────────────────────────────────────────────────────────────

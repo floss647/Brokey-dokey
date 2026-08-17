@@ -26,7 +26,10 @@ import {
   getPostsByCategory,
   getFeaturedPosts,
   getBuyingGuides,
+  getBuyingGuide,
   getBuyingGuideBySlug,
+  updateBuyingGuide,
+  deleteBuyingGuide,
 } from './db.js';
 import { homepageHtml, sectionHtml, articleHtml, allPostsHtml, carsHtml, carDetailHtml, guidesHtml, guideDetailHtml } from './site.js';
 import { generateOutreachMessage, generateEmailSubject } from './messages.js';
@@ -247,6 +250,28 @@ app.post('/api/import-url', async (req, res) => {
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// ── Buying guides API ─────────────────────────────────────────────────────────
+
+app.get('/api/guides', (_req, res) => {
+  res.json(getBuyingGuides());
+});
+
+app.get('/api/guides/:id', (req, res) => {
+  const guide = getBuyingGuide(Number(req.params.id));
+  if (!guide) return res.status(404).json({ error: 'Not found' });
+  res.json(guide);
+});
+
+app.patch('/api/guides/:id', (req, res) => {
+  updateBuyingGuide(Number(req.params.id), req.body);
+  res.json({ ok: true });
+});
+
+app.delete('/api/guides/:id', (req, res) => {
+  deleteBuyingGuide(Number(req.params.id));
+  res.json({ ok: true });
 });
 
 app.get('/api/listings', (req, res) => {
