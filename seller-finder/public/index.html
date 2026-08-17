@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrokeyDokey — Seller Finder</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117; --surface: #1a1d27; --border: #2a2d3a; --text: #e8eaf0;
+      --muted: #7a7e96; --accent: #ff6b2b; --green: #22c55e; --yellow: #eab308;
+      --blue: #3b82f6; --red: #ef4444;
+    }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+    .logo { font-size: 18px; font-weight: 700; color: var(--accent); }
+    .logo span { color: var(--text); }
+    .stats { display: flex; gap: 24px; margin-left: auto; }
+    .stat { text-align: center; }
+    .stat-value { font-size: 20px; font-weight: 700; }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .layout { display: grid; grid-template-columns: 320px 1fr; height: calc(100vh - 61px); }
+    .sidebar { background: var(--surface); border-right: 1px solid var(--border); overflow-y: auto; }
+    .filters { padding: 12px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-btn { padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; transition: all 0.15s; }
+    .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(255,107,43,0.1); }
+    .seller-item { padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+    .seller-item:hover { background: rgba(255,255,255,0.03); }
+    .seller-item.selected { background: rgba(255,107,43,0.08); border-left: 3px solid var(--accent); }
+    .seller-row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .seller-username { font-weight: 600; flex: 1; }
+    .score-badge { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+    .score-hot { background: rgba(255,107,43,0.2); color: var(--accent); }
+    .score-good { background: rgba(34,197,94,0.15); color: var(--green); }
+    .score-ok { background: rgba(234,179,8,0.15); color: var(--yellow); }
+    .score-low { background: rgba(122,126,150,0.15); color: var(--muted); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .status-new { background: var(--blue); } .status-contacted { background: var(--yellow); }
+    .status-replied { background: var(--green); } .status-listed { background: var(--accent); }
+    .status-declined { background: var(--red); }
+    .seller-row2 { font-size: 12px; color: var(--muted); display: flex; gap: 12px; }
+    .detail { padding: 24px; overflow-y: auto; }
+    .detail-empty { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--muted); }
+    .detail-header { margin-bottom: 20px; }
+    .detail-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .detail-meta { color: var(--muted); font-size: 13px; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .detail-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+    .detail-card-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .detail-card-value { font-size: 20px; font-weight: 700; }
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
+    .status-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    .status-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-size: 12px; transition: all 0.15s; }
+    .status-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .status-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .contact-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .field-group { display: flex; flex-direction: column; gap: 4px; }
+    .field-group label { font-size: 11px; color: var(--muted); }
+    .field-group input, .field-group textarea { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; color: var(--text); font-size: 13px; transition: border-color 0.15s; }
+    .field-group input:focus, .field-group textarea:focus { outline: none; border-color: var(--accent); }
+    .field-group.full { grid-column: 1 / -1; }
+    .field-group textarea { height: 60px; resize: vertical; font-family: inherit; }
+    .save-btn { margin-top: 8px; padding: 7px 16px; background: var(--accent); border: none; border-radius: 6px; color: white; cursor: pointer; font-size: 13px; font-weight: 600; }
+    .save-btn:hover { opacity: 0.9; }
+    .message-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .message-toolbar { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .message-subject-field { flex: 1; background: transparent; border: none; color: var(--text); font-size: 13px; font-weight: 600; }
+    .message-subject-field:focus { outline: none; }
+    .message-textarea { width: 100%; min-height: 200px; background: transparent; border: none; color: var(--text); font-size: 13px; line-height: 1.6; padding: 14px; resize: vertical; font-family: inherit; }
+    .message-textarea:focus { outline: none; }
+    .message-actions { padding: 10px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
+    .btn { padding: 7px 14px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-size: 12px; transition: all 0.15s; }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
+    .btn-primary:hover { opacity: 0.9; color: white; border-color: var(--accent); }
+    .btn-sm { padding: 4px 10px; font-size: 11px; }
+    .listings-grid { display: grid; gap: 8px; }
+    .listing-item { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start; }
+    .listing-img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; background: var(--border); flex-shrink: 0; }
+    .listing-title { font-size: 13px; flex: 1; }
+    .listing-price { font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .listing-link { font-size: 11px; color: var(--blue); text-decoration: none; }
+    .listing-link:hover { text-decoration: underline; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--green); color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+    .toast.show { opacity: 1; } .toast.error { background: var(--red); }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; background: rgba(255,255,255,0.07); margin: 2px; }
+    .ebay-link { font-size: 11px; color: var(--blue); text-decoration: none; }
+    .ebay-link:hover { text-decoration: underline; }
+    .tab-bar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; }
+    .tab-btn { padding: 10px 20px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 600; border-bottom: 2px solid transparent; transition: all 0.15s; }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-content { display: none; } .tab-content.active { display: contents; }
+    .import-box { padding: 16px; border-bottom: 1px solid var(--border); }
+    .import-row { display: flex; gap: 8px; }
+    .import-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; color: var(--text); font-size: 13px; }
+    .import-input:focus { outline: none; border-color: var(--accent); }
+    .import-input::placeholder { color: var(--muted); }
+    .listing-card { padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+    .listing-card:hover { background: rgba(255,255,255,0.03); }
+    .listing-card.selected { background: rgba(255,107,43,0.08); border-left: 3px solid var(--accent); }
+    .listing-card-row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+    .listing-card-title { font-weight: 600; flex: 1; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .listing-card-price { color: var(--accent); font-weight: 700; white-space: nowrap; }
+    .listing-card-row2 { font-size: 11px; color: var(--muted); }
+    .status-pill { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+    .pill-draft { background: rgba(122,126,150,0.2); color: var(--muted); }
+    .pill-live { background: rgba(34,197,94,0.15); color: var(--green); }
+    .pill-archived { background: rgba(239,68,68,0.15); color: var(--red); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-field { display: flex; flex-direction: column; gap: 4px; }
+    .form-field label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-field input, .form-field textarea, .form-field select {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+      padding: 7px 10px; color: var(--text); font-size: 13px; font-family: inherit;
+    }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus { outline: none; border-color: var(--accent); }
+    .form-field select option { background: var(--surface); }
+    .form-field textarea { resize: vertical; min-height: 80px; }
+    .img-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; background: var(--border); }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">Brokey<span>Dokey</span> <span style="font-weight:400;color:var(--muted);font-size:14px;">Admin</span></div>
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat-value" id="s-total">—</div><div class="stat-label">Sellers</div></div>
+    <div class="stat"><div class="stat-value" id="s-new" style="color:var(--blue)">—</div><div class="stat-label">New</div></div>
+    <div class="stat"><div class="stat-value" id="s-contacted" style="color:var(--yellow)">—</div><div class="stat-label">Contacted</div></div>
+    <div class="stat"><div class="stat-value" id="s-replied" style="color:var(--green)">—</div><div class="stat-label">Replied</div></div>
+    <div class="stat"><div class="stat-value" id="s-listed" style="color:var(--accent)">—</div><div class="stat-label">Listed</div></div>
+  </div>
+</header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('sellers')">Seller Finder</button>
+  <button class="tab-btn" onclick="switchTab('listings')">Listings <span id="listings-count" style="font-size:11px;opacity:0.6"></span></button>
+  <button class="tab-btn" onclick="switchTab('blog')">Blog</button>
+  <button class="tab-btn" onclick="switchTab('guides')">Guides <span id="guides-count" style="font-size:11px;opacity:0.6"></span></button>
+</div>
+<div class="layout">
+
+  <!-- ── SELLERS TAB ── -->
+  <div id="tab-sellers" class="tab-content active">
+    <div class="sidebar">
+      <div class="filters">
+        <button class="filter-btn active" data-status="">All</button>
+        <button class="filter-btn" data-status="new">New</button>
+        <button class="filter-btn" data-status="contacted">Contacted</button>
+        <button class="filter-btn" data-status="replied">Replied</button>
+        <button class="filter-btn" data-status="listed">Listed</button>
+        <button class="filter-btn" data-status="declined">Declined</button>
+      </div>
+      <div class="seller-list" id="seller-list"></div>
+    </div>
+    <div class="detail" id="detail">
+      <div class="detail-empty">Select a seller to view details and generate outreach</div>
+    </div>
+  </div>
+
+  <!-- ── LISTINGS TAB ── -->
+  <div id="tab-listings" class="tab-content">
+    <div class="sidebar">
+      <div class="import-box">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Import from URL</div>
+        <div class="import-row">
+          <input class="import-input" id="import-url-input" placeholder="Paste AutoTrader / eBay / Gumtree URL…" type="url">
+          <button class="btn btn-primary" id="import-btn" onclick="importUrl()">Import</button>
+        </div>
+        <div id="import-status" style="font-size:12px;color:var(--muted);margin-top:6px"></div>
+      </div>
+      <div class="filters">
+        <button class="filter-btn active" data-lstatus="">All</button>
+        <button class="filter-btn" data-lstatus="draft">Draft</button>
+        <button class="filter-btn" data-lstatus="live">Live</button>
+        <button class="filter-btn" data-lstatus="archived">Archived</button>
+      </div>
+      <div id="listing-list"></div>
+    </div>
+    <div class="detail" id="listing-detail">
+      <div class="detail-empty">Import a listing or select one from the list</div>
+    </div>
+  </div>
+
+
+  <!-- ── GUIDES TAB ── -->
+  <div id="tab-guides" class="tab-content">
+    <div class="sidebar">
+      <div style="padding:12px;border-bottom:1px solid var(--border)">
+        <input class="import-input" id="guide-search" placeholder="Search guides…" oninput="filterGuides(this.value)" style="width:100%">
+      </div>
+      <div id="guide-list"></div>
+    </div>
+    <div class="detail" id="guide-detail">
+      <div class="detail-empty">Select a guide to edit its image and details</div>
+    </div>
+  </div>
+
+  <!-- ── BLOG TAB ── -->
+  <div id="tab-blog" class="tab-content">
+    <div class="sidebar">
+      <div style="padding:12px">
+        <button class="btn btn-primary" style="width:100%" onclick="newPost()">+ New Post</button>
+      </div>
+      <div id="post-list"></div>
+    </div>
+    <div class="detail" id="post-detail">
+      <div class="detail-empty">Select a post or create a new one</div>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+<script>
+  // ── State ───────────────────────────────────────────────────────────────────
+  let sellers = [], currentSeller = null, currentFilter = '';
+  let listings = [], currentListing = null, currentLFilter = '';
+  let activeTab = 'sellers';
+
+  // ── Tab switching ───────────────────────────────────────────────────────────
+  function switchTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['sellers','listings','blog','guides'][i] === tab));
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    if (tab === 'listings') loadListings(currentLFilter);
+    if (tab === 'blog') loadPosts();
+    if (tab === 'guides') loadGuides();
+  }
+
+  // ── Stats ───────────────────────────────────────────────────────────────────
+  async function loadStats() {
+    const data = await fetch('/api/stats').then(r => r.json());
+    document.getElementById('s-total').textContent = data.total;
+    document.getElementById('s-new').textContent = data.new;
+    document.getElementById('s-contacted').textContent = data.contacted;
+    document.getElementById('s-replied').textContent = data.replied;
+    document.getElementById('s-listed').textContent = data.listed;
+  }
+
+  // ── Sellers tab ─────────────────────────────────────────────────────────────
+  async function loadSellers(status = '') {
+    const url = status ? `/api/sellers?status=${status}` : '/api/sellers';
+    sellers = await fetch(url).then(r => r.json());
+    renderSellers();
+  }
+  function scoreLabel(score) {
+    if (score >= 80) return ['Hot', 'score-hot'];
+    if (score >= 60) return ['Good', 'score-good'];
+    if (score >= 40) return ['OK', 'score-ok'];
+    return ['Low', 'score-low'];
+  }
+  function renderSellers() {
+    const list = document.getElementById('seller-list');
+    if (!sellers.length) { list.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No sellers found.<br>Run <code>npm run crawl</code> first.</div>'; return; }
+    list.innerHTML = sellers.map(s => {
+      const [label, cls] = scoreLabel(s.score);
+      const cats = JSON.parse(s.categories || '[]').join(', ');
+      const isSelected = currentSeller && currentSeller.username === s.username ? ' selected' : '';
+      return `<div class="seller-item${isSelected}" data-username="${s.username}" onclick="selectSeller('${s.username}')">
+        <div class="seller-row1"><div class="status-dot status-${s.status}"></div><div class="seller-username">${s.username}</div><span class="score-badge ${cls}">${label} ${s.score}</span></div>
+        <div class="seller-row2"><span>${s.broken_listing_count} listings</span><span>FB: ${s.feedback_score}</span><span>${cats || '—'}</span></div>
+      </div>`;
+    }).join('');
+  }
+  async function selectSeller(username) {
+    document.querySelectorAll('.seller-item').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`[data-username="${username}"]`)?.classList.add('selected');
+    const [{ seller, listings: sl }, { subject, message }] = await Promise.all([
+      fetch(`/api/sellers/${username}`).then(r => r.json()),
+      fetch(`/api/sellers/${username}/message`).then(r => r.json()),
+    ]);
+    currentSeller = seller;
+    const cats = JSON.parse(seller.categories || '[]');
+    const [scoreLabel_, scoreCls] = scoreLabel(seller.score);
+    document.getElementById('detail').innerHTML = `
+      <div class="detail-header">
+        <div class="detail-title">${seller.username} <span class="score-badge ${scoreCls}" style="font-size:14px;vertical-align:middle;margin-left:8px">${scoreLabel_} ${seller.score}</span></div>
+        <div class="detail-meta">FB: ${seller.feedback_score} (${seller.feedback_percentage}%) &nbsp;·&nbsp; ${seller.broken_listing_count} broken listings &nbsp;·&nbsp; Est. value £${Math.round(seller.total_listing_value)} &nbsp;·&nbsp; <a class="ebay-link" href="https://www.ebay.co.uk/usr/${seller.username}" target="_blank">View eBay store ↗</a></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card"><div class="detail-card-label">Feedback Score</div><div class="detail-card-value">${seller.feedback_score}</div></div>
+        <div class="detail-card"><div class="detail-card-label">Broken Listings</div><div class="detail-card-value">${seller.broken_listing_count}</div></div>
+        <div class="detail-card"><div class="detail-card-label">Total Listing Value</div><div class="detail-card-value">£${Math.round(seller.total_listing_value)}</div></div>
+        <div class="detail-card"><div class="detail-card-label">Categories</div><div style="margin-top:4px">${cats.map(c => `<span class="tag">${c}</span>`).join('')}</div></div>
+      </div>
+      <div class="section"><div class="section-title">Status</div><div class="status-buttons">${['new','contacted','replied','listed','declined'].map(s => `<button class="status-btn ${seller.status===s?'active':''}" onclick="setStatus('${username}','${s}')">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}</div></div>
+      <div class="section"><div class="section-title">Contact Details</div>
+        <div class="contact-fields">
+          <div class="field-group"><label>Email</label><input id="cf-email" type="email" value="${seller.email||''}" placeholder="email@example.com"></div>
+          <div class="field-group"><label>Instagram</label><input id="cf-instagram" value="${seller.instagram||''}" placeholder="@username"></div>
+          <div class="field-group"><label>TikTok</label><input id="cf-tiktok" value="${seller.tiktok||''}" placeholder="@username"></div>
+          <div class="field-group"><label>Website</label><input id="cf-website" value="${seller.website||''}" placeholder="https://..."></div>
+          <div class="field-group full"><label>Notes</label><textarea id="cf-notes">${seller.notes||''}</textarea></div>
+        </div>
+        <button class="save-btn" onclick="saveContact('${username}')">Save Contact Info</button>
+      </div>
+      <div class="section"><div class="section-title">Recent Listings</div><div class="listings-grid">${sl.slice(0,5).map(l => `<div class="listing-item">${l.image?`<img class="listing-img" src="${l.image}" alt="">`:'<div class="listing-img"></div>'}<div style="flex:1;min-width:0"><div class="listing-title">${l.title}</div><a class="listing-link" href="${l.url}" target="_blank">View on eBay ↗</a></div><div class="listing-price">£${l.price}</div></div>`).join('')}</div></div>
+      <div class="section"><div class="section-title">Outreach Message</div>
+        <div class="message-box">
+          <div class="message-toolbar"><span style="font-size:11px;color:var(--muted)">Subject:</span><input class="message-subject-field" id="msg-subject" value="${subject}"></div>
+          <textarea class="message-textarea" id="msg-body">${message}</textarea>
+          <div class="message-actions">${seller.email?`<button class="btn btn-primary" onclick="sendEmail('${username}')">Send Email</button>`:'<span style="color:var(--muted);font-size:12px">Add email above to send</span>'}<button class="btn" onclick="copyMessage()">Copy Message</button><button class="btn btn-sm" onclick="regenerateMessage('${username}')">Regenerate</button></div>
+        </div>
+      </div>`;
+  }
+  async function setStatus(username, status) {
+    await fetch(`/api/sellers/${username}/status`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+    toast('Status updated'); loadStats(); await loadSellers(currentFilter); selectSeller(username);
+  }
+  async function saveContact(username) {
+    const fields = {email:document.getElementById('cf-email')?.value,instagram:document.getElementById('cf-instagram')?.value,tiktok:document.getElementById('cf-tiktok')?.value,website:document.getElementById('cf-website')?.value,notes:document.getElementById('cf-notes')?.value};
+    await fetch(`/api/sellers/${username}/contact`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
+    toast('Contact info saved');
+  }
+  async function sendEmail(username) {
+    const email=document.getElementById('cf-email')?.value,subject=document.getElementById('msg-subject')?.value,message=document.getElementById('msg-body')?.value;
+    if (!email) { toast('Add an email address first',true); return; }
+    const data = await fetch(`/api/sellers/${username}/send-email`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,subject,message})}).then(r=>r.json());
+    if (data.ok) { toast('Email sent!'); loadStats(); loadSellers(currentFilter); } else { toast(data.error||'Failed to send',true); }
+  }
+  function copyMessage() { navigator.clipboard.writeText(document.getElementById('msg-body')?.value||'').then(()=>toast('Copied to clipboard')); }
+  async function regenerateMessage(username) {
+    const {subject,message} = await fetch(`/api/sellers/${username}/message`).then(r=>r.json());
+    document.getElementById('msg-subject').value=subject; document.getElementById('msg-body').value=message;
+  }
+
+  // ── Listings tab ─────────────────────────────────────────────────────────────
+  async function loadListings(status = '') {
+    const url = status ? `/api/listings?status=${status}` : '/api/listings';
+    listings = await fetch(url).then(r => r.json());
+    document.getElementById('listings-count').textContent = listings.length ? `(${listings.length})` : '';
+    renderListings();
+  }
+  function renderListings() {
+    const el = document.getElementById('listing-list');
+    if (!listings.length) {
+      el.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No listings yet.<br>Paste a URL above to import one.</div>';
+      return;
+    }
+    el.innerHTML = listings.map(l => {
+      const isSelected = currentListing && currentListing.id === l.id ? ' selected' : '';
+      const pill = `<span class="status-pill pill-${l.status}">${l.status}</span>`;
+      const specs = [l.year, l.make, l.model].filter(Boolean).join(' ');
+      return `<div class="listing-card${isSelected}" onclick="selectListing(${l.id})">
+        <div class="listing-card-row1">${pill}<div class="listing-card-title">${l.title}</div>${l.price?`<div class="listing-card-price">£${l.price}</div>`:''}</div>
+        <div class="listing-card-row2">${[specs, l.mileage ? l.mileage.toLocaleString()+'mi' : '', l.location].filter(Boolean).join(' · ')}</div>
+      </div>`;
+    }).join('');
+  }
+  async function selectListing(id) {
+    document.querySelectorAll('.listing-card').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`.listing-card[onclick="selectListing(${id})"]`)?.classList.add('selected');
+    const l = await fetch(`/api/listings/${id}`).then(r => r.json());
+    currentListing = l;
+    const imgs = JSON.parse(l.images || '[]');
+    document.getElementById('listing-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <div style="flex:1;font-size:18px;font-weight:700">${l.title}</div>
+          <div style="display:flex;gap:8px">
+            ${['draft','live','archived'].map(s=>`<button class="btn ${l.status===s?'btn-primary':''}" onclick="setListingStatus(${l.id},'${s}')">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
+            <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="deleteListing(${l.id})">Delete</button>
+          </div>
+        </div>
+        ${imgs.length ? `<div class="img-strip">${imgs.slice(0,8).map(u=>`<img class="img-thumb" src="${u}">`).join('')}</div>` : ''}
+        <div style="margin:16px 0">
+          ${l.source_url ? `<a href="${l.source_url}" target="_blank" class="listing-link">View original listing ↗</a>` : ''}
+        </div>
+        <div class="form-grid">
+          <div class="form-field full"><label>Title</label><input id="lf-title" value="${esc(l.title)}"></div>
+          <div class="form-field"><label>Price (£)</label><input id="lf-price" type="number" value="${l.price||''}"></div>
+          <div class="form-field"><label>Category</label>
+            <select id="lf-category">
+              ${['Cars','Phones','Laptops','Tablets','Consoles','Cameras','White Goods','Power Tools','Garden','E-bikes','Music','General'].map(c=>`<option${l.category===c?' selected':''}>${c}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-field"><label>Make</label><input id="lf-make" value="${esc(l.make)}"></div>
+          <div class="form-field"><label>Model</label><input id="lf-model" value="${esc(l.model)}"></div>
+          <div class="form-field"><label>Year</label><input id="lf-year" type="number" value="${l.year||''}"></div>
+          <div class="form-field"><label>Mileage</label><input id="lf-mileage" type="number" value="${l.mileage||''}"></div>
+          <div class="form-field"><label>Fuel Type</label><input id="lf-fuel_type" value="${esc(l.fuel_type)}"></div>
+          <div class="form-field"><label>Engine Size</label><input id="lf-engine_size" value="${esc(l.engine_size)}"></div>
+          <div class="form-field"><label>Colour</label><input id="lf-colour" value="${esc(l.colour)}"></div>
+          <div class="form-field"><label>Transmission</label><input id="lf-transmission" value="${esc(l.transmission)}"></div>
+          <div class="form-field"><label>Body Type</label><input id="lf-body_type" value="${esc(l.body_type)}"></div>
+          <div class="form-field"><label>Doors</label><input id="lf-doors" type="number" value="${l.doors||''}"></div>
+          <div class="form-field"><label>MOT Expiry</label><input id="lf-mot_expiry" value="${esc(l.mot_expiry)}"></div>
+          <div class="form-field"><label>Location</label><input id="lf-location" value="${esc(l.location)}"></div>
+          <div class="form-field"><label>Postcode</label><input id="lf-postcode" value="${esc(l.postcode)}"></div>
+          <div class="form-field full"><label>Contact / WhatsApp / Phone</label><input id="lf-contact_info" placeholder="e.g. 07700 900000 or wa.me/447700900000" value="${esc(l.contact_info)}"></div>
+          <div class="form-field full"><label>Description</label><textarea id="lf-description" style="min-height:120px">${esc(l.description)}</textarea></div>
+        </div>
+        <button class="save-btn" style="margin-top:12px" onclick="saveListing(${l.id})">Save Changes</button>
+      </div>`;
+  }
+  function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+  async function setListingStatus(id, status) {
+    await fetch(`/api/listings/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+    toast('Status updated'); loadListings(currentLFilter); selectListing(id);
+  }
+  async function saveListing(id) {
+    const fields = {
+      title: document.getElementById('lf-title')?.value,
+      price: parseFloat(document.getElementById('lf-price')?.value)||null,
+      category: document.getElementById('lf-category')?.value,
+      make: document.getElementById('lf-make')?.value,
+      model: document.getElementById('lf-model')?.value,
+      year: parseInt(document.getElementById('lf-year')?.value)||null,
+      mileage: parseInt(document.getElementById('lf-mileage')?.value)||null,
+      fuel_type: document.getElementById('lf-fuel_type')?.value,
+      engine_size: document.getElementById('lf-engine_size')?.value,
+      colour: document.getElementById('lf-colour')?.value,
+      transmission: document.getElementById('lf-transmission')?.value,
+      body_type: document.getElementById('lf-body_type')?.value,
+      doors: parseInt(document.getElementById('lf-doors')?.value)||null,
+      mot_expiry: document.getElementById('lf-mot_expiry')?.value,
+      location: document.getElementById('lf-location')?.value,
+      postcode: document.getElementById('lf-postcode')?.value,
+      contact_info: document.getElementById('lf-contact_info')?.value,
+      description: document.getElementById('lf-description')?.value,
+    };
+    await fetch(`/api/listings/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
+    toast('Saved'); loadListings(currentLFilter);
+  }
+  async function deleteListing(id) {
+    if (!confirm('Delete this listing?')) return;
+    await fetch(`/api/listings/${id}`, {method:'DELETE'});
+    toast('Deleted'); currentListing = null;
+    document.getElementById('listing-detail').innerHTML = '<div class="detail-empty">Import a listing or select one from the list</div>';
+    loadListings(currentLFilter);
+  }
+  async function importUrl() {
+    const urlInput = document.getElementById('import-url-input');
+    const url = urlInput.value.trim();
+    if (!url) return;
+    const btn = document.getElementById('import-btn');
+    const status = document.getElementById('import-status');
+    btn.innerHTML = '<span class="spinner"></span>Fetching…';
+    btn.disabled = true;
+    status.textContent = 'Loading page and extracting data…';
+    try {
+      const data = await fetch('/api/import-url', {
+        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({url})
+      }).then(r => r.json());
+      if (data.error) throw new Error(data.error);
+      // Save as draft
+      const { id } = await fetch('/api/listings', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          title: data.title, description: data.description,
+          price: data.price, category: data.category, status: 'draft',
+          source_url: data.sourceUrl, images: JSON.stringify(data.images),
+          location: data.location, postcode: data.postcode,
+          make: data.make, model: data.model, year: data.year,
+          mileage: data.mileage, fuel_type: data.fuelType, engine_size: data.engineSize,
+          colour: data.colour, transmission: data.transmission,
+          body_type: data.bodyType, doors: data.doors, mot_expiry: data.motExpiry,
+        })
+      }).then(r => r.json());
+      status.textContent = '';
+      urlInput.value = '';
+      toast('Imported as draft');
+      await loadListings(currentLFilter);
+      selectListing(id);
+    } catch(e) {
+      status.textContent = 'Error: ' + e.message;
+      toast('Import failed', true);
+    } finally {
+      btn.innerHTML = 'Import';
+      btn.disabled = false;
+    }
+  }
+
+  // ── Blog tab ─────────────────────────────────────────────────────────────────
+  let posts = [], currentPost = null;
+
+  async function loadPosts() {
+    posts = await fetch('/api/posts').then(r => r.json());
+    renderPosts();
+  }
+  function renderPosts() {
+    const el = document.getElementById('post-list');
+    if (!posts.length) { el.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No posts yet.<br>Click New Post to start.</div>'; return; }
+    const catLabel = { 'the-find': 'The Find', 'review': 'Review', 'rolling-stop': 'Rolling Stop', 'general': '' };
+    el.innerHTML = posts.map(p => {
+      const isSelected = currentPost && currentPost.id === p.id ? ' selected' : '';
+      const pill = `<span class="status-pill ${p.status==='published'?'pill-live':'pill-draft'}">${p.status}</span>`;
+      const cat = p.category && catLabel[p.category] ? `<span style="font-size:10px;color:var(--accent);margin-left:4px">${catLabel[p.category]}</span>` : '';
+      const star = p.featured ? '<span style="color:#eab308;margin-left:4px" title="Featured">★</span>' : '';
+      return `<div class="listing-card${isSelected}" onclick="selectPost(${p.id})">
+        <div class="listing-card-row1">${pill}<div class="listing-card-title">${p.title}</div>${star}</div>
+        <div class="listing-card-row2">${p.published_at ? new Date(p.published_at).toLocaleDateString('en-GB') : 'Draft'}${cat}</div>
+      </div>`;
+    }).join('');
+  }
+  async function selectPost(id) {
+    document.querySelectorAll('#post-list .listing-card').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`#post-list .listing-card[onclick="selectPost(${id})"]`)?.classList.add('selected');
+    const p = await fetch(`/api/posts/${id}`).then(r => r.json());
+    currentPost = p;
+    renderPostEditor(p);
+  }
+  function renderPostEditor(p) {
+    const postUrl = `${window.location.origin}/blog/${p.slug}`;
+    document.getElementById('post-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="flex:1;font-size:16px;font-weight:700">${p.status==='published' ? `<a href="${postUrl}" target="_blank" style="color:var(--accent)">${p.title} ↗</a>` : p.title}</div>
+          <div style="display:flex;gap:8px">
+            ${p.status !== 'published' ? `<button class="btn btn-primary" onclick="publishPost(${p.id})">Publish</button>` : `<button class="btn" onclick="unpublishPost(${p.id})">Unpublish</button>`}
+            <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="deletePostItem(${p.id})">Delete</button>
+          </div>
+        </div>
+        ${p.status==='published' ? `<div style="font-size:12px;color:var(--muted)">Public URL: <a href="${postUrl}" target="_blank" style="color:var(--blue)">${postUrl}</a> — <a href="https://developers.facebook.com/tools/debug/?q=${encodeURIComponent(postUrl)}" target="_blank" style="color:var(--blue)">Test Facebook preview ↗</a></div>` : ''}
+        <div class="form-grid">
+          <div class="form-field full"><label>Title</label><input id="pf-title" value="${esc(p.title)}"></div>
+          <div class="form-field full"><label>Excerpt (shown in Facebook preview and post list)</label><input id="pf-excerpt" value="${esc(p.excerpt)}" placeholder="One or two sentences that hook the reader…"></div>
+          <div class="form-field full"><label>Image URL (paste a link to your image — this appears on Facebook)</label><input id="pf-image_url" value="${esc(p.image_url)}" placeholder="https://…/your-image.jpg"></div>
+          <div class="form-field"><label>Section</label>
+            <select id="pf-category">
+              <option value="the-find"${p.category==='the-find'?' selected':''}>The Find</option>
+              <option value="classic-sell"${p.category==='classic-sell'?' selected':''}>Classic Sell of the Week</option>
+              <option value="new-review"${p.category==='new-review'?' selected':''}>New Review</option>
+              <option value="classic-review"${p.category==='classic-review'?' selected':''}>Classic Review</option>
+              <option value="restoration"${p.category==='restoration'?' selected':''}>Restoration</option>
+              <option value="rolling-stop"${p.category==='rolling-stop'?' selected':''}>Rolling Stop</option>
+              <option value="review"${p.category==='review'?' selected':''}>Review (legacy)</option>
+              <option value="general"${(!p.category||p.category==='general')?' selected':''}>General</option>
+            </select>
+          </div>
+          <div class="form-field" style="flex-direction:row;align-items:center;gap:10px;padding-top:20px">
+            <input type="checkbox" id="pf-featured" style="width:16px;height:16px;accent-color:var(--accent)" ${p.featured?'checked':''}>
+            <label for="pf-featured" style="font-size:13px;text-transform:none;letter-spacing:0;cursor:pointer">Feature on homepage hero</label>
+          </div>
+        </div>
+        <div class="form-field" style="flex:1;display:flex;flex-direction:column">
+          <label>Post content (use ## for headings, - for bullet points, blank lines between paragraphs)</label>
+          <textarea id="pf-body" style="flex:1;min-height:320px;resize:vertical;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;color:var(--text);font-size:14px;font-family:inherit;line-height:1.7">${esc(p.body)}</textarea>
+        </div>
+        <button class="save-btn" onclick="savePostEdits(${p.id})">Save Draft</button>
+      </div>`;
+  }
+  function newPost() {
+    document.getElementById('post-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%;display:flex;flex-direction:column;gap:16px">
+        <div style="font-size:16px;font-weight:700">New Post</div>
+        <div class="form-grid">
+          <div class="form-field full"><label>Title</label><input id="np-title" placeholder="Give your post a title…"></div>
+          <div class="form-field full"><label>Excerpt</label><input id="np-excerpt" placeholder="One or two sentences…"></div>
+          <div class="form-field full"><label>Image URL</label><input id="np-image_url" placeholder="https://…/image.jpg"></div>
+          <div class="form-field"><label>Section</label>
+            <select id="np-category">
+              <option value="the-find">The Find</option>
+              <option value="review">Review</option>
+              <option value="rolling-stop">Rolling Stop</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+          <div class="form-field" style="flex-direction:row;align-items:center;gap:10px;padding-top:20px">
+            <input type="checkbox" id="np-featured" style="width:16px;height:16px;accent-color:var(--accent)">
+            <label for="np-featured" style="font-size:13px;text-transform:none;letter-spacing:0;cursor:pointer">Feature on homepage hero</label>
+          </div>
+        </div>
+        <div class="form-field" style="flex:1;display:flex;flex-direction:column">
+          <label>Content</label>
+          <textarea id="np-body" style="flex:1;min-height:320px;resize:vertical;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;color:var(--text);font-size:14px;font-family:inherit;line-height:1.7" placeholder="Write your post here…&#10;&#10;Use ## for headings&#10;Use - for bullet points&#10;Leave a blank line between paragraphs"></textarea>
+        </div>
+        <button class="save-btn" onclick="createPost()">Save as Draft</button>
+      </div>`;
+    currentPost = null;
+    document.querySelectorAll('#post-list .listing-card').forEach(el => el.classList.remove('selected'));
+  }
+  async function createPost() {
+    const title = document.getElementById('np-title')?.value?.trim();
+    if (!title) { toast('Title required', true); return; }
+    const { id } = await fetch('/api/posts', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        title,
+        excerpt: document.getElementById('np-excerpt')?.value || '',
+        body: document.getElementById('np-body')?.value || '',
+        image_url: document.getElementById('np-image_url')?.value || '',
+        category: document.getElementById('np-category')?.value || 'general',
+        featured: document.getElementById('np-featured')?.checked ? 1 : 0,
+        status: 'draft',
+      })
+    }).then(r => r.json());
+    toast('Saved as draft');
+    await loadPosts();
+    selectPost(id);
+  }
+  async function savePostEdits(id) {
+    await fetch(`/api/posts/${id}`, {
+      method: 'PATCH', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        title: document.getElementById('pf-title')?.value,
+        excerpt: document.getElementById('pf-excerpt')?.value,
+        body: document.getElementById('pf-body')?.value,
+        image_url: document.getElementById('pf-image_url')?.value,
+        category: document.getElementById('pf-category')?.value,
+        featured: document.getElementById('pf-featured')?.checked ? 1 : 0,
+      })
+    });
+    toast('Saved'); loadPosts();
+  }
+  async function publishPost(id) {
+    await fetch(`/api/posts/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:'published'})});
+    toast('Published!'); await loadPosts(); selectPost(id);
+  }
+  async function unpublishPost(id) {
+    await fetch(`/api/posts/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:'draft'})});
+    toast('Moved to draft'); await loadPosts(); selectPost(id);
+  }
+  async function deletePostItem(id) {
+    if (!confirm('Delete this post?')) return;
+    await fetch(`/api/posts/${id}`, {method:'DELETE'});
+    toast('Deleted'); currentPost = null;
+    document.getElementById('post-detail').innerHTML = '<div class="detail-empty">Select a post or create a new one</div>';
+    loadPosts();
+  }
+
+  // ── Guides tab ───────────────────────────────────────────────────────────────
+  let guides = [], currentGuide = null, guideSearchQuery = '';
+
+  async function loadGuides() {
+    guides = await fetch('/api/guides').then(r => r.json());
+    document.getElementById('guides-count').textContent = guides.length ? `(${guides.length})` : '';
+    renderGuides();
+  }
+
+  function filterGuides(q) {
+    guideSearchQuery = q.toLowerCase();
+    renderGuides();
+  }
+
+  function renderGuides() {
+    const el = document.getElementById('guide-list');
+    const filtered = guides.filter(g =>
+      !guideSearchQuery ||
+      (g.make + ' ' + g.model + ' ' + (g.generation||'')).toLowerCase().includes(guideSearchQuery)
+    );
+    if (!filtered.length) { el.innerHTML = '<div style="padding:24px;color:var(--muted);text-align:center">No guides found.</div>'; return; }
+    el.innerHTML = filtered.map(g => {
+      const isSelected = currentGuide && currentGuide.id === g.id ? ' selected' : '';
+      const pill = `<span class="status-pill ${g.status==='published'?'pill-live':'pill-draft'}">${g.status}</span>`;
+      const hasImg = g.image_url ? '📷 ' : '';
+      return `<div class="listing-card${isSelected}" onclick="selectGuide(${g.id})">
+        <div class="listing-card-row1">${pill}<div class="listing-card-title">${hasImg}${g.make} ${g.model}</div></div>
+        <div class="listing-card-row2">${[g.generation, g.price_range].filter(Boolean).join(' · ')}</div>
+      </div>`;
+    }).join('');
+  }
+
+  async function selectGuide(id) {
+    document.querySelectorAll('#guide-list .listing-card').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`#guide-list .listing-card[onclick="selectGuide(${id})"]`)?.classList.add('selected');
+    const g = await fetch(`/api/guides/${id}`).then(r => r.json());
+    currentGuide = g;
+    renderGuideEditor(g);
+  }
+
+  function renderGuideEditor(g) {
+    const guideUrl = `${window.location.origin}/guides/${g.slug}`;
+    const pros = JSON.parse(g.pros || '[]').join('\n');
+    const cons = JSON.parse(g.cons || '[]').join('\n');
+    document.getElementById('guide-detail').innerHTML = `
+      <div style="padding:24px;overflow-y:auto;height:100%;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="flex:1;font-size:18px;font-weight:700">${g.make} ${g.model} <span style="color:var(--muted);font-weight:400;font-size:14px">${g.generation||''}</span></div>
+          <div style="display:flex;gap:8px">
+            <a href="${guideUrl}" target="_blank" class="btn">View ↗</a>
+            ${g.status==='published'
+              ? `<button class="btn" onclick="setGuideStatus(${g.id},'draft')">Unpublish</button>`
+              : `<button class="btn btn-primary" onclick="setGuideStatus(${g.id},'published')">Publish</button>`}
+            <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="deleteGuide(${g.id})">Delete</button>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-field full">
+            <label>Image URL — paste a Wikimedia Commons or press photo URL</label>
+            <input id="gf-image_url" value="${esc(g.image_url)}" placeholder="https://upload.wikimedia.org/…" oninput="previewGuideImg(this.value)">
+          </div>
+          ${g.image_url ? `<div class="form-field full"><img src="${esc(g.image_url)}" id="gf-img-preview" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;border:1px solid var(--border)"></div>` : `<div class="form-field full"><div id="gf-img-preview" style="height:0"></div></div>`}
+          <div class="form-field"><label>Price Range</label><input id="gf-price_range" value="${esc(g.price_range)}" placeholder="£5,000–£18,000"></div>
+          <div class="form-field full"><label>Verdict (one punchy sentence)</label><input id="gf-verdict" value="${esc(g.verdict)}" placeholder="The verdict…"></div>
+          <div class="form-field full"><label>Overview (paragraphs — blank line between each)</label><textarea id="gf-overview" style="min-height:180px">${esc(g.overview)}</textarea></div>
+          <div class="form-field"><label>Pros (one per line)</label><textarea id="gf-pros" style="min-height:160px">${esc(pros)}</textarea></div>
+          <div class="form-field"><label>Cons (one per line)</label><textarea id="gf-cons" style="min-height:160px">${esc(cons)}</textarea></div>
+          <div class="form-field full"><label>What to Watch For (paragraphs — blank line between each)</label><textarea id="gf-watch_for" style="min-height:140px">${esc(g.watch_for)}</textarea></div>
+        </div>
+        <button class="save-btn" onclick="saveGuide(${g.id})">Save Changes</button>
+      </div>`;
+  }
+
+  function previewGuideImg(url) {
+    const el = document.getElementById('gf-img-preview');
+    if (!el) return;
+    if (url) {
+      el.outerHTML = `<img src="${url}" id="gf-img-preview" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">`;
+    } else {
+      el.outerHTML = `<div id="gf-img-preview" style="height:0"></div>`;
+    }
+  }
+
+  async function saveGuide(id) {
+    const prosRaw = document.getElementById('gf-pros')?.value || '';
+    const consRaw = document.getElementById('gf-cons')?.value || '';
+    const fields = {
+      image_url: document.getElementById('gf-image_url')?.value || null,
+      price_range: document.getElementById('gf-price_range')?.value || null,
+      verdict: document.getElementById('gf-verdict')?.value || null,
+      overview: document.getElementById('gf-overview')?.value || null,
+      pros: JSON.stringify(prosRaw.split('\n').map(s=>s.trim()).filter(Boolean)),
+      cons: JSON.stringify(consRaw.split('\n').map(s=>s.trim()).filter(Boolean)),
+      watch_for: document.getElementById('gf-watch_for')?.value || null,
+    };
+    await fetch(`/api/guides/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
+    toast('Guide saved');
+    await loadGuides();
+    renderGuides();
+  }
+
+  async function setGuideStatus(id, status) {
+    await fetch(`/api/guides/${id}`, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+    toast('Status updated'); await loadGuides(); selectGuide(id);
+  }
+
+  async function deleteGuide(id) {
+    if (!confirm('Delete this buying guide?')) return;
+    await fetch(`/api/guides/${id}`, {method:'DELETE'});
+    toast('Deleted'); currentGuide = null;
+    document.getElementById('guide-detail').innerHTML = '<div class="detail-empty">Select a guide to edit its image and details</div>';
+    loadGuides();
+  }
+
+  // ── Shared ───────────────────────────────────────────────────────────────────
+  function toast(msg, isError=false) {
+    const el=document.getElementById('toast'); el.textContent=msg; el.className='toast show'+(isError?' error':'');
+    setTimeout(()=>el.className='toast',2500);
+  }
+
+  // ── Init ─────────────────────────────────────────────────────────────────────
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+    const parent = btn.closest('.sidebar');
+    parent.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (btn.dataset.status !== undefined) { currentFilter = btn.dataset.status; loadSellers(currentFilter); }
+    if (btn.dataset.lstatus !== undefined) { currentLFilter = btn.dataset.lstatus; loadListings(currentLFilter); }
+  }));
+  document.getElementById('import-url-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') importUrl(); });
+  loadStats();
+  loadSellers();
+</script>
+</body>
+</html>

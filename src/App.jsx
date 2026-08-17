@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import MarketingPage from './MarketingPage';
+import SellPage from './SellPage';
 
 // --- STYLES & FONTS ---
 const GlobalStyles = () => (
@@ -1284,6 +1286,7 @@ export default function App() {
                 </div>
                 <div className="flex items-center gap-2">
                      <button onClick={() => setView('investor')} className="text-xs font-bold uppercase border-2 border-black px-3 py-1 bg-yellow-400 hover:bg-yellow-300">Investors</button>
+                     <button onClick={() => setView('marketing')} className="text-xs font-bold uppercase border-2 border-black px-3 py-1 bg-black text-yellow-400 hover:bg-gray-800">Marketing</button>
                      
                      <ThemedButton theme={theme} onClick={() => requireAuth('sell')} className="px-3 py-1 text-sm"><Icons.Plus className="w-4 h-4"/> Sell</ThemedButton>
                      
@@ -1337,6 +1340,9 @@ export default function App() {
                 
                 {/* INVESTOR VIEW */}
                 {view === 'investor' && <InvestorDeck />}
+
+                {/* MARKETING WAR ROOM */}
+                {view === 'marketing' && <MarketingPage />}
             </main>
 
              <div className="fixed bottom-4 right-4 z-50 opacity-20 hover:opacity-100">
